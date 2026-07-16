@@ -96,10 +96,10 @@
   @keyframes blink{50%{opacity:0}}
   @media (prefers-reduced-motion:reduce){.blink{animation:none}}
 
-  /* reveal: output streams into the log, no float-up */
-  .stream{opacity:0}
-  .stream.in{opacity:1;transition:opacity .18s linear}
-  @media (prefers-reduced-motion:reduce){.stream{opacity:1}}
+  /* output lines stream in one by one; without JS or with reduced motion
+     everything renders in its final state */
+  .anim .ln{opacity:0}
+  .anim .ln.in{opacity:1;transition:opacity .18s linear}
 
   section{padding:0}
   .block{padding:14px 0 40px}
@@ -177,6 +177,7 @@
   .pipeline .p{color:var(--purple)}
   .pipeline .y{color:var(--yellow)}
   .pipeline .label{color:var(--dim);font-size:11px;margin-bottom:14px;display:block}
+  .gate{display:inline-block;width:10ch}
 
   /* ---- security posture ---- */
   .facts{border-collapse:collapse;width:100%;font-size:13.5px}
@@ -202,11 +203,23 @@
   .links a:hover,.links a:focus-visible{background:var(--sel);border-left-color:var(--purple);outline:none}
   .links a:hover .lv,.links a:focus-visible .lv{color:var(--fg)}
 
+  /* ---- interactive prompt ---- */
+  #tout{margin-top:40px;font-size:14px}
+  #tout div{white-space:pre-wrap;word-break:break-word}
+  #tout .out{color:var(--muted)}
+  #tout .err{color:var(--red)}
   .finalprompt{
     display:flex;align-items:center;gap:0;
-    margin-top:46px;font-size:16px;
+    margin-top:10px;font-size:16px;
   }
   .finalprompt .prompt{margin-right:8px}
+  #tin{
+    background:none;border:none;outline:none;
+    color:var(--fg);font:inherit;
+    caret-color:var(--purple);
+    flex:1;min-width:0;
+  }
+  #tin::placeholder{color:var(--dim)}
   .foot{
     margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
     font-size:12px;color:var(--dim);
@@ -224,7 +237,6 @@
   <div class="right">
     <span>tailscale</span>
     <span>6/6 gates</span>
-    <span>uptime 41d</span>
   </div>
 </div>
 
@@ -234,19 +246,19 @@
   <!-- HERO -->
   <section class="hero">
     <div class="cmdline">
-      <span class="prompt"><span class="tick">~&gt;</span> </span><span id="typed"></span><span class="cursor blink" id="hero-cursor"></span>
+      <span class="prompt"><span class="tick">~&gt;</span> </span><span id="typed">whoami</span><span class="cursor blink" id="hero-cursor"></span>
     </div>
-    <div class="stream" id="hero-out">
-      <h1>I build infrastructure that is <span class="accent">defensible</span>, not decorative.</h1>
-      <p class="sub">
-        Ahmad Syamim — <a href="#contact">syamxm</a>. Final-year CS student, DevSecOps focus.
-        I self-host everything I ship: code, pipeline, and the box it runs on.
-        Nothing here is decorative. Everything earns its place or gets cut.
+    <div id="hero-out">
+      <h1 class="ln">I build infrastructure that is <span class="accent">defensible</span>, not decorative.</h1>
+      <p class="sub ln">
+        Ahmad Syamim — <a href="#contact">syamxm</a>. Final-year CS student at UiTM Shah Alam,
+        DevSecOps specialisation. I self-host everything I ship: code, pipeline, and the box
+        it runs on. Nothing here is decorative. Everything earns its place or gets cut.
       </p>
-      <div class="meta-row">
+      <div class="meta-row ln">
         <span class="k">role</span> <b>student · devsecops</b>
         <span class="k">host</span> <b>self-hosted / tailscale</b>
-        <span class="k">shell</span> <b>zsh</b>
+        <span class="k">shell</span> <b>fish</b>
         <span class="k">status</span> <b>all systems green</b>
       </div>
     </div>
@@ -255,13 +267,13 @@
   <!-- PROJECTS -->
   <section id="projects">
     <div class="sechead">
-      <span class="prompt"><span class="tick">~&gt;</span> <span class="cmd">ls</span> <span class="path-c">~/projects</span></span>
-      <span class="note"># 4 dirs · sorted by importance</span>
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">ls</span> <span class="t path-c">~/projects</span></span>
+      <span class="note"># 7 dirs · sorted by importance</span>
     </div>
 
-    <div class="stream">
+    <div>
       <!-- BeanThere flagship -->
-      <a class="proj featured" href="#" onclick="return false">
+      <a class="proj featured ln" href="https://beanthere.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
           <span class="name">BeanThere/</span>
@@ -269,56 +281,88 @@
           <span class="arrow">cd →</span>
         </div>
         <p class="desc">
-          Self-hosted coffee-shop platform. Full six-gate DevSecOps pipeline gating every deploy,
-          CSRF protection, rate limiting, and a local LLM recommender running on a 4GB GPU —
-          no third-party API, no data leaving the box.
+          Coffee-shop platform in plain PHP — online ordering, loyalty tiers, and a drink
+          recommender backed by a local Ollama model on a 4&nbsp;GB GPU. CSRF tokens, rate
+          limiting, and prepared statements throughout; every deploy gated by a six-gate
+          DevSecOps pipeline.
         </p>
         <div class="stack">
+          <span class="chip">php-8.2</span>
+          <span class="chip">mariadb</span>
           <span class="chip">local-llm</span>
           <span class="chip">csrf</span>
           <span class="chip">rate-limit</span>
           <span class="chip">trivy</span>
           <span class="chip">tailscale</span>
-          <span class="chip">4gb-gpu</span>
         </div>
 
         <div class="pipeline">
-          <span class="label"># pipeline.yml — deploy gated on 6 passing stages, fail-closed</span>
-<pre>  <span class="g">lint</span> ──▶ <span class="g">semgrep</span> ──▶ <span class="g">gitleaks</span> ──▶ <span class="g">build</span> ──▶ <span class="g">trivy</span> ──▶ <span class="p">deploy</span>
-  <span class="y">│</span>       <span class="y">│</span>        <span class="y">│</span>          <span class="y">│</span>       <span class="y">│</span>        <span class="y">│</span>
-  style   SAST     secrets    image     CVE      <span class="p">tailscale</span>
-  <span class="g">✓ pass</span>  <span class="g">✓ pass</span>   <span class="g">✓ pass</span>    <span class="g">✓ pass</span>  <span class="g">✓ pass</span>   <span class="p">✓ live</span></pre>
+          <span class="label"># ci.yml — every push, fail-closed · gitleaks also runs a weekly full-history scan</span>
+<pre>php -l    <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span>─┐
+semgrep   <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span>─┼──▶ docker build ──▶ trivy fs + image ──▶ deploy
+gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span>─┘    <span class="gate g" data-step="1" data-done="✓ pass">✓ pass</span>       <span class="gate g" data-step="2" data-done="✓ pass">✓ pass</span>           <span class="gate p" data-step="3" data-done="✓ live">✓ live</span>
+                                                                <span class="comment">tailscale ssh — fires only when main is green</span></pre>
         </div>
       </a>
 
-      <a class="proj" href="#" onclick="return false">
+      <a class="proj ln" href="https://taskflow.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
           <span class="name">taskflow/</span>
           <span class="arrow">cd →</span>
         </div>
-        <p class="desc">Homeserver dashboard. Single pane for services, containers, and box health across the tailnet.</p>
-        <div class="stack"><span class="chip">dashboard</span><span class="chip">self-host</span><span class="chip">metrics</span></div>
+        <p class="desc">MERN task manager with a security-gated CI/CD pipeline — gitleaks, semgrep, npm audit, hadolint, trivy (fs · config · image + SBOM), ZAP baseline. Deploy blocked on HIGH/CRITICAL findings.</p>
+        <div class="stack"><span class="chip">mern</span><span class="chip">github-actions</span><span class="chip">trivy</span><span class="chip">zap</span><span class="chip">jwt</span><span class="chip">non-root</span></div>
       </a>
 
-      <a class="proj" href="#" onclick="return false">
+      <a class="proj ln" href="https://dash.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">homeserver-dashboard/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">Grafana + Prometheus + Loki observability for the Debian homeserver — metrics, auth and fail2ban logs — behind Cloudflare Access (email OTP) with no published host port.</p>
+        <div class="stack"><span class="chip">grafana</span><span class="chip">prometheus</span><span class="chip">loki</span><span class="chip">cloudflare-access</span></div>
+      </a>
+
+      <a class="proj ln" href="https://github.com/syamxm/student_reminder_system" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">student_reminder_system/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">Flutter timetable + deadline reminders for UiTM students. Firebase, plus a FastAPI backend with bcrypt auth and Redis rate-limited login, Dockerised on the homeserver.</p>
+        <div class="stack"><span class="chip">flutter</span><span class="chip">firebase</span><span class="chip">fastapi</span><span class="chip">redis</span><span class="chip">bcrypt</span></div>
+      </a>
+
+      <a class="proj ln" href="https://cipher-agent.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
           <span class="name">cipher-agent/</span>
           <span class="arrow">cd →</span>
         </div>
-        <p class="desc">Autonomous security agent. Reads findings, triages, and proposes fixes against a defined threat model.</p>
-        <div class="stack"><span class="chip">agent</span><span class="chip">security</span><span class="chip">automation</span></div>
+        <p class="desc">RSA spy game in a fake browser terminal — solo cipher missions plus a two-player one-time-pad channel. pytest suite, hardened non-root container.</p>
+        <div class="stack"><span class="chip">fastapi</span><span class="chip">rsa</span><span class="chip">otp</span><span class="chip">pytest</span><span class="chip">non-root</span></div>
       </a>
 
-      <a class="proj" href="#" onclick="return false">
+      <a class="proj ln" href="https://cipher-forge.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
           <span class="name">cipher-forge/</span>
           <span class="arrow">cd →</span>
         </div>
-        <p class="desc">Tooling to build and harness cipher-agent workflows — the workbench behind the agent.</p>
-        <div class="stack"><span class="chip">tooling</span><span class="chip">pipeline</span></div>
+        <p class="desc">Interactive RSA teaching game — prime selection through decryption, solved by hand stage by stage. React + FastAPI + MongoDB with JWT auth.</p>
+        <div class="stack"><span class="chip">react</span><span class="chip">fastapi</span><span class="chip">mongodb</span><span class="chip">jwt</span></div>
+      </a>
+
+      <a class="proj ln" href="https://cv.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">cv-api/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">My CV as data — Node + Postgres REST API serving resume JSON. GitHub Actions deploys over Tailscale SSH; published through a Cloudflare Tunnel, zero open inbound ports.</p>
+        <div class="stack"><span class="chip">node</span><span class="chip">express</span><span class="chip">postgres</span><span class="chip">github-actions</span><span class="chip">tailscale</span></div>
       </a>
     </div>
   </section>
@@ -326,19 +370,19 @@
   <!-- SECURITY -->
   <section id="posture">
     <div class="sechead">
-      <span class="prompt"><span class="tick">~&gt;</span> <span class="cmd">cat</span> <span class="arg">pipeline.txt</span></span>
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">cat</span> <span class="t arg">security.txt</span></span>
       <span class="note"># security posture — facts, not marketing</span>
     </div>
-    <div class="stream">
+    <div>
       <table class="facts">
-        <tr><td class="key">CSP</td><td class="val"><code>default-src 'self'</code> — no third-party origins, no inline eval</td></tr>
-        <tr><td class="key">passwords</td><td class="val"><code>bcrypt</code> — salted, work-factor tuned, never reversible</td></tr>
-        <tr><td class="key">queries</td><td class="val">prepared statements only — <span class="y">zero</span> string-built SQL</td></tr>
-        <tr><td class="key">SAST</td><td class="val"><code>semgrep</code> gate — build fails on new findings</td></tr>
-        <tr><td class="key">secrets</td><td class="val"><code>gitleaks</code> gate — no key reaches a commit</td></tr>
-        <tr><td class="key">images</td><td class="val"><code>trivy</code> scan — deploy blocked on known CVEs</td></tr>
-        <tr><td class="key">transport</td><td class="val">Tailscale mesh — services never touch the public internet</td></tr>
-        <tr><td class="key">requests</td><td class="val">CSRF tokens + per-route rate limiting on every mutating path</td></tr>
+        <tr class="ln"><td class="key">CSP</td><td class="val"><code>default-src 'self'</code> — no third-party origins, no inline eval</td></tr>
+        <tr class="ln"><td class="key">passwords</td><td class="val"><code>bcrypt</code> — salted, work-factor tuned, never reversible</td></tr>
+        <tr class="ln"><td class="key">queries</td><td class="val">prepared statements only — <span class="y">zero</span> string-built SQL</td></tr>
+        <tr class="ln"><td class="key">SAST</td><td class="val"><code>semgrep</code> gate — build fails on new findings</td></tr>
+        <tr class="ln"><td class="key">secrets</td><td class="val"><code>gitleaks</code> gate — no key reaches a commit</td></tr>
+        <tr class="ln"><td class="key">images</td><td class="val"><code>trivy</code> scan — deploy blocked on known CVEs</td></tr>
+        <tr class="ln"><td class="key">transport</td><td class="val">deploys over Tailscale SSH; public traffic via Cloudflare Tunnel — zero open inbound ports</td></tr>
+        <tr class="ln"><td class="key">requests</td><td class="val">CSRF tokens + per-route rate limiting on every mutating path</td></tr>
       </table>
     </div>
   </section>
@@ -346,21 +390,23 @@
   <!-- CONTACT -->
   <section id="contact" class="contact block">
     <div class="sechead">
-      <span class="prompt"><span class="tick">~&gt;</span> <span class="cmd">cat</span> <span class="arg">contact.txt</span></span>
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">cat</span> <span class="t arg">contact.txt</span></span>
     </div>
-    <div class="stream">
-      <p class="lead">Session's open. If you're building something that has to hold up under scrutiny — or you just want to talk shop — the prompt's yours.</p>
+    <div>
+      <p class="lead ln">Session's open. If you're building something that has to hold up under scrutiny — or you just want to talk shop — the prompt's yours.</p>
       <div class="links">
-        <a href="mailto:ahmadsyamim200@gmail.com"><span class="lk">email</span><span class="lv">ahmadsyamim200@gmail.com</span></a>
-        <a href="https://github.com/syamxm" target="_blank" rel="noopener"><span class="lk">github</span><span class="lv">github.com/syamxm</span></a>
-        <a href="#projects"><span class="lk">projects</span><span class="lv">ls ~/projects</span></a>
+        <a class="ln" href="mailto:ahmadsyamim200@gmail.com"><span class="lk">email</span><span class="lv">ahmadsyamim200@gmail.com</span></a>
+        <a class="ln" href="https://github.com/syamxm" target="_blank" rel="noopener"><span class="lk">github</span><span class="lv">github.com/syamxm</span></a>
+        <a class="ln" href="#projects"><span class="lk">projects</span><span class="lv">ls ~/projects</span></a>
       </div>
 
-      <div class="finalprompt">
-        <span class="prompt"><span class="tick">~&gt;</span> </span><span class="cursor blink"></span>
+      <div id="tout" aria-live="polite"></div>
+      <div class="finalprompt ln" id="fp">
+        <span class="prompt"><span class="tick">~&gt;</span> </span>
+        <input id="tin" type="text" autocomplete="off" spellcheck="false" aria-label="terminal input" placeholder="type 'help'">
       </div>
 
-      <div class="foot">
+      <div class="foot ln">
         <span>syamxm@homeserver — built by hand, deployed over tailscale</span>
         <span>6/6 gates · fail-closed</span>
       </div>
@@ -374,50 +420,122 @@
 (function(){
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // reveal streams as they scroll into view — like output landing in the log
-  var streams = document.querySelectorAll(".stream");
-  if(reduce){
-    streams.forEach(function(s){s.classList.add("in")});
-  } else {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
-      });
-    },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
-    streams.forEach(function(s){io.observe(s)});
+  /* ---- interactive prompt (always active) ---- */
+  var tin = document.getElementById("tin");
+  var tout = document.getElementById("tout");
+  var CMDS = {
+    "help": "help  ls  cat contact.txt  clear  sudo hire syamxm",
+    "ls": "BeanThere/  taskflow/  homeserver-dashboard/  student_reminder_system/  cipher-agent/  cipher-forge/  cv-api/",
+    "cat contact.txt": "email   ahmadsyamim200@gmail.com\ngithub  github.com/syamxm",
+    "sudo hire syamxm": "[sudo] password for recruiter: ********\naccess granted — forwarding to ahmadsyamim200@gmail.com ..."
+  };
+  function tprint(text, cls){
+    text.split("\n").forEach(function(line){
+      var d = document.createElement("div");
+      d.className = cls;
+      d.textContent = line;
+      tout.appendChild(d);
+    });
+  }
+  document.getElementById("fp").addEventListener("click", function(){ tin.focus(); });
+  tin.addEventListener("keydown", function(e){
+    if(e.key !== "Enter") return;
+    var c = tin.value.trim();
+    tin.value = "";
+    if(!c) return;
+    if(c === "clear"){ tout.textContent = ""; return; }
+    var echo = document.createElement("div");
+    var p = document.createElement("span");
+    p.className = "prompt";
+    p.innerHTML = '<span class="tick">~&gt;</span> ';
+    var t = document.createElement("span");
+    t.className = "cmd";
+    t.textContent = c;
+    echo.appendChild(p); echo.appendChild(t);
+    tout.appendChild(echo);
+    if(CMDS[c]) tprint(CMDS[c], "out");
+    else tprint("fish: Unknown command: " + c, "err");
+    tin.scrollIntoView({block:"nearest"});
+  });
+
+  if(reduce) return; /* final state already in the markup */
+
+  document.body.classList.add("anim");
+
+  /* ---- helpers ---- */
+  function typeSpans(spans, done){
+    var si = 0;
+    (function next(){
+      if(si >= spans.length){ done(); return; }
+      var sp = spans[si], txt = sp.dataset.t, i = 0;
+      (function tick(){
+        if(i < txt.length){
+          sp.textContent = txt.slice(0, ++i);
+          setTimeout(tick, 70 + Math.random()*90);
+        } else { si++; setTimeout(next, 90); }
+      })();
+    })();
+  }
+  function reveal(container, done){
+    var lines = container.querySelectorAll(".ln");
+    lines.forEach(function(l, i){
+      setTimeout(function(){ l.classList.add("in"); }, i*28);
+    });
+    if(done) setTimeout(done, lines.length*28 + 120);
   }
 
-  // type "$ whoami" then resolve hero
+  /* ---- pipeline gates: "… running" then "✓ pass", stage by stage ---- */
+  var gates = document.querySelectorAll(".gate");
+  gates.forEach(function(g){ g.textContent = ""; });
+  function runGates(){
+    var t = 0, steps = [[],[],[],[]];
+    gates.forEach(function(g){ steps[+g.dataset.step].push(g); });
+    steps.forEach(function(gs){
+      gs.forEach(function(g){
+        setTimeout(function(){ g.textContent = "… running"; g.className = "gate y"; }, t);
+        setTimeout(function(){
+          g.textContent = g.dataset.done;
+          g.className = "gate " + (g.dataset.done === "✓ live" ? "p" : "g");
+        }, t + 520);
+      });
+      t += 640;
+    });
+  }
+
+  /* ---- sections: type the command, then stream the output ---- */
+  var secs = document.querySelectorAll("section[id]");
+  secs.forEach(function(sec){
+    sec.querySelectorAll(".sechead .t").forEach(function(sp){
+      sp.dataset.t = sp.textContent;
+      sp.textContent = "";
+    });
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      io.unobserve(e.target);
+      var sec = e.target;
+      typeSpans(sec.querySelectorAll(".sechead .t"), function(){
+        reveal(sec, sec.id === "projects" ? runGates : null);
+      });
+    });
+  },{threshold:.12, rootMargin:"0px 0px -8% 0px"});
+  secs.forEach(function(s){ io.observe(s); });
+
+  /* ---- hero: type "whoami", then stream the answer ---- */
   var typed = document.getElementById("typed");
-  var cursor = document.getElementById("hero-cursor");
   var out = document.getElementById("hero-out");
   var text = "whoami";
-  var full = "$ " + text;
-
-  function done(){
-    out.classList.add("in");
-    cursor.classList.add("blink");
-  }
-
-  if(reduce){
-    typed.textContent = full;
-    done();
-    return;
-  }
-
-  typed.textContent = "$ ";
+  typed.textContent = "";
   var i = 0;
-  function tick(){
+  setTimeout(function tick(){
     if(i < text.length){
-      typed.textContent = "$ " + text.slice(0,i+1);
-      i++;
-      // realistic irregular keystroke cadence
+      typed.textContent = text.slice(0, ++i);
       setTimeout(tick, 70 + Math.random()*90);
     } else {
-      setTimeout(done, 340);
+      setTimeout(function(){ reveal(out); }, 340);
     }
-  }
-  setTimeout(tick, 520);
+  }, 520);
 })();
 </script>
 </body>
