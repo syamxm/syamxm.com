@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>syamxm — ~/</title>
+<meta name="description" content="Ahmad Syamim (syamxm) — DevSecOps-focused CS student. I build infrastructure that is defensible, not decorative.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1E1E2E;
+    --bg-raise:#252537;
+    --sel:#313244;
+    --fg:#CDD6F4;
+    --muted:#7F849C;
+    --dim:#585B70;
+    --purple:#BD93F9;
+    --green:#A6E3A1;
+    --red:#F38BA8;
+    --yellow:#F9E2AF;
+    --line:#2A2A3C;
+    --blink:530ms;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    background:var(--bg);
+    color:var(--muted);
+    font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:15px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    padding-bottom:12vh;
+    overflow-x:hidden;
+  }
+  /* faint phosphor scanline atmosphere, extremely subtle */
+  body::before{
+    content:"";
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:repeating-linear-gradient(180deg,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.12) 2px 3px);
+    mix-blend-mode:multiply;opacity:.35;
+  }
+  ::selection{background:var(--purple);color:var(--bg)}
+
+  .shell{
+    max-width:960px;
+    margin:0 auto;
+    padding:0 24px;
+    position:relative;
+    z-index:1;
+  }
+
+  /* status bar — fixed, like a tmux/window chrome strip */
+  .statusbar{
+    position:fixed;top:0;left:0;right:0;z-index:5;
+    display:flex;align-items:center;gap:14px;
+    height:38px;padding:0 18px;
+    background:rgba(30,30,46,.82);
+    backdrop-filter:none;
+    border-bottom:1px solid var(--line);
+    font-size:12px;color:var(--dim);
+  }
+  .statusbar .dot{width:11px;height:11px;border-radius:50%}
+  .dots{display:flex;gap:7px;margin-right:6px}
+  .d1{background:#585B70}.d2{background:#585B70}.d3{background:#585B70}
+  .statusbar .path{color:var(--muted)}
+  .statusbar .path b{color:var(--purple);font-weight:500}
+  .statusbar .right{margin-left:auto;display:flex;gap:18px}
+  .statusbar .right span::before{content:"● ";color:var(--green)}
+  @media(max-width:620px){.statusbar .right{display:none}}
+
+  main{padding-top:96px}
+
+  .prompt{color:var(--green)}
+  .prompt .tick{color:var(--purple)}
+  .cmd{color:var(--fg)}
+  .arg{color:var(--yellow)}
+  .flag{color:var(--purple)}
+  .comment{color:var(--dim)}
+  .ok{color:var(--green)}
+  .warn{color:var(--yellow)}
+  .path-c{color:var(--purple)}
+
+  .cursor{
+    display:inline-block;
+    width:9px;height:1.05em;
+    background:var(--purple);
+    vertical-align:-2px;
+    margin-left:2px;
+  }
+  .blink{animation:blink var(--blink) steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){.blink{animation:none}}
+
+  /* reveal: output streams into the log, no float-up */
+  .stream{opacity:0}
+  .stream.in{opacity:1;transition:opacity .18s linear}
+  @media (prefers-reduced-motion:reduce){.stream{opacity:1}}
+
+  section{padding:0}
+  .block{padding:14px 0 40px}
+
+  /* ---- HERO ---- */
+  .hero{padding:8vh 0 7vh;border-bottom:1px solid var(--line)}
+  .cmdline{font-size:15px;margin-bottom:26px}
+  #typed{color:var(--fg)}
+  .hero h1{
+    font-weight:700;
+    font-size:clamp(30px,6.1vw,62px);
+    line-height:1.08;
+    letter-spacing:-.02em;
+    color:var(--fg);
+    max-width:18ch;
+    margin:.35em 0 .6em;
+  }
+  .hero h1 .accent{color:var(--purple)}
+  .hero .sub{color:var(--muted);max-width:60ch}
+  .hero .sub a{color:var(--purple);text-decoration:none;border-bottom:1px solid transparent}
+  .hero .sub a:hover{background:var(--sel);border-bottom-color:var(--purple)}
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:30px;
+    font-size:13px;color:var(--dim);
+  }
+  .meta-row b{color:var(--muted);font-weight:400}
+  .meta-row .k{color:var(--purple)}
+
+  /* ---- section header prompt ---- */
+  .sechead{
+    display:flex;align-items:baseline;gap:10px;
+    padding:34px 0 22px;
+    font-size:15px;flex-wrap:wrap;
+  }
+  .sechead .prompt{white-space:nowrap}
+  .sechead .note{color:var(--dim);font-size:12px;margin-left:auto}
+  @media(max-width:620px){.sechead .note{display:none}}
+
+  /* ---- projects ---- */
+  .proj{
+    display:block;text-decoration:none;color:inherit;
+    padding:16px 14px;margin:0 -14px;
+    border-left:2px solid transparent;
+  }
+  .proj:hover,.proj:focus-visible{
+    background:var(--sel);
+    border-left-color:var(--purple);
+    outline:none;
+  }
+  .proj .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .proj .name{color:var(--fg);font-weight:500;font-size:17px}
+  .proj:hover .name,.proj:focus-visible .name{color:var(--purple)}
+  .proj .flag-tag{color:var(--purple);font-size:12px}
+  .proj .perm{color:var(--dim);font-size:12px;letter-spacing:.05em}
+  .proj .arrow{margin-left:auto;color:var(--dim);opacity:0;transition:opacity .12s}
+  .proj:hover .arrow,.proj:focus-visible .arrow{opacity:1;color:var(--purple)}
+  .proj .desc{color:var(--muted);margin-top:6px;max-width:72ch;font-size:14px}
+  .proj .stack{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 8px;font-size:11.5px}
+  .proj .chip{color:var(--dim);border:1px solid var(--line);padding:1px 8px;border-radius:2px}
+  .featured{border-left-color:var(--dim)}
+
+  /* ASCII pipeline */
+  .pipeline{
+    margin:20px 0 6px;padding:20px 16px;
+    background:var(--bg-raise);
+    border:1px solid var(--line);
+    border-radius:3px;
+    overflow-x:auto;
+  }
+  .pipeline pre{
+    font-size:12.5px;line-height:1.7;color:var(--muted);
+    white-space:pre;
+  }
+  .pipeline .g{color:var(--green)}
+  .pipeline .p{color:var(--purple)}
+  .pipeline .y{color:var(--yellow)}
+  .pipeline .label{color:var(--dim);font-size:11px;margin-bottom:14px;display:block}
+
+  /* ---- security posture ---- */
+  .facts{border-collapse:collapse;width:100%;font-size:13.5px}
+  .facts td{padding:9px 14px 9px 0;vertical-align:top;border-bottom:1px solid var(--line)}
+  .facts tr:hover td{background:var(--sel)}
+  .facts .key{color:var(--purple);white-space:nowrap;width:1%}
+  .facts .val{color:var(--muted)}
+  .facts .val code{color:var(--fg);background:var(--bg-raise);padding:1px 6px;border-radius:2px;font-size:12.5px}
+  .facts .val .y{color:var(--yellow)}
+
+  /* ---- contact ---- */
+  .contact{border-top:1px solid var(--line);margin-top:20px}
+  .contact .lead{color:var(--muted);max-width:60ch;margin:8px 0 26px}
+  .links{display:flex;flex-direction:column;gap:2px}
+  .links a{
+    text-decoration:none;color:var(--fg);
+    padding:9px 12px;margin:0 -12px;
+    display:flex;gap:14px;align-items:baseline;
+    border-left:2px solid transparent;
+  }
+  .links a .lk{color:var(--purple);width:11ch;flex:none}
+  .links a .lv{color:var(--muted)}
+  .links a:hover,.links a:focus-visible{background:var(--sel);border-left-color:var(--purple);outline:none}
+  .links a:hover .lv,.links a:focus-visible .lv{color:var(--fg)}
+
+  .finalprompt{
+    display:flex;align-items:center;gap:0;
+    margin-top:46px;font-size:16px;
+  }
+  .finalprompt .prompt{margin-right:8px}
+  .foot{
+    margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--dim);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  a:focus-visible,.proj:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="statusbar" role="presentation">
+  <div class="dots"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span></div>
+  <span class="path">syamxm@<b>homeserver</b>: ~</span>
+  <div class="right">
+    <span>tailscale</span>
+    <span>6/6 gates</span>
+    <span>uptime 41d</span>
+  </div>
+</div>
+
+<div class="shell">
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="cmdline">
+      <span class="prompt"><span class="tick">~&gt;</span> </span><span id="typed"></span><span class="cursor blink" id="hero-cursor"></span>
+    </div>
+    <div class="stream" id="hero-out">
+      <h1>I build infrastructure that is <span class="accent">defensible</span>, not decorative.</h1>
+      <p class="sub">
+        Ahmad Syamim — <a href="#contact">syamxm</a>. Final-year CS student, DevSecOps focus.
+        I self-host everything I ship: code, pipeline, and the box it runs on.
+        Nothing here is decorative. Everything earns its place or gets cut.
+      </p>
+      <div class="meta-row">
+        <span class="k">role</span> <b>student · devsecops</b>
+        <span class="k">host</span> <b>self-hosted / tailscale</b>
+        <span class="k">shell</span> <b>zsh</b>
+        <span class="k">status</span> <b>all systems green</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="cmd">ls</span> <span class="path-c">~/projects</span></span>
+      <span class="note"># 4 dirs · sorted by importance</span>
+    </div>
+
+    <div class="stream">
+      <!-- BeanThere flagship -->
+      <a class="proj featured" href="#" onclick="return false">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">BeanThere/</span>
+          <span class="flag-tag">★ flagship</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">
+          Self-hosted coffee-shop platform. Full six-gate DevSecOps pipeline gating every deploy,
+          CSRF protection, rate limiting, and a local LLM recommender running on a 4GB GPU —
+          no third-party API, no data leaving the box.
+        </p>
+        <div class="stack">
+          <span class="chip">local-llm</span>
+          <span class="chip">csrf</span>
+          <span class="chip">rate-limit</span>
+          <span class="chip">trivy</span>
+          <span class="chip">tailscale</span>
+          <span class="chip">4gb-gpu</span>
+        </div>
+
+        <div class="pipeline">
+          <span class="label"># pipeline.yml — deploy gated on 6 passing stages, fail-closed</span>
+<pre>  <span class="g">lint</span> ──▶ <span class="g">semgrep</span> ──▶ <span class="g">gitleaks</span> ──▶ <span class="g">build</span> ──▶ <span class="g">trivy</span> ──▶ <span class="p">deploy</span>
+  <span class="y">│</span>       <span class="y">│</span>        <span class="y">│</span>          <span class="y">│</span>       <span class="y">│</span>        <span class="y">│</span>
+  style   SAST     secrets    image     CVE      <span class="p">tailscale</span>
+  <span class="g">✓ pass</span>  <span class="g">✓ pass</span>   <span class="g">✓ pass</span>    <span class="g">✓ pass</span>  <span class="g">✓ pass</span>   <span class="p">✓ live</span></pre>
+        </div>
+      </a>
+
+      <a class="proj" href="#" onclick="return false">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">taskflow/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">Homeserver dashboard. Single pane for services, containers, and box health across the tailnet.</p>
+        <div class="stack"><span class="chip">dashboard</span><span class="chip">self-host</span><span class="chip">metrics</span></div>
+      </a>
+
+      <a class="proj" href="#" onclick="return false">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">cipher-agent/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">Autonomous security agent. Reads findings, triages, and proposes fixes against a defined threat model.</p>
+        <div class="stack"><span class="chip">agent</span><span class="chip">security</span><span class="chip">automation</span></div>
+      </a>
+
+      <a class="proj" href="#" onclick="return false">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">cipher-forge/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">Tooling to build and harness cipher-agent workflows — the workbench behind the agent.</p>
+        <div class="stack"><span class="chip">tooling</span><span class="chip">pipeline</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECURITY -->
+  <section id="posture">
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="cmd">cat</span> <span class="arg">pipeline.txt</span></span>
+      <span class="note"># security posture — facts, not marketing</span>
+    </div>
+    <div class="stream">
+      <table class="facts">
+        <tr><td class="key">CSP</td><td class="val"><code>default-src 'self'</code> — no third-party origins, no inline eval</td></tr>
+        <tr><td class="key">passwords</td><td class="val"><code>bcrypt</code> — salted, work-factor tuned, never reversible</td></tr>
+        <tr><td class="key">queries</td><td class="val">prepared statements only — <span class="y">zero</span> string-built SQL</td></tr>
+        <tr><td class="key">SAST</td><td class="val"><code>semgrep</code> gate — build fails on new findings</td></tr>
+        <tr><td class="key">secrets</td><td class="val"><code>gitleaks</code> gate — no key reaches a commit</td></tr>
+        <tr><td class="key">images</td><td class="val"><code>trivy</code> scan — deploy blocked on known CVEs</td></tr>
+        <tr><td class="key">transport</td><td class="val">Tailscale mesh — services never touch the public internet</td></tr>
+        <tr><td class="key">requests</td><td class="val">CSRF tokens + per-route rate limiting on every mutating path</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact block">
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="cmd">cat</span> <span class="arg">contact.txt</span></span>
+    </div>
+    <div class="stream">
+      <p class="lead">Session's open. If you're building something that has to hold up under scrutiny — or you just want to talk shop — the prompt's yours.</p>
+      <div class="links">
+        <a href="mailto:ahmadsyamim200@gmail.com"><span class="lk">email</span><span class="lv">ahmadsyamim200@gmail.com</span></a>
+        <a href="https://github.com/syamxm" target="_blank" rel="noopener"><span class="lk">github</span><span class="lv">github.com/syamxm</span></a>
+        <a href="#projects"><span class="lk">projects</span><span class="lv">ls ~/projects</span></a>
+      </div>
+
+      <div class="finalprompt">
+        <span class="prompt"><span class="tick">~&gt;</span> </span><span class="cursor blink"></span>
+      </div>
+
+      <div class="foot">
+        <span>syamxm@homeserver — built by hand, deployed over tailscale</span>
+        <span>6/6 gates · fail-closed</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // reveal streams as they scroll into view — like output landing in the log
+  var streams = document.querySelectorAll(".stream");
+  if(reduce){
+    streams.forEach(function(s){s.classList.add("in")});
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+    streams.forEach(function(s){io.observe(s)});
+  }
+
+  // type "$ whoami" then resolve hero
+  var typed = document.getElementById("typed");
+  var cursor = document.getElementById("hero-cursor");
+  var out = document.getElementById("hero-out");
+  var text = "whoami";
+  var full = "$ " + text;
+
+  function done(){
+    out.classList.add("in");
+    cursor.classList.add("blink");
+  }
+
+  if(reduce){
+    typed.textContent = full;
+    done();
+    return;
+  }
+
+  typed.textContent = "$ ";
+  var i = 0;
+  function tick(){
+    if(i < text.length){
+      typed.textContent = "$ " + text.slice(0,i+1);
+      i++;
+      // realistic irregular keystroke cadence
+      setTimeout(tick, 70 + Math.random()*90);
+    } else {
+      setTimeout(done, 340);
+    }
+  }
+  setTimeout(tick, 520);
+})();
+</script>
+</body>
+</html>
