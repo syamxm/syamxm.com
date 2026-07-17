@@ -13,9 +13,7 @@
   position:fixed;top:0;left:0;right:0;z-index:5;
   display:flex;align-items:center;gap:14px;
   height:40px;padding:0 20px;
-  background:rgba(30,30,46,.55);
-  backdrop-filter:blur(16px) saturate(1.5);
-  -webkit-backdrop-filter:blur(16px) saturate(1.5);
+  background:rgba(30,30,46,.94);
   border-bottom:1px solid rgba(189,147,249,.14);
   box-shadow:0 8px 32px -12px rgba(0,0,0,.5);
   font-size:12px;color:var(--dim);
@@ -33,6 +31,13 @@
 .statusbar .right{margin-left:auto;display:flex;gap:18px}
 .statusbar .right span::before{content:"● ";color:var(--green);text-shadow:0 0 6px var(--glow-green)}
 @media(max-width:620px){.statusbar .right{display:none}}
+@media(min-width:769px){
+  body:not(.lite-root) .statusbar{
+    background:rgba(30,30,46,.55);
+    backdrop-filter:blur(16px) saturate(1.5);
+    -webkit-backdrop-filter:blur(16px) saturate(1.5);
+  }
+}
 
 main{padding-top:clamp(96px,12vh,140px)}
 
@@ -41,22 +46,24 @@ section{padding:0}
 
 /* ---- HERO ---- */
 .hero{padding:9vh 0 8vh;border-bottom:1px solid var(--line);position:relative}
-.hero::before,.hero::after{
-  content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%;
+@media(min-width:769px){
+  body:not(.lite-root) .hero::before,body:not(.lite-root) .hero::after{
+    content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%;
+  }
+  body:not(.lite-root) .hero::before{
+    top:-18%;left:-12%;width:62%;height:115%;
+    background:radial-gradient(circle,rgba(189,147,249,.13),transparent 65%);
+    filter:blur(48px);
+    animation:breathe 7s ease-in-out infinite alternate;
+  }
+  body:not(.lite-root) .hero::after{
+    top:6%;right:-14%;width:48%;height:90%;
+    background:radial-gradient(circle,rgba(166,227,161,.08),transparent 65%);
+    filter:blur(56px);
+    animation:breathe 9s ease-in-out 1.2s infinite alternate-reverse;
+  }
+  @keyframes breathe{from{opacity:.5;transform:scale(.94)}to{opacity:1;transform:scale(1.06)}}
 }
-.hero::before{
-  top:-18%;left:-12%;width:62%;height:115%;
-  background:radial-gradient(circle,rgba(189,147,249,.13),transparent 65%);
-  filter:blur(48px);
-  animation:breathe 7s ease-in-out infinite alternate;
-}
-.hero::after{
-  top:6%;right:-14%;width:48%;height:90%;
-  background:radial-gradient(circle,rgba(166,227,161,.08),transparent 65%);
-  filter:blur(56px);
-  animation:breathe 9s ease-in-out 1.2s infinite alternate-reverse;
-}
-@keyframes breathe{from{opacity:.5;transform:scale(.94)}to{opacity:1;transform:scale(1.06)}}
 .cmdline{font-size:15px;margin-bottom:26px}
 #typed{color:var(--fg)}
 .hero h1{

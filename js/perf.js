@@ -2,7 +2,7 @@
   var root = document.documentElement;
 
   if(navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4){
-    root.classList.add("lite");
+    document.body.classList.add("lite-root");
   }
 
   document.addEventListener("visibilitychange", function(){

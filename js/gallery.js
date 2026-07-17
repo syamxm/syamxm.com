@@ -22,7 +22,7 @@
       ovimg.src = BLANK;
       document.body.style.overflow = "";
     }
-    if(reduce){ hide(); return; }
+    if(reduce || window.matchMedia("(max-width: 768px)").matches){ hide(); return; }
     closing = true;
     ov.classList.add("closing");
     setTimeout(hide, 300);

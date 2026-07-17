@@ -115,7 +115,7 @@
 
   /* ---- live uptime in the footer ---- */
   var footstat = document.getElementById("footstat");
-  if(footstat){
+  if(footstat && window.matchMedia("(min-width: 769px)").matches){
     setInterval(function(){
       if(document.hidden) return;
       footstat.textContent = "up " + uptime() + " · 6/6 gates · fail-closed";
