@@ -98,6 +98,26 @@ body::after{
   transition:opacity .65s var(--ease),transform .65s var(--ease),filter .5s var(--ease);
 }
 
+/* boot overlay — created by js/boot.js, once per session */
+#boot{
+  position:fixed;inset:0;z-index:20;
+  background:var(--bg);
+  padding:clamp(18px,5vh,64px) clamp(18px,6vw,80px);
+  opacity:1;transition:opacity .45s var(--ease);
+}
+#boot pre{
+  font-size:clamp(11px,1.6vw,13.5px);line-height:1.9;
+  color:var(--green);text-shadow:0 0 8px var(--glow-green);
+  white-space:pre-wrap;
+}
+#boot.off{opacity:0;pointer-events:none}
+#boothint{
+  position:absolute;bottom:24px;left:0;right:0;text-align:center;
+  font-size:11px;color:var(--dim);
+  animation:blink 1.2s steps(1) infinite;
+}
+.booting{overflow:hidden}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
