@@ -116,7 +116,10 @@
   /* ---- live uptime in the footer ---- */
   var footstat = document.getElementById("footstat");
   if(footstat){
-    setInterval(function(){ footstat.textContent = "up " + uptime() + " · 6/6 gates · fail-closed"; }, 1000);
+    setInterval(function(){
+      if(document.hidden) return;
+      footstat.textContent = "up " + uptime() + " · 6/6 gates · fail-closed";
+    }, 1000);
   }
 
   if(reduce) return; /* final state already in the markup */
