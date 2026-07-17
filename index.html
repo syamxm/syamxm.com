@@ -8,341 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#1E1E2E;
-    --bg-raise:#252537;
-    --sel:#313244;
-    --fg:#CDD6F4;
-    --muted:#7F849C;
-    --dim:#585B70;
-    --purple:#BD93F9;
-    --green:#A6E3A1;
-    --red:#F38BA8;
-    --yellow:#F9E2AF;
-    --line:#2A2A3C;
-    --blink:530ms;
-    --glow-purple:rgba(189,147,249,.45);
-    --glow-green:rgba(166,227,161,.4);
-    --glow-yellow:rgba(249,226,175,.35);
-    --ease:cubic-bezier(.22,1,.36,1);
-  }
-  @property --angle{syntax:"<angle>";initial-value:0deg;inherits:false}
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{
-    background:
-      radial-gradient(1100px 700px at 88% -12%,rgba(166,227,161,.055),transparent 60%),
-      radial-gradient(1300px 850px at 8% 4%,rgba(189,147,249,.075),transparent 62%),
-      var(--bg);
-    color:var(--muted);
-    font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-    font-size:clamp(14.5px,13px + .18vw,17px);
-    line-height:1.75;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-    padding-bottom:12vh;
-    overflow-x:hidden;
-  }
-  /* atmosphere: vignette + phosphor scanlines, above content, below chrome */
-  body::before{
-    content:"";
-    position:fixed;inset:0;z-index:3;pointer-events:none;
-    background:
-      radial-gradient(ellipse 120% 90% at 50% 50%,transparent 58%,rgba(10,10,18,.38) 100%),
-      repeating-linear-gradient(180deg,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.09) 2px 3px);
-  }
-  /* animated film grain */
-  body::after{
-    content:"";
-    position:fixed;inset:-60%;z-index:3;pointer-events:none;
-    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
-    opacity:.038;
-    animation:grain 8s steps(10) infinite;
-  }
-  @keyframes grain{
-    0%,100%{transform:translate(0,0)}
-    10%{transform:translate(-4%,-7%)}
-    20%{transform:translate(-9%,3%)}
-    30%{transform:translate(6%,-12%)}
-    40%{transform:translate(-3%,11%)}
-    50%{transform:translate(-8%,-5%)}
-    60%{transform:translate(7%,4%)}
-    70%{transform:translate(-2%,8%)}
-    80%{transform:translate(4%,-10%)}
-    90%{transform:translate(9%,6%)}
-  }
-  ::selection{background:var(--purple);color:var(--bg)}
-  ::-webkit-scrollbar{width:10px}
-  ::-webkit-scrollbar-track{background:var(--bg)}
-  ::-webkit-scrollbar-thumb{background:var(--sel);border-radius:5px;border:2px solid var(--bg)}
-  ::-webkit-scrollbar-thumb:hover{background:var(--dim)}
-
-  .shell{
-    max-width:1000px;
-    margin:0 auto;
-    padding:0 28px;
-    position:relative;
-    z-index:1;
-  }
-  @media(min-width:1600px){.shell{max-width:1160px}}
-  @media(max-width:620px){.shell{padding:0 20px}}
-
-  /* status bar — frosted glass chrome strip */
-  .statusbar{
-    position:fixed;top:0;left:0;right:0;z-index:5;
-    display:flex;align-items:center;gap:14px;
-    height:40px;padding:0 20px;
-    background:rgba(30,30,46,.55);
-    backdrop-filter:blur(16px) saturate(1.5);
-    -webkit-backdrop-filter:blur(16px) saturate(1.5);
-    border-bottom:1px solid rgba(189,147,249,.14);
-    box-shadow:0 8px 32px -12px rgba(0,0,0,.5);
-    font-size:12px;color:var(--dim);
-  }
-  .statusbar .dot{width:11px;height:11px;border-radius:50%;transition:filter .3s}
-  .dots{display:flex;gap:7px;margin-right:6px}
-  .d1{background:rgba(243,139,168,.8)}
-  .d2{background:rgba(249,226,175,.8)}
-  .d3{background:rgba(166,227,161,.8)}
-  .statusbar:hover .d1{filter:drop-shadow(0 0 4px var(--red))}
-  .statusbar:hover .d2{filter:drop-shadow(0 0 4px var(--yellow))}
-  .statusbar:hover .d3{filter:drop-shadow(0 0 4px var(--green))}
-  .statusbar .path{color:var(--muted)}
-  .statusbar .path b{color:var(--purple);font-weight:500}
-  .statusbar .right{margin-left:auto;display:flex;gap:18px}
-  .statusbar .right span::before{content:"● ";color:var(--green);text-shadow:0 0 6px var(--glow-green)}
-  @media(max-width:620px){.statusbar .right{display:none}}
-
-  main{padding-top:clamp(96px,12vh,140px)}
-
-  .prompt{color:var(--green);text-shadow:0 0 10px rgba(166,227,161,.22)}
-  .prompt .tick{color:var(--purple);text-shadow:0 0 8px var(--glow-purple),0 0 26px rgba(189,147,249,.2)}
-  .cmd{color:var(--fg)}
-  .arg{color:var(--yellow)}
-  .flag{color:var(--purple)}
-  .comment{color:var(--dim)}
-  .ok{color:var(--green)}
-  .warn{color:var(--yellow)}
-  .path-c{color:var(--purple)}
-
-  .cursor{
-    display:inline-block;
-    width:9px;height:1.05em;
-    background:var(--purple);
-    vertical-align:-2px;
-    margin-left:2px;
-    border-radius:1px;
-    box-shadow:0 0 8px var(--glow-purple),0 0 22px rgba(189,147,249,.3);
-  }
-  .blink{animation:blink var(--blink) steps(1) infinite}
-  @keyframes blink{50%{opacity:0}}
-
-  /* output lines stream in cinematically; without JS or with reduced motion
-     everything renders in its final state */
-  .anim .ln{opacity:0;transform:translateY(14px);filter:blur(5px)}
-  .anim .ln.in{
-    opacity:1;transform:none;filter:blur(0);
-    transition:opacity .65s var(--ease),transform .65s var(--ease),filter .5s var(--ease);
-  }
-
-  section{padding:0}
-  .block{padding:14px 0 40px}
-
-  /* ---- HERO ---- */
-  .hero{padding:9vh 0 8vh;border-bottom:1px solid var(--line);position:relative}
-  .hero::before,.hero::after{
-    content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%;
-  }
-  .hero::before{
-    top:-18%;left:-12%;width:62%;height:115%;
-    background:radial-gradient(circle,rgba(189,147,249,.13),transparent 65%);
-    filter:blur(48px);
-    animation:breathe 7s ease-in-out infinite alternate;
-  }
-  .hero::after{
-    top:6%;right:-14%;width:48%;height:90%;
-    background:radial-gradient(circle,rgba(166,227,161,.08),transparent 65%);
-    filter:blur(56px);
-    animation:breathe 9s ease-in-out 1.2s infinite alternate-reverse;
-  }
-  @keyframes breathe{from{opacity:.5;transform:scale(.94)}to{opacity:1;transform:scale(1.06)}}
-  .cmdline{font-size:15px;margin-bottom:26px}
-  #typed{color:var(--fg)}
-  .hero h1{
-    font-weight:700;
-    font-size:clamp(30px,5.4vw,72px);
-    line-height:1.08;
-    letter-spacing:-.02em;
-    color:var(--fg);
-    max-width:18ch;
-    margin:.35em 0 .6em;
-  }
-  .hero h1 .accent{
-    color:var(--purple);
-    text-shadow:0 0 20px rgba(189,147,249,.4),0 0 60px rgba(189,147,249,.18);
-  }
-  .hero .sub{color:var(--muted);max-width:62ch}
-  .hero .sub a{
-    color:var(--purple);text-decoration:none;border-bottom:1px solid transparent;
-    transition:background .25s,border-color .25s,text-shadow .25s;
-  }
-  .hero .sub a:hover{background:var(--sel);border-bottom-color:var(--purple);text-shadow:0 0 12px var(--glow-purple)}
-  .meta-row{
-    display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:30px;
-    font-size:13px;color:var(--dim);
-  }
-  .meta-row b{color:var(--muted);font-weight:400}
-  .meta-row .k{color:var(--purple)}
-
-  /* ---- section header prompt ---- */
-  .sechead{
-    display:flex;align-items:baseline;gap:10px;
-    padding:34px 0 22px;
-    font-size:15px;flex-wrap:wrap;
-  }
-  .sechead .prompt{white-space:nowrap}
-  .sechead .note{color:var(--dim);font-size:12px;margin-left:auto}
-  @media(max-width:620px){.sechead .note{display:none}}
-
-  /* ---- projects ---- */
-  @media(min-width:1440px){
-    .plist{display:grid;grid-template-columns:1fr 1fr;gap:2px 32px;align-items:start}
-    .plist .featured{grid-column:1/-1}
-  }
-  .proj{
-    display:block;text-decoration:none;color:inherit;
-    padding:18px;margin:0 -18px;
-    border-left:2px solid transparent;
-    border-radius:4px;
-    position:relative;
-    transition:background .35s var(--ease),border-color .35s var(--ease),
-               transform .35s var(--ease),box-shadow .35s var(--ease);
-  }
-  .proj::after{
-    content:"";position:absolute;inset:0;border-radius:4px;padding:1px;
-    background:conic-gradient(from var(--angle),
-      transparent 0 62%,rgba(189,147,249,.9) 76%,rgba(166,227,161,.9) 86%,transparent 96%);
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;mask-composite:exclude;
-    opacity:0;transition:opacity .4s var(--ease);pointer-events:none;
-  }
-  .proj:hover::after,.proj:focus-visible::after{opacity:1;animation:orbit 3.2s linear infinite}
-  @keyframes orbit{to{--angle:360deg}}
-  .proj:hover,.proj:focus-visible{
-    background:rgba(49,50,68,.55);
-    border-left-color:var(--purple);
-    transform:translateY(-2px);
-    box-shadow:0 18px 44px -22px rgba(0,0,0,.65);
-    outline:none;
-  }
-  .proj .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-  .proj .name{color:var(--fg);font-weight:500;font-size:17px;transition:color .3s,text-shadow .3s}
-  .proj:hover .name,.proj:focus-visible .name{color:var(--purple);text-shadow:0 0 14px var(--glow-purple)}
-  .proj .flag-tag{color:var(--purple);font-size:12px;text-shadow:0 0 10px rgba(189,147,249,.25)}
-  .proj .perm{color:var(--dim);font-size:12px;letter-spacing:.05em}
-  .proj .arrow{
-    margin-left:auto;color:var(--dim);opacity:0;transform:translateX(-6px);
-    transition:opacity .3s var(--ease),transform .3s var(--ease);
-  }
-  .proj:hover .arrow,.proj:focus-visible .arrow{opacity:1;transform:none;color:var(--purple)}
-  .proj .desc{color:var(--muted);margin-top:6px;max-width:72ch;font-size:14px}
-  .proj .stack{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 8px;font-size:11.5px}
-  .proj .chip{
-    color:var(--dim);border:1px solid var(--line);padding:1px 8px;border-radius:3px;
-    transition:color .3s,border-color .3s;
-  }
-  .proj:hover .chip{color:var(--muted);border-color:rgba(189,147,249,.3)}
-  .featured{border-left-color:var(--dim)}
-
-  /* ASCII pipeline — frosted card */
-  .pipeline{
-    margin:22px 0 6px;padding:22px 18px;
-    background:rgba(37,37,55,.5);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-    border:1px solid rgba(189,147,249,.12);
-    border-radius:6px;
-    overflow-x:auto;
-    box-shadow:inset 0 1px 0 rgba(205,214,244,.04),0 12px 32px -20px rgba(0,0,0,.6);
-  }
-  .pipeline pre{
-    font-size:12.5px;line-height:1.7;color:var(--muted);
-    white-space:pre;
-  }
-  .pipeline .g{color:var(--green);text-shadow:0 0 9px var(--glow-green)}
-  .pipeline .p{color:var(--purple);text-shadow:0 0 9px var(--glow-purple)}
-  .pipeline .y{color:var(--yellow);text-shadow:0 0 8px var(--glow-yellow)}
-  .pipeline .label{color:var(--dim);font-size:11px;margin-bottom:14px;display:block}
-  .gate{display:inline-block;width:10ch}
-  .anim .gate.done{animation:gatepop .5s var(--ease)}
-  @keyframes gatepop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-
-  /* ---- security posture ---- */
-  .facts{border-collapse:collapse;width:100%;font-size:13.5px}
-  .facts td{padding:9px 14px 9px 0;vertical-align:top;border-bottom:1px solid var(--line);transition:background .25s}
-  .facts tr:hover td{background:rgba(49,50,68,.5)}
-  .facts .key{color:var(--purple);white-space:nowrap;width:1%;text-shadow:0 0 10px rgba(189,147,249,.15)}
-  .facts .val{color:var(--muted)}
-  .facts .val code{color:var(--fg);background:var(--bg-raise);padding:1px 6px;border-radius:2px;font-size:12.5px}
-  .facts .val .y{color:var(--yellow)}
-
-  /* ---- contact ---- */
-  .contact{border-top:1px solid var(--line);margin-top:20px}
-  .contact .lead{color:var(--muted);max-width:60ch;margin:8px 0 26px}
-  .links{display:flex;flex-direction:column;gap:2px}
-  .links a{
-    text-decoration:none;color:var(--fg);
-    padding:9px 12px;margin:0 -12px;
-    display:flex;gap:14px;align-items:baseline;
-    border-left:2px solid transparent;
-    border-radius:3px;
-    transition:background .3s var(--ease),border-color .3s var(--ease);
-  }
-  .links a .lk{color:var(--purple);width:11ch;flex:none}
-  .links a .lv{color:var(--muted);transition:color .3s,text-shadow .3s}
-  .links a:hover,.links a:focus-visible{background:rgba(49,50,68,.55);border-left-color:var(--purple);outline:none}
-  .links a:hover .lv,.links a:focus-visible .lv{color:var(--fg);text-shadow:0 0 12px rgba(205,214,244,.2)}
-
-  /* ---- interactive prompt — frosted input card ---- */
-  #tout{margin-top:40px;font-size:14px}
-  #tout div{white-space:pre-wrap;word-break:break-word}
-  #tout .out{color:var(--muted)}
-  #tout .err{color:var(--red);text-shadow:0 0 10px rgba(243,139,168,.25)}
-  .finalprompt{
-    display:flex;align-items:center;gap:0;
-    margin-top:14px;padding:10px 14px;font-size:16px;
-    background:rgba(37,37,55,.45);
-    border:1px solid var(--line);border-radius:6px;
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-    transition:border-color .35s var(--ease),box-shadow .35s var(--ease);
-  }
-  .finalprompt:focus-within{
-    border-color:rgba(189,147,249,.5);
-    box-shadow:0 0 0 1px rgba(189,147,249,.25),0 12px 40px -18px var(--glow-purple);
-  }
-  .finalprompt .prompt{margin-right:8px}
-  #tin{
-    background:none;border:none;outline:none;
-    color:var(--fg);font:inherit;
-    caret-color:var(--purple);
-    flex:1;min-width:0;
-  }
-  #tin::placeholder{color:var(--dim)}
-  .foot{
-    margin-top:64px;padding-top:20px;border-top:1px solid var(--line);
-    font-size:12px;color:var(--dim);
-    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
-  }
-
-  a:focus-visible,.proj:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
-
-  @media (prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation:none!important;transition:none!important}
-  }
-</style>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
 </head>
 <body>
 
@@ -388,6 +56,7 @@
 
     <div class="plist">
       <!-- BeanThere flagship -->
+      <div class="pentry featured">
       <a class="proj featured ln" href="https://beanthere.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
@@ -419,7 +88,20 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
                                                                 <span class="comment">tailscale ssh — fires only when main is green</span></pre>
         </div>
       </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/beanthere/beanthere-1.png</span></span>
+          <span class="simg"><img src="assets/screenshots/beanthere-1.png" alt="BeanThere screenshot 1" loading="lazy"></span>
+        </button>
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/beanthere/beanthere-2.png</span></span>
+          <span class="simg"><img src="assets/screenshots/beanthere-2.png" alt="BeanThere screenshot 2" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
 
+      <div class="pentry">
       <a class="proj ln" href="https://taskflow.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
@@ -429,7 +111,20 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <p class="desc">MERN task manager with a security-gated CI/CD pipeline — gitleaks, semgrep, npm audit, hadolint, trivy (fs · config · image + SBOM), ZAP baseline. Deploy blocked on HIGH/CRITICAL findings.</p>
         <div class="stack"><span class="chip">mern</span><span class="chip">github-actions</span><span class="chip">trivy</span><span class="chip">zap</span><span class="chip">jwt</span><span class="chip">non-root</span></div>
       </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/taskflow/taskflow-1.png</span></span>
+          <span class="simg"><img src="assets/screenshots/taskflow-1.png" alt="taskflow screenshot 1" loading="lazy"></span>
+        </button>
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/taskflow/taskflow-2.png</span></span>
+          <span class="simg"><img src="assets/screenshots/taskflow-2.png" alt="taskflow screenshot 2" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
 
+      <div class="pentry">
       <a class="proj ln" href="https://dash.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
@@ -439,7 +134,16 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <p class="desc">Grafana + Prometheus + Loki observability for the Debian homeserver — metrics, auth and fail2ban logs — behind Cloudflare Access (email OTP) with no published host port.</p>
         <div class="stack"><span class="chip">grafana</span><span class="chip">prometheus</span><span class="chip">loki</span><span class="chip">cloudflare-access</span></div>
       </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/homeserver-dashboard/homeserver-dashboard-1.png</span></span>
+          <span class="simg"><img src="assets/screenshots/homeserver-dashboard-1.png" alt="homeserver-dashboard screenshot 1" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
 
+      <div class="pentry">
       <a class="proj ln" href="https://github.com/syamxm/student_reminder_system" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
@@ -449,7 +153,16 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <p class="desc">Flutter timetable + deadline reminders for UiTM students. Firebase, plus a FastAPI backend with bcrypt auth and Redis rate-limited login, Dockerised on the homeserver.</p>
         <div class="stack"><span class="chip">flutter</span><span class="chip">firebase</span><span class="chip">fastapi</span><span class="chip">redis</span><span class="chip">bcrypt</span></div>
       </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/student-reminder-system/student-reminder-system-1.png</span></span>
+          <span class="simg"><img src="assets/screenshots/student-reminder-system-1.png" alt="student reminder system screenshot 1" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
 
+      <div class="pentry">
       <a class="proj ln" href="https://cipher-agent.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
@@ -459,7 +172,16 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <p class="desc">RSA spy game in a fake browser terminal — solo cipher missions plus a two-player one-time-pad channel. pytest suite, hardened non-root container.</p>
         <div class="stack"><span class="chip">fastapi</span><span class="chip">rsa</span><span class="chip">otp</span><span class="chip">pytest</span><span class="chip">non-root</span></div>
       </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/cipher-agent/cipher-agent-1.png</span></span>
+          <span class="simg"><img src="assets/screenshots/cipher-agent-1.png" alt="cipher-agent screenshot 1" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
 
+      <div class="pentry">
       <a class="proj ln" href="https://cipher-forge.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
@@ -469,7 +191,16 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <p class="desc">Interactive RSA teaching game — prime selection through decryption, solved by hand stage by stage. React + FastAPI + MongoDB with JWT auth.</p>
         <div class="stack"><span class="chip">react</span><span class="chip">fastapi</span><span class="chip">mongodb</span><span class="chip">jwt</span></div>
       </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/cipher-forge/cipher-forge-1.png</span></span>
+          <span class="simg"><img src="assets/screenshots/cipher-forge-1.png" alt="cipher-forge screenshot 1" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
 
+      <div class="pentry">
       <a class="proj ln" href="https://cv.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
@@ -479,6 +210,14 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <p class="desc">My CV as data — Node + Postgres REST API serving resume JSON. GitHub Actions deploys over Tailscale SSH; published through a Cloudflare Tunnel, zero open inbound ports.</p>
         <div class="stack"><span class="chip">node</span><span class="chip">express</span><span class="chip">postgres</span><span class="chip">github-actions</span><span class="chip">tailscale</span></div>
       </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/cv-api/cv-api-1.png</span></span>
+          <span class="simg"><img src="assets/screenshots/cv-api-1.png" alt="cv-api screenshot 1" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
     </div>
   </section>
 
@@ -531,127 +270,14 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
 </main>
 </div>
 
-<script>
-(function(){
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+<div class="overlay" id="ov" hidden>
+  <figure class="ovwin">
+    <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname" id="ovtitle"></span></span>
+    <img id="ovimg" alt="">
+  </figure>
+</div>
 
-  /* ---- interactive prompt (always active) ---- */
-  var tin = document.getElementById("tin");
-  var tout = document.getElementById("tout");
-  var CMDS = {
-    "help": "help  ls  cat contact.txt  clear  sudo hire syamxm",
-    "ls": "BeanThere/  taskflow/  homeserver-dashboard/  student_reminder_system/  cipher-agent/  cipher-forge/  cv-api/",
-    "cat contact.txt": "email   ahmadsyamim200@gmail.com\ngithub  github.com/syamxm",
-    "sudo hire syamxm": "[sudo] password for recruiter: ********\naccess granted — forwarding to ahmadsyamim200@gmail.com ..."
-  };
-  function tprint(text, cls){
-    text.split("\n").forEach(function(line){
-      var d = document.createElement("div");
-      d.className = cls;
-      d.textContent = line;
-      tout.appendChild(d);
-    });
-  }
-  document.getElementById("fp").addEventListener("click", function(){ tin.focus(); });
-  tin.addEventListener("keydown", function(e){
-    if(e.key !== "Enter") return;
-    var c = tin.value.trim();
-    tin.value = "";
-    if(!c) return;
-    if(c === "clear"){ tout.textContent = ""; return; }
-    var echo = document.createElement("div");
-    var p = document.createElement("span");
-    p.className = "prompt";
-    p.innerHTML = '<span class="tick">~&gt;</span> ';
-    var t = document.createElement("span");
-    t.className = "cmd";
-    t.textContent = c;
-    echo.appendChild(p); echo.appendChild(t);
-    tout.appendChild(echo);
-    if(CMDS[c]) tprint(CMDS[c], "out");
-    else tprint("fish: Unknown command: " + c, "err");
-    tin.scrollIntoView({block:"nearest"});
-  });
-
-  if(reduce) return; /* final state already in the markup */
-
-  document.body.classList.add("anim");
-
-  /* ---- helpers ---- */
-  function typeSpans(spans, done){
-    var si = 0;
-    (function next(){
-      if(si >= spans.length){ done(); return; }
-      var sp = spans[si], txt = sp.dataset.t, i = 0;
-      (function tick(){
-        if(i < txt.length){
-          sp.textContent = txt.slice(0, ++i);
-          setTimeout(tick, 52 + Math.random()*70);
-        } else { si++; setTimeout(next, 90); }
-      })();
-    })();
-  }
-  function reveal(container, done){
-    var lines = container.querySelectorAll(".ln");
-    lines.forEach(function(l, i){
-      setTimeout(function(){ l.classList.add("in"); }, i*55);
-    });
-    if(done) setTimeout(done, lines.length*55 + 200);
-  }
-
-  /* ---- pipeline gates: "… running" then "✓ pass", stage by stage ---- */
-  var gates = document.querySelectorAll(".gate");
-  gates.forEach(function(g){ g.textContent = ""; });
-  function runGates(){
-    var t = 0, steps = [[],[],[],[]];
-    gates.forEach(function(g){ steps[+g.dataset.step].push(g); });
-    steps.forEach(function(gs){
-      gs.forEach(function(g){
-        setTimeout(function(){ g.textContent = "… running"; g.className = "gate y"; }, t);
-        setTimeout(function(){
-          g.textContent = g.dataset.done;
-          g.className = "gate done " + (g.dataset.done === "✓ live" ? "p" : "g");
-        }, t + 520);
-      });
-      t += 640;
-    });
-  }
-
-  /* ---- sections: type the command, then stream the output ---- */
-  var secs = document.querySelectorAll("section[id]");
-  secs.forEach(function(sec){
-    sec.querySelectorAll(".sechead .t").forEach(function(sp){
-      sp.dataset.t = sp.textContent;
-      sp.textContent = "";
-    });
-  });
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(!e.isIntersecting) return;
-      io.unobserve(e.target);
-      var sec = e.target;
-      typeSpans(sec.querySelectorAll(".sechead .t"), function(){
-        reveal(sec, sec.id === "projects" ? runGates : null);
-      });
-    });
-  },{threshold:.12, rootMargin:"0px 0px -8% 0px"});
-  secs.forEach(function(s){ io.observe(s); });
-
-  /* ---- hero: type "whoami", then stream the answer ---- */
-  var typed = document.getElementById("typed");
-  var out = document.getElementById("hero-out");
-  var text = "whoami";
-  typed.textContent = "";
-  var i = 0;
-  setTimeout(function tick(){
-    if(i < text.length){
-      typed.textContent = text.slice(0, ++i);
-      setTimeout(tick, 52 + Math.random()*70);
-    } else {
-      setTimeout(function(){ reveal(out); }, 340);
-    }
-  }, 520);
-})();
-</script>
+<script src="js/main.js"></script>
+<script src="js/gallery.js"></script>
 </body>
 </html>
