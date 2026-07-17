@@ -12,10 +12,20 @@
     document.body.style.overflow = "hidden";
   }
   var BLANK = ovimg.src;
+  var closing = false;
   function close(){
-    ov.hidden = true;
-    ovimg.src = BLANK;
-    document.body.style.overflow = "";
+    if(closing) return;
+    function hide(){
+      closing = false;
+      ov.classList.remove("closing");
+      ov.hidden = true;
+      ovimg.src = BLANK;
+      document.body.style.overflow = "";
+    }
+    if(reduce){ hide(); return; }
+    closing = true;
+    ov.classList.add("closing");
+    setTimeout(hide, 300);
   }
 
   document.querySelectorAll(".shot").forEach(function(btn){

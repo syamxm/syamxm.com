@@ -257,12 +257,12 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
       <div id="tout" aria-live="polite"></div>
       <div class="finalprompt ln" id="fp">
         <span class="prompt"><span class="tick">~&gt;</span> </span>
-        <input id="tin" type="text" autocomplete="off" spellcheck="false" aria-label="terminal input" placeholder="type 'help'">
+        <input id="tin" type="text" autocomplete="off" spellcheck="false" aria-label="terminal input" placeholder="press / · type 'help'">
       </div>
 
       <div class="foot ln">
         <span>syamxm@homeserver — built by hand, deployed over tailscale</span>
-        <span>6/6 gates · fail-closed</span>
+        <span id="footstat">6/6 gates · fail-closed</span>
       </div>
     </div>
   </section>
@@ -277,6 +277,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
   </figure>
 </div>
 
+<script src="js/boot.js"></script>
 <script src="js/main.js"></script>
 <script src="js/gallery.js"></script>
 </body>

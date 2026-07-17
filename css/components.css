@@ -175,8 +175,26 @@
   border:1px solid var(--line);border-radius:6px;overflow:hidden;
   box-shadow:0 30px 80px -30px rgba(0,0,0,.8),0 0 40px -10px var(--glow-purple);
 }
+.overlay:not([hidden]) .ovwin{animation:crt-on .32s var(--ease)}
+@keyframes crt-on{
+  0%{transform:scaleY(.004) scaleX(.6);filter:brightness(3)}
+  55%{transform:scaleY(1.02) scaleX(1);filter:brightness(1.6)}
+  100%{transform:none;filter:none}
+}
+.overlay.closing{opacity:0;transition:opacity .3s var(--ease)}
+.overlay.closing .ovwin{animation:degauss .3s var(--ease) forwards}
+@keyframes degauss{
+  30%{transform:scale(1.012) skewX(1.2deg);filter:brightness(1.5) saturate(1.4)}
+  60%{transform:scale(.99) skewX(-.8deg)}
+  100%{transform:scaleY(.005);filter:brightness(2)}
+}
 .ovwin .shotbar{font-size:12px;padding:8px 12px}
 .ovwin .shotbar .dot{width:9px;height:9px}
 .ovwin img{display:block;max-width:100%;min-height:0;object-fit:contain}
 
 a:focus-visible,.proj:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+
+/* rm -rf / easter egg — content flickers out, then restores */
+main{transition:opacity .5s var(--ease)}
+.panic main{opacity:.08}
+.panic .statusbar .right span::before{color:var(--red);text-shadow:0 0 6px rgba(243,139,168,.4)}
