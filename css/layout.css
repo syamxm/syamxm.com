@@ -70,6 +70,7 @@ section{padding:0}
 }
 .hero h1 .accent{
   color:var(--purple);
+  text-decoration:none;
   text-shadow:0 0 20px rgba(189,147,249,.4),0 0 60px rgba(189,147,249,.18);
 }
 .hero .sub{color:var(--muted);max-width:62ch}
