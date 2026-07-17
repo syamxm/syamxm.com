@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 4 * * 1'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate HTML
+        uses: Cyb3r-Jak3/html5validator-action@v7.2.0
+        with:
+          root: .
+
+      - name: Check JS syntax
+        run: find js -name '*.js' -print0 | xargs -0 -n1 node --check
+
+      - name: Check local asset references resolve
+        run: |
+          grep -oE '(href|src)="[^"]+"' index.html \
+            | sed -E 's/^(href|src)="//; s/"$//' \
+            | grep -vE '^(https?:|mailto:|data:|#)' \
+            | while read -r f; do test -f "$f" || { echo "missing: $f"; exit 1; }; done
+
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Scan for secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
