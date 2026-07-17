@@ -11,9 +11,10 @@
     ov.hidden = false;
     document.body.style.overflow = "hidden";
   }
+  var BLANK = ovimg.src;
   function close(){
     ov.hidden = true;
-    ovimg.removeAttribute("src");
+    ovimg.src = BLANK;
     document.body.style.overflow = "";
   }
 
