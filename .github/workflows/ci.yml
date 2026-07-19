@@ -24,8 +24,8 @@ jobs:
       - name: Check local asset references resolve
         run: |
           grep -oE '(href|src)="[^"]+"' index.html \
-            | sed -E 's/^(href|src)="//; s/"$//' \
-            | grep -vE '^(https?:|mailto:|data:|#)' \
+            | sed -E 's/^(href|src)="//; s/"$//; s/[?#].*$//' \
+            | grep -vE '^(https?:|mailto:|data:|#|$)' \
             | while read -r f; do test -f "$f" || { echo "missing: $f"; exit 1; }; done
 
   gitleaks:
