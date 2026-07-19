@@ -1,12 +1,12 @@
 :root{
-  --bg:#1E1E2E;
-  --bg-raise:#252537;
-  --sel:#313244;
-  --fg:#CDD6F4;
-  --muted:#7F849C;
-  --dim:#585B70;
-  --purple:#BD93F9;
+  --bg:#0D0B14;
+  --bg-raise:#16121F;
+  --sel:#221B33;
+  --fg:#E4E1EE;
+  --muted:#A5A1B2;
+  --dim:#615D72;
   --accent:#7C3AED;
+  --purple:#A78BFA;
   --accent-glow:rgba(124,58,237,.5);
   --bar-bg:rgba(13,11,20,.85);
   --bar-border:rgba(124,58,237,.55);
@@ -15,9 +15,9 @@
   --green:#A6E3A1;
   --red:#F38BA8;
   --yellow:#F9E2AF;
-  --line:#2A2A3C;
+  --line:rgba(124,58,237,.14);
   --blink:530ms;
-  --glow-purple:rgba(124,58,237,.5);
+  --glow-purple:var(--accent-glow);
   --glow-green:rgba(166,227,161,.4);
   --glow-yellow:rgba(249,226,175,.35);
   --ease:cubic-bezier(.22,1,.36,1);
@@ -28,8 +28,8 @@ html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
   background:
-    radial-gradient(1100px 700px at 88% -12%,rgba(166,227,161,.055),transparent 60%),
-    radial-gradient(1300px 850px at 8% 4%,rgba(189,147,249,.075),transparent 62%),
+    radial-gradient(1100px 700px at 88% -12%,rgba(167,139,250,.05),transparent 60%),
+    radial-gradient(1300px 850px at 8% 4%,rgba(124,58,237,.09),transparent 62%),
     var(--bg);
   color:var(--muted);
   font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -72,14 +72,14 @@ body{
     90%{transform:translate(9%,6%)}
   }
 }
-::selection{background:var(--purple);color:var(--bg)}
+::selection{background:var(--accent);color:#fff}
 ::-webkit-scrollbar{width:10px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--sel);border-radius:5px;border:2px solid var(--bg)}
 ::-webkit-scrollbar-thumb:hover{background:var(--dim)}
 
 .prompt{color:var(--green);text-shadow:0 0 10px rgba(166,227,161,.22)}
-.prompt .tick{color:var(--purple);text-shadow:0 0 8px var(--glow-purple),0 0 26px rgba(189,147,249,.2)}
+.prompt .tick{color:var(--purple);text-shadow:0 0 8px var(--glow-purple),0 0 26px rgba(124,58,237,.25)}
 .cmd{color:var(--fg)}
 .arg{color:var(--yellow)}
 .flag{color:var(--purple)}
@@ -91,11 +91,11 @@ body{
 .cursor{
   display:inline-block;
   width:9px;height:1.05em;
-  background:var(--purple);
+  background:var(--accent);
   vertical-align:-2px;
   margin-left:2px;
   border-radius:1px;
-  box-shadow:0 0 8px var(--glow-purple),0 0 22px rgba(189,147,249,.3);
+  box-shadow:0 0 8px var(--glow-purple),0 0 22px rgba(124,58,237,.35);
 }
 .blink{animation:blink var(--blink) steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
@@ -152,7 +152,7 @@ body{
   position:fixed;top:-100%;left:16px;z-index:30;
   padding:8px 14px;
   background:var(--bg-raise);color:var(--fg);
-  border:1px solid var(--purple);border-radius:4px;
+  border:1px solid var(--accent);border-radius:4px;
   text-decoration:none;font-size:13px;
 }
 .skiplink:focus-visible{top:60px;outline:none}

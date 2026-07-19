@@ -42,7 +42,7 @@
     "  █ ▂▂▂▂▂ █    shell   fish",
     "   ▀▀▀▀▀▀▀     net     tailscale + cloudflare tunnel",
     "               ci      6/6 gates · fail-closed",
-    "               theme   catppuccin mocha"
+    "               theme   cachyos violet"
   ].join("\n");
 
   function tprint(text, cls){
@@ -112,7 +112,7 @@
     for(var i = 0; i < cols; i++) drops[i] = Math.random() * -50;
     var CHARS = "アイウエオカキクケコ01<>~/$#";
     var iv = setInterval(function(){
-      ctx.fillStyle = "rgba(30,30,46,.14)";
+      ctx.fillStyle = "rgba(13,11,20,.14)";
       ctx.fillRect(0, 0, cv.width, cv.height);
       ctx.fillStyle = "#A6E3A1";
       ctx.font = fs + "px monospace";

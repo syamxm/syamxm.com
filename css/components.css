@@ -16,7 +16,7 @@
   body:not(.lite-root) .proj::after{
     content:"";position:absolute;inset:0;border-radius:4px;padding:1px;
     background:conic-gradient(from var(--angle),
-      transparent 0 62%,rgba(189,147,249,.9) 76%,rgba(166,227,161,.9) 86%,transparent 96%);
+      transparent 0 62%,rgba(124,58,237,.95) 76%,rgba(167,139,250,.9) 86%,transparent 96%);
     -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
     -webkit-mask-composite:xor;mask-composite:exclude;
     opacity:0;transition:opacity .4s var(--ease);pointer-events:none;
@@ -26,7 +26,7 @@
   @keyframes orbit{to{--angle:360deg}}
 }
 .proj:hover,.proj:focus-visible{
-  background:rgba(49,50,68,.55);
+  background:rgba(34,27,51,.55);
   border-left-color:var(--purple);
   transform:translateY(-2px);
   box-shadow:0 18px 44px -22px rgba(0,0,0,.65);
@@ -35,7 +35,7 @@
 .proj .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .proj .name{color:var(--fg);font-weight:500;font-size:17px;transition:color .3s,text-shadow .3s}
 .proj:hover .name,.proj:focus-visible .name{color:var(--purple);text-shadow:0 0 14px var(--glow-purple)}
-.proj .flag-tag{color:var(--purple);font-size:12px;text-shadow:0 0 10px rgba(189,147,249,.25)}
+.proj .flag-tag{color:var(--purple);font-size:12px;text-shadow:0 0 10px var(--accent-glow)}
 .proj .perm{color:var(--dim);font-size:12px;letter-spacing:.05em}
 .proj .arrow{
   margin-left:auto;color:var(--dim);opacity:0;transform:translateX(-6px);
@@ -48,14 +48,14 @@
   color:var(--dim);border:1px solid var(--line);padding:1px 8px;border-radius:3px;
   transition:color .3s,border-color .3s;
 }
-.proj:hover .chip{color:var(--muted);border-color:rgba(189,147,249,.3)}
+.proj:hover .chip{color:var(--muted);border-color:rgba(124,58,237,.35)}
 .featured{border-left-color:var(--dim)}
 
 /* ASCII pipeline — frosted card */
 .pipeline{
   margin:22px 0 6px;padding:22px 18px;
-  background:rgba(37,37,55,.92);
-  border:1px solid rgba(189,147,249,.12);
+  background:rgba(22,18,31,.92);
+  border:1px solid var(--line);
   border-radius:6px;
   overflow-x:auto;
   box-shadow:inset 0 1px 0 rgba(205,214,244,.04),0 12px 32px -20px rgba(0,0,0,.6);
@@ -76,8 +76,8 @@
 #posture{border-top:1px solid var(--line);margin-top:26px}
 .facts{border-collapse:collapse;width:100%;font-size:13.5px}
 .facts td{padding:9px 14px 9px 0;vertical-align:top;border-bottom:1px solid var(--line);transition:background .25s}
-.facts tr:hover td{background:rgba(49,50,68,.5)}
-.facts .key{color:var(--purple);white-space:nowrap;width:1%;text-shadow:0 0 10px rgba(189,147,249,.15)}
+.facts tr:hover td{background:rgba(34,27,51,.5)}
+.facts .key{color:var(--purple);white-space:nowrap;width:1%;text-shadow:0 0 10px rgba(124,58,237,.2)}
 .facts .val{color:var(--muted)}
 .facts .val code{color:var(--fg);background:var(--bg-raise);padding:1px 6px;border-radius:2px;font-size:12.5px}
 .facts .val .y{color:var(--yellow)}
@@ -96,7 +96,7 @@
 }
 .links a .lk{color:var(--purple);width:11ch;flex:none}
 .links a .lv{color:var(--muted);transition:color .3s,text-shadow .3s}
-.links a:hover,.links a:focus-visible{background:rgba(49,50,68,.55);border-left-color:var(--purple);outline:none}
+.links a:hover,.links a:focus-visible{background:rgba(34,27,51,.55);border-left-color:var(--purple);outline:none}
 .links a:hover .lv,.links a:focus-visible .lv{color:var(--fg);text-shadow:0 0 12px rgba(205,214,244,.2)}
 
 /* ---- interactive prompt — frosted input card ---- */
@@ -107,19 +107,19 @@
 .finalprompt{
   display:flex;align-items:center;gap:0;
   margin-top:14px;padding:10px 14px;font-size:16px;
-  background:rgba(37,37,55,.9);
+  background:rgba(22,18,31,.9);
   border:1px solid var(--line);border-radius:6px;
   transition:border-color .35s var(--ease),box-shadow .35s var(--ease);
 }
 .finalprompt:focus-within{
-  border-color:rgba(189,147,249,.5);
-  box-shadow:0 0 0 1px rgba(189,147,249,.25),0 12px 40px -18px var(--glow-purple);
+  border-color:rgba(124,58,237,.6);
+  box-shadow:0 0 0 1px rgba(124,58,237,.3),0 12px 40px -18px var(--glow-purple);
 }
 .finalprompt .prompt{margin-right:8px}
 #tin{
   background:none;border:none;outline:none;
   color:var(--fg);font:inherit;
-  caret-color:var(--purple);
+  caret-color:var(--accent);
   flex:1;min-width:0;
 }
 #tin::placeholder{color:var(--dim)}
@@ -135,7 +135,7 @@
 }
 .shot:hover,.shot:focus-visible{
   transform:translateY(-3px);
-  border-color:rgba(189,147,249,.4);
+  border-color:rgba(124,58,237,.5);
   box-shadow:0 12px 30px -14px rgba(0,0,0,.7),0 0 18px -4px var(--glow-purple);
   outline:none;
 }
@@ -206,7 +206,7 @@
 .ovwin .shotbar .dot{width:9px;height:9px}
 .ovwin img{display:block;max-width:100%;min-height:0;object-fit:contain}
 
-a:focus-visible,.proj:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+a:focus-visible,.proj:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* rm -rf / easter egg — content flickers out, then restores */
 main{transition:opacity .5s var(--ease)}
