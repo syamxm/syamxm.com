@@ -3,213 +3,298 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>syamxm — self-hosted, after dark</title>
+<title>syamxm — ~/</title>
 <meta name="description" content="Ahmad Syamim (syamxm). Final-year CS student at UiTM Shah Alam, DevSecOps specialisation.">
-<meta name="theme-color" content="#0a0a0c">
+<meta name="theme-color" content="#1E1E2E">
 <meta property="og:type" content="website">
-<meta property="og:title" content="syamxm — self-hosted, after dark">
+<meta property="og:title" content="syamxm — ~/">
 <meta property="og:description" content="Ahmad Syamim (syamxm). Final-year CS student at UiTM Shah Alam, DevSecOps specialisation. Self-hosted, six-gate fail-closed pipeline.">
 <meta property="og:url" content="https://syamxm.com/">
 <meta property="og:image" content="https://syamxm.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="syamxm — self-hosted, after dark">
+<meta name="twitter:title" content="syamxm — ~/">
 <meta name="twitter:description" content="Ahmad Syamim (syamxm). Final-year CS student at UiTM Shah Alam, DevSecOps specialisation.">
 <meta name="twitter:image" content="https://syamxm.com/assets/og.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='12'%20fill='%230a0a0c'/%3E%3Ctext%20x='32'%20y='44'%20font-family='monospace'%20font-size='32'%20font-weight='700'%20fill='%23eec46f'%20text-anchor='middle'%3E~%26gt;%3C/text%3E%3C/svg%3E">
-<link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='12'%20fill='%231E1E2E'/%3E%3Ctext%20x='32'%20y='44'%20font-family='monospace'%20font-size='32'%20font-weight='700'%20fill='%23BD93F9'%20text-anchor='middle'%3E~%26gt;%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
 </head>
 <body>
 
 <a class="skiplink" href="#projects">skip to content</a>
-<div class="crt" aria-hidden="true"></div>
 
-<nav class="nav" aria-label="Primary">
-  <ul>
-    <li><a class="brand" href="#top" aria-label="syamxm home">~&gt;</a></li>
-    <li><a href="#projects">projects</a></li>
-    <li><a href="#about">about</a></li>
-    <li><a href="#stack">stack</a></li>
-    <li><a href="#contact">contact</a></li>
-  </ul>
-</nav>
+<div class="statusbar" role="presentation">
+  <div class="dots"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span></div>
+  <span class="path">syamxm@<b>homeserver</b>: ~</span>
+  <div class="right">
+    <span>tailscale</span>
+    <span>6/6 gates</span>
+  </div>
+</div>
 
-<main class="wrap" id="top">
+<div class="shell">
+<main>
 
   <!-- HERO -->
-  <header class="hero">
-    <p class="eyebrow"><span class="dim">syamxm@homeserver:~$</span> whoami</p>
-    <h1>I self-host everything I <em>ship</em>.</h1>
-    <p class="sub">
-      Ahmad Syamim — final-year CS student at UiTM Shah Alam, DevSecOps
-      specialisation. The code, the pipeline, and the server it runs on are all
-      mine, mostly because I want to know how it all actually works.
-    </p>
-    <div class="meta">
-      <span>role <b>student · devsecops</b></span>
-      <span>host <b>self-hosted / tailscale</b></span>
-      <span>shell <b>fish</b></span>
-      <span>status <b>6/6 gates green</b></span>
+  <section class="hero">
+    <div class="cmdline">
+      <span class="prompt"><span class="tick">~&gt;</span> </span><span id="typed">whoami</span><span class="cursor blink" id="hero-cursor"></span>
     </div>
-    <div class="cta-row">
-      <a class="btn btn-solid" href="#projects">view projects ↓</a>
-      <a class="btn btn-ghost" href="mailto:ahmadsyamim200@gmail.com">email me</a>
+    <div id="hero-out">
+      <h1 class="ln">Ahmad Syamim (<a class="accent" href="#contact">syamxm</a>).</h1>
+      <p class="sub ln">
+        Final-year CS student at UiTM Shah Alam, DevSecOps specialisation. I self-host
+        everything I ship — the code, the pipeline, and the server it runs on. Mostly
+        because I want to know how it all actually works.
+      </p>
+      <div class="meta-row ln">
+        <span class="k">role</span> <b>student · devsecops</b>
+        <span class="k">host</span> <b>self-hosted / tailscale</b>
+        <span class="k">shell</span> <b>fish</b>
+        <span class="k">status</span> <b>all systems green</b>
+      </div>
     </div>
-  </header>
+  </section>
 
   <!-- PROJECTS -->
   <section id="projects">
-    <span class="sec-label">// projects</span>
-    <h2>Selected work.</h2>
+    <h2 class="sr-only">Projects</h2>
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">ls</span> <span class="t path-c">~/projects</span></span>
+      <span class="note"># 7 dirs · sorted by importance</span>
+    </div>
 
-    <div class="grid">
-      <article class="card card-flagship">
-        <div class="card-inner">
-          <div class="card-head">
-            <h3><a href="https://beanthere.syamxm.com" target="_blank" rel="noopener">BeanThere</a></h3>
-            <span class="flag">★ flagship</span>
-            <span class="go" aria-hidden="true">cd →</span>
-          </div>
-          <p>
-            Coffee-shop platform in plain PHP — online ordering, loyalty tiers, and a
-            drink recommender backed by a local Ollama model on a 4&nbsp;GB GPU. CSRF
-            tokens, rate limiting, and prepared statements throughout; every deploy
-            gated by a six-gate DevSecOps pipeline.
-          </p>
-          <div class="chips">
-            <span class="chip">php-8.2</span><span class="chip">mariadb</span><span class="chip">local-llm</span><span class="chip">csrf</span><span class="chip">rate-limit</span><span class="chip">trivy</span><span class="chip">tailscale</span>
-          </div>
+    <div class="plist">
+      <!-- BeanThere flagship -->
+      <div class="pentry featured">
+      <a class="proj featured ln" href="https://beanthere.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">BeanThere/</span>
+          <span class="flag-tag">★ flagship</span>
+          <span class="arrow">cd →</span>
         </div>
-      </article>
+        <p class="desc">
+          Coffee-shop platform in plain PHP — online ordering, loyalty tiers, and a drink
+          recommender backed by a local Ollama model on a 4&nbsp;GB GPU. CSRF tokens, rate
+          limiting, and prepared statements throughout; every deploy gated by a six-gate
+          DevSecOps pipeline.
+        </p>
+        <div class="stack">
+          <span class="chip">php-8.2</span>
+          <span class="chip">mariadb</span>
+          <span class="chip">local-llm</span>
+          <span class="chip">csrf</span>
+          <span class="chip">rate-limit</span>
+          <span class="chip">trivy</span>
+          <span class="chip">tailscale</span>
+        </div>
 
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-head">
-            <h3><a href="https://taskflow.syamxm.com" target="_blank" rel="noopener">taskflow</a></h3>
-            <span class="go" aria-hidden="true">cd →</span>
-          </div>
-          <p>
-            MERN task manager with a security-gated CI/CD pipeline: five scanners
-            (Semgrep SAST, Gitleaks secrets, and Trivy across SCA, image, and IaC)
-            block deploy on HIGH or CRITICAL findings.
-          </p>
-          <div class="chips">
-            <span class="chip">mern</span><span class="chip">github-actions</span><span class="chip">semgrep</span><span class="chip">gitleaks</span><span class="chip">trivy</span><span class="chip">jwt</span>
-          </div>
+        <div class="pipeline">
+          <span class="label"># ci.yml — every push, fail-closed · gitleaks also runs a weekly full-history scan</span>
+<pre>php -l    <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span>─┐
+semgrep   <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span>─┼──▶ docker build ──▶ trivy fs + image ──▶ deploy
+gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span>─┘    <span class="gate g" data-step="1" data-done="✓ pass">✓ pass</span>       <span class="gate g" data-step="2" data-done="✓ pass">✓ pass</span>           <span class="gate p" data-step="3" data-done="✓ live">✓ live</span>
+                                                                <span class="comment">tailscale ssh — fires only when main is green</span></pre>
         </div>
-      </article>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/beanthere/beanthere-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/beanthere-1.webp" width="1200" height="622" alt="BeanThere landing page — 'Coffee worth the detour' hero with menu and drink-recommender buttons" loading="lazy"></span>
+        </button>
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/beanthere/beanthere-2.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/beanthere-2.webp" width="1200" height="622" alt="BeanThere admin dashboard — store status toggle and opening-hours editor" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
 
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-head">
-            <h3><a href="https://github.com/syamxm/" target="_blank" rel="noopener">homeserver-dashboard</a></h3>
-            <span class="go" aria-hidden="true">cd →</span>
-          </div>
-          <p>
-            Grafana + Prometheus + Loki observability for the Debian homeserver —
-            metrics, auth and fail2ban logs — behind Cloudflare Access (email OTP)
-            with no published host port.
-          </p>
-          <div class="chips">
-            <span class="chip">grafana</span><span class="chip">prometheus</span><span class="chip">loki</span><span class="chip">cloudflare-access</span>
-          </div>
+      <div class="pentry">
+      <a class="proj ln" href="https://taskflow.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">taskflow/</span>
+          <span class="arrow">cd →</span>
         </div>
-      </article>
+        <p class="desc">MERN task manager with a security-gated CI/CD pipeline: five scanners (Semgrep SAST, Gitleaks secrets, and Trivy across SCA, image, and IaC) block deploy on HIGH or CRITICAL findings.</p>
+        <div class="stack"><span class="chip">mern</span><span class="chip">github-actions</span><span class="chip">semgrep</span><span class="chip">gitleaks</span><span class="chip">trivy</span><span class="chip">jwt</span></div>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/taskflow/taskflow-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/taskflow-1.webp" width="1200" height="622" alt="TaskFlow projects dashboard — GitHub-synced projects with language, issue, and LOC stats" loading="lazy"></span>
+        </button>
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/taskflow/taskflow-2.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/taskflow-2.webp" width="1200" height="622" alt="TaskFlow project view — lines-of-code breakdown, branch list, and kanban task board" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
 
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-head">
-            <h3><a href="https://cipher-agent.syamxm.com" target="_blank" rel="noopener">cipher-agent</a></h3>
-            <span class="go" aria-hidden="true">cd →</span>
-          </div>
-          <p>
-            RSA spy game in a fake browser terminal — solo cipher missions plus a
-            two-player one-time-pad channel. pytest suite, hardened non-root
-            container.
-          </p>
-          <div class="chips">
-            <span class="chip">fastapi</span><span class="chip">rsa</span><span class="chip">otp</span><span class="chip">pytest</span><span class="chip">non-root</span>
-          </div>
+      <div class="pentry">
+      <a class="proj ln" href="https://github.com/syamxm/" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">homeserver-dashboard/</span>
+          <span class="arrow">cd →</span>
         </div>
-      </article>
+        <p class="desc">Grafana + Prometheus + Loki observability for the Debian homeserver — metrics, auth and fail2ban logs — behind Cloudflare Access (email OTP) with no published host port.</p>
+        <div class="stack"><span class="chip">grafana</span><span class="chip">prometheus</span><span class="chip">loki</span><span class="chip">cloudflare-access</span></div>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/homeserver-dashboard/homeserver-dashboard-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/homeserver-dashboard-1.webp" width="1200" height="622" alt="Grafana metrics drilldown — node memory graphs fed by Prometheus" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
 
-      <article class="card">
-        <div class="card-inner">
-          <div class="card-head">
-            <h3><a href="https://cv.syamxm.com" target="_blank" rel="noopener">cv-api</a></h3>
-            <span class="go" aria-hidden="true">cd →</span>
-          </div>
-          <p>
-            My CV as data — Node + Postgres REST API serving resume JSON. GitHub
-            Actions deploys over Tailscale SSH; published through a Cloudflare
-            Tunnel, zero open inbound ports.
-          </p>
-          <div class="chips">
-            <span class="chip">node</span><span class="chip">express</span><span class="chip">postgres</span><span class="chip">github-actions</span><span class="chip">tailscale</span>
-          </div>
+      <div class="pentry">
+      <a class="proj ln" href="https://github.com/syamxm/student_reminder_system" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">student_reminder_system/</span>
+          <span class="arrow">cd →</span>
         </div>
-      </article>
+        <p class="desc">Flutter timetable + deadline reminders for UiTM students. Firebase, plus a FastAPI backend with bcrypt auth and Redis rate-limited login, Dockerised on the homeserver.</p>
+        <div class="stack"><span class="chip">flutter</span><span class="chip">firebase</span><span class="chip">fastapi</span><span class="chip">redis</span><span class="chip">bcrypt</span></div>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/student-reminder-system/student-reminder-system-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/student-reminder-system-1.webp" width="540" height="1098" alt="Student reminder app home — semester week, streak counter, and upcoming deadline cards" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
+
+      <div class="pentry">
+      <a class="proj ln" href="https://cipher-agent.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">cipher-agent/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">RSA spy game in a fake browser terminal — solo cipher missions plus a two-player one-time-pad channel. pytest suite, hardened non-root container.</p>
+        <div class="stack"><span class="chip">fastapi</span><span class="chip">rsa</span><span class="chip">otp</span><span class="chip">pytest</span><span class="chip">non-root</span></div>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/cipher-agent/cipher-agent-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/cipher-agent-1.webp" width="1200" height="622" alt="cipher-agent terminal — help output listing solo cipher missions and the two-player field channel" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
+
+      <div class="pentry">
+      <a class="proj ln" href="https://cipher-forge.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">cipher-forge/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">Interactive RSA teaching game — prime selection through decryption, solved by hand stage by stage. React + FastAPI + MongoDB with JWT auth.</p>
+        <div class="stack"><span class="chip">react</span><span class="chip">fastapi</span><span class="chip">mongodb</span><span class="chip">jwt</span></div>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/cipher-forge/cipher-forge-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/cipher-forge-1.webp" width="1200" height="622" alt="cipher-forge login — terminal-style window with username and password fields" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
+
+      <div class="pentry">
+      <a class="proj ln" href="https://cv.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">cv-api/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">My CV as data — Node + Postgres REST API serving resume JSON. GitHub Actions deploys over Tailscale SSH; published through a Cloudflare Tunnel, zero open inbound ports.</p>
+        <div class="stack"><span class="chip">node</span><span class="chip">express</span><span class="chip">postgres</span><span class="chip">github-actions</span><span class="chip">tailscale</span></div>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/cv-api/cv-api-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/cv-api-1.webp" width="1200" height="623" alt="cv.syamxm.com — resume page served from the CV REST API, with PDF download" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about" class="about">
-    <span class="sec-label">// about</span>
-    <h2>Built by hand, on purpose.</h2>
-    <p>
-      I run a Debian homeserver behind Tailscale and a Cloudflare Tunnel — zero
-      open inbound ports — and everything I build deploys to it through a
-      fail-closed pipeline: php-l/semgrep/gitleaks before build, Trivy on the
-      filesystem and image after, deploy only when main is green.
-    </p>
-    <p>
-      This site is part of that: hand-written HTML and CSS, self-hosted fonts,
-      <code>default-src 'self'</code> CSP, no third-party origins.
-    </p>
-  </section>
-
-  <!-- STACK -->
-  <section id="stack">
-    <span class="sec-label">// stack</span>
-    <h2>Tools I actually run.</h2>
-    <div class="stack-groups">
-      <div class="stack-group">
-        <span class="k">ci/cd &amp; security</span>
-        <ul>
-          <li class="chip">github-actions</li><li class="chip">semgrep</li><li class="chip">gitleaks</li><li class="chip">trivy</li><li class="chip">docker</li>
-        </ul>
-      </div>
-      <div class="stack-group">
-        <span class="k">infra</span>
-        <ul>
-          <li class="chip">debian</li><li class="chip">nginx</li><li class="chip">tailscale</li><li class="chip">cloudflare-tunnel</li><li class="chip">grafana</li><li class="chip">prometheus</li><li class="chip">loki</li>
-        </ul>
-      </div>
-      <div class="stack-group">
-        <span class="k">build</span>
-        <ul>
-          <li class="chip">php</li><li class="chip">node</li><li class="chip">fastapi</li><li class="chip">react</li><li class="chip">flutter</li><li class="chip">mariadb</li><li class="chip">postgres</li><li class="chip">redis</li>
-        </ul>
-      </div>
+  <!-- SECURITY -->
+  <section id="posture">
+    <h2 class="sr-only">Security posture</h2>
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">cat</span> <span class="t arg">security.txt</span></span>
+      <span class="note"># security posture — facts, not marketing</span>
+    </div>
+    <div>
+      <table class="facts">
+        <tr class="ln"><td class="key">CSP</td><td class="val"><code>default-src 'self'</code> — no third-party origins, no inline eval</td></tr>
+        <tr class="ln"><td class="key">passwords</td><td class="val"><code>bcrypt</code> — salted, work-factor tuned, never reversible</td></tr>
+        <tr class="ln"><td class="key">queries</td><td class="val">prepared statements only — <span class="y">zero</span> string-built SQL</td></tr>
+        <tr class="ln"><td class="key">SAST</td><td class="val"><code>semgrep</code> gate — build fails on new findings</td></tr>
+        <tr class="ln"><td class="key">secrets</td><td class="val"><code>gitleaks</code> gate — no key reaches a commit</td></tr>
+        <tr class="ln"><td class="key">images</td><td class="val"><code>trivy</code> scan — deploy blocked on known CVEs</td></tr>
+        <tr class="ln"><td class="key">transport</td><td class="val">deploys over Tailscale SSH; public traffic via Cloudflare Tunnel — zero open inbound ports</td></tr>
+        <tr class="ln"><td class="key">requests</td><td class="val">CSRF tokens + per-route rate limiting on every mutating path</td></tr>
+      </table>
     </div>
   </section>
 
-  <!-- CONTACT / FOOTER -->
-  <footer id="contact">
-    <span class="sec-label">// contact</span>
-    <p class="statement">Building something similar? Talk shop.</p>
-    <div class="contact-links">
-      <a href="mailto:ahmadsyamim200@gmail.com"><span class="lk">email</span>ahmadsyamim200@gmail.com</a>
-      <a href="https://github.com/syamxm" target="_blank" rel="noopener"><span class="lk">github</span>github.com/syamxm</a>
-      <a href="https://cv.syamxm.com" target="_blank" rel="noopener"><span class="lk">cv</span>cv.syamxm.com</a>
+  <!-- CONTACT -->
+  <section id="contact" class="contact block">
+    <h2 class="sr-only">Contact</h2>
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">cat</span> <span class="t arg">contact.txt</span></span>
     </div>
-    <div class="colophon">
-      <span>syamxm@homeserver — built by hand, deployed over tailscale</span>
-      <span>6/6 gates · fail-closed</span>
+    <div>
+      <p class="lead ln">If you're building something similar or just want to talk shop, reach out.</p>
+      <div class="links">
+        <a class="ln" href="mailto:ahmadsyamim200@gmail.com"><span class="lk">email</span><span class="lv">ahmadsyamim200@gmail.com</span></a>
+        <a class="ln" href="https://github.com/syamxm" target="_blank" rel="noopener"><span class="lk">github</span><span class="lv">github.com/syamxm</span></a>
+        <a class="ln" href="#projects"><span class="lk">projects</span><span class="lv">ls ~/projects</span></a>
+      </div>
+
+      <div id="tout" aria-live="polite"></div>
+      <div class="finalprompt ln" id="fp">
+        <span class="prompt"><span class="tick">~&gt;</span> </span>
+        <input id="tin" type="text" autocomplete="off" spellcheck="false" aria-label="terminal input" placeholder="press / · type 'help'">
+      </div>
+
+      <div class="foot ln">
+        <span>syamxm@homeserver — built by hand, deployed over tailscale</span>
+        <span id="footstat">6/6 gates · fail-closed</span>
+      </div>
     </div>
-  </footer>
+  </section>
 
 </main>
+</div>
+
+<div class="overlay" id="ov" hidden>
+  <figure class="ovwin">
+    <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname" id="ovtitle"></span></span>
+    <img id="ovimg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
+  </figure>
+</div>
+
+<script src="js/perf.js"></script>
+<script src="js/boot.js"></script>
+<script src="js/main.js"></script>
+<script src="js/gallery.js"></script>
 </body>
 </html>
