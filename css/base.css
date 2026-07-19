@@ -149,7 +149,7 @@ body{
   border:1px solid var(--purple);border-radius:4px;
   text-decoration:none;font-size:13px;
 }
-.skiplink:focus-visible{top:52px;outline:none}
+.skiplink:focus-visible{top:60px;outline:none}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}

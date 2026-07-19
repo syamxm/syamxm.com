@@ -73,6 +73,7 @@
 @keyframes gatepop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
 /* ---- security posture ---- */
+#posture{border-top:1px solid var(--line);margin-top:26px}
 .facts{border-collapse:collapse;width:100%;font-size:13.5px}
 .facts td{padding:9px 14px 9px 0;vertical-align:top;border-bottom:1px solid var(--line);transition:background .25s}
 .facts tr:hover td{background:rgba(49,50,68,.5)}
@@ -138,6 +139,9 @@
   box-shadow:0 12px 30px -14px rgba(0,0,0,.7),0 0 18px -4px var(--glow-purple);
   outline:none;
 }
+.d1{background:rgba(243,139,168,.8)}
+.d2{background:rgba(249,226,175,.8)}
+.d3{background:rgba(166,227,161,.8)}
 .shotbar{
   display:flex;align-items:center;gap:5px;
   padding:5px 9px;font-size:10.5px;color:var(--dim);
@@ -157,6 +161,10 @@
 .shot img{display:block;width:100%;height:auto}
 .shotecho{flex-basis:100%;font-size:13px}
 .shotecho:empty{display:none}
+@media(max-width:620px){.shot{width:100%}}
+
+/* cmatrix easter egg canvas */
+#mtx{position:fixed;inset:0;z-index:15;background:var(--bg)}
 
 .overlay{
   position:fixed;inset:0;z-index:9;
@@ -203,4 +211,4 @@ a:focus-visible,.proj:focus-visible{outline:2px solid var(--purple);outline-offs
 /* rm -rf / easter egg — content flickers out, then restores */
 main{transition:opacity .5s var(--ease)}
 .panic main{opacity:.08}
-.panic .statusbar .right span::before{color:var(--red);text-shadow:0 0 6px rgba(243,139,168,.4)}
+.panic .sensor::before{color:var(--red);text-shadow:0 0 6px rgba(243,139,168,.4)}

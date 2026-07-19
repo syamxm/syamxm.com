@@ -25,6 +25,16 @@
     return d + "d " + pad(Math.floor(s / 3600)) + ":" + pad(Math.floor(s % 3600 / 60)) + ":" + pad(s % 60);
   }
 
+  var FORTUNES = [
+    "the S in IoT stands for security",
+    "there is no cloud, only someone else's computer — mine is in my room",
+    "fail-closed beats fail-open. ask the pipeline.",
+    "a backup you haven't restored is a rumour",
+    "least privilege: because 'sudo everything' is a lifestyle, not a policy",
+    "the best time to rotate a secret was before the commit. the second best is now.",
+    "127.0.0.1 is where the heart is"
+  ];
+
   var NEOFETCH = [
     "   ▄▄▄▄▄▄▄     visitor@syamxm.com",
     "  █ ~> ▌  █    ------------------",
@@ -64,12 +74,82 @@
     }, 1800);
   }
 
+  function tree(){
+    var keys = Object.keys(PROJECTS);
+    var lines = ["~/projects"];
+    keys.forEach(function(k, i){
+      lines.push((i === keys.length - 1 ? "└── " : "├── ") + k + "/");
+    });
+    lines.push("\n" + keys.length + " directories, 0 loose files");
+    tprint(lines.join("\n"), "out");
+  }
+
+  function fakePing(host){
+    var n = 0;
+    tprint("PING " + host + " via tailscale0", "out");
+    var iv = setInterval(function(){
+      n++;
+      var ms = (1.2 + Math.random() * 2.3).toFixed(1);
+      tprint("64 bytes from homeserver: icmp_seq=" + n + " ttl=64 time=" + ms + " ms", "out");
+      if(n >= 4){
+        clearInterval(iv);
+        tprint("--- " + host + " ping statistics ---\n4 packets transmitted, 4 received, 0% packet loss", "out");
+        tin.scrollIntoView({block: "nearest"});
+      }
+    }, 420);
+  }
+
+  function cmatrix(){
+    if(document.getElementById("mtx")) return;
+    if(reduce){ tprint("cmatrix: disabled — prefers-reduced-motion is set", "out"); return; }
+    var cv = document.createElement("canvas");
+    cv.id = "mtx";
+    document.body.appendChild(cv);
+    var ctx = cv.getContext("2d");
+    cv.width = innerWidth; cv.height = innerHeight;
+    var fs = 14, cols = Math.floor(cv.width / fs);
+    var drops = [];
+    for(var i = 0; i < cols; i++) drops[i] = Math.random() * -50;
+    var CHARS = "アイウエオカキクケコ01<>~/$#";
+    var iv = setInterval(function(){
+      ctx.fillStyle = "rgba(30,30,46,.14)";
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      ctx.fillStyle = "#A6E3A1";
+      ctx.font = fs + "px monospace";
+      drops.forEach(function(y, x){
+        ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], x * fs, y * fs);
+        drops[x] = y * fs > cv.height && Math.random() > .975 ? 0 : y + 1;
+      });
+    }, 50);
+    var stopped = false;
+    function stop(){
+      if(stopped) return;
+      stopped = true;
+      clearInterval(iv);
+      cv.remove();
+      window.removeEventListener("keydown", stop);
+      window.removeEventListener("pointerdown", stop);
+      tprint("cmatrix: session ended", "out");
+    }
+    setTimeout(function(){
+      window.addEventListener("keydown", stop);
+      window.addEventListener("pointerdown", stop);
+      setTimeout(stop, 8000);
+    }, 200);
+  }
+
+  var history = [];
+  var hidx = 0;
+  var COMMANDS = ["help", "whoami", "ls", "open ", "cat contact.txt", "cat security.txt",
+    "neofetch", "uptime", "tree", "history", "fortune", "ping", "date", "echo ",
+    "clear", "sudo hire syamxm", "cmatrix"];
+
   function run(c){
     var parts = c.split(/\s+/);
     if(c === "clear"){ tout.textContent = ""; return; }
     echo(c);
     if(c === "help"){
-      tprint("help  whoami  ls  open <project>  cat contact.txt  neofetch  uptime  clear  sudo hire syamxm", "out");
+      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nuptime  fortune  ping  date  echo  history  clear  sudo hire syamxm", "out");
     } else if(c === "whoami"){
       tprint("visitor — guest session on syamxm@homeserver", "out");
     } else if(c === "ls" || c === "ls ~/projects" || c === "ls projects"){
@@ -85,6 +165,21 @@
       tprint("rendered above ↑", "out");
     } else if(c === "neofetch"){
       tprint(NEOFETCH, "out");
+    } else if(c === "tree" || c === "tree ~/projects" || c === "tree projects"){
+      tree();
+    } else if(c === "history"){
+      tprint(history.map(function(h, i){ return "  " + (i + 1) + "  " + h; }).join("\n") || "history: empty", "out");
+    } else if(c === "fortune"){
+      tprint(FORTUNES[Math.floor(Math.random() * FORTUNES.length)], "out");
+    } else if(parts[0] === "ping"){
+      fakePing(parts[1] || "syamxm.com");
+    } else if(c === "date"){
+      tprint(new Date().toString(), "out");
+    } else if(parts[0] === "echo"){
+      tprint(c.slice(5) || "", "out");
+    } else if(c === "cmatrix" || c === "matrix"){
+      tprint("wake up, visitor ... (any key to exit)", "out");
+      cmatrix();
     } else if(c === "uptime"){
       tprint("up " + uptime() + " · all systems green", "out");
     } else if(c === "sudo hire syamxm"){
@@ -100,10 +195,37 @@
   fp.addEventListener("click", function(){ tin.focus(); });
   tin.addEventListener("keydown", function(e){
     if(e.key === "Escape"){ tin.blur(); return; }
+    if(e.key === "ArrowUp"){
+      e.preventDefault();
+      if(hidx > 0) tin.value = history[--hidx];
+      return;
+    }
+    if(e.key === "ArrowDown"){
+      e.preventDefault();
+      if(hidx < history.length - 1) tin.value = history[++hidx];
+      else { hidx = history.length; tin.value = ""; }
+      return;
+    }
+    if(e.key === "Tab"){
+      e.preventDefault();
+      var v = tin.value;
+      if(!v) return;
+      var pool = /^open\s+/.test(v)
+        ? Object.keys(PROJECTS).map(function(k){ return "open " + k; })
+        : COMMANDS;
+      var hits = pool.filter(function(cmd){ return cmd.indexOf(v) === 0; });
+      if(hits.length === 1){ tin.value = hits[0]; }
+      else if(hits.length > 1){ tprint(hits.join("  "), "out"); tin.scrollIntoView({block: "nearest"}); }
+      return;
+    }
     if(e.key !== "Enter") return;
     var c = tin.value.trim();
     tin.value = "";
-    if(c) run(c);
+    if(c){
+      history.push(c);
+      hidx = history.length;
+      run(c);
+    }
   });
   document.addEventListener("keydown", function(e){
     if(e.key !== "/" || e.target === tin) return;
@@ -113,13 +235,52 @@
     tin.focus({preventScroll: true});
   });
 
-  /* ---- live uptime in the footer ---- */
+  /* ---- footer uptime + waybar clock / sensors ---- */
   var footstat = document.getElementById("footstat");
-  if(footstat && window.matchMedia("(min-width: 769px)").matches){
-    setInterval(function(){
-      if(document.hidden) return;
-      footstat.textContent = "up " + uptime() + " · 6/6 gates · fail-closed";
-    }, 1000);
+  var clkT = document.getElementById("clk-t");
+  var clkD = document.getElementById("clk-d");
+  var temp = document.getElementById("temp");
+  var pup = document.getElementById("pup");
+  var loadT = Date.now();
+  function tick(){
+    if(document.hidden) return;
+    var d = new Date();
+    if(clkT){
+      clkT.textContent = pad(d.getHours()) + ":" + pad(d.getMinutes());
+      clkD.textContent = pad(d.getMonth() + 1) + "/" + pad(d.getDate()) + "/" + String(d.getFullYear()).slice(2);
+    }
+    if(footstat) footstat.textContent = "up " + uptime() + " · 6/6 gates · fail-closed";
+    if(pup){
+      var m = Math.floor((Date.now() - loadT) / 60000);
+      pup.textContent = "up " + (m < 60 ? m + "m" : Math.floor(m / 60) + "h " + (m % 60) + "m");
+    }
+    if(temp && d.getSeconds() % 5 === 0){
+      temp.textContent = (45 + Math.floor(Math.random() * 8)) + " °C";
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  /* ---- workspace pills follow the section in view ---- */
+  var pills = document.querySelectorAll(".ws");
+  if(pills.length && "IntersectionObserver" in window){
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        pills.forEach(function(p){
+          p.classList.toggle("on", p.getAttribute("href") === "#" + e.target.id);
+        });
+      });
+    }, {rootMargin: "-40% 0px -55% 0px"});
+    document.querySelectorAll("main section[id]").forEach(function(s){ spy.observe(s); });
+  }
+
+  /* ---- bar glow once scrolled ---- */
+  var bar = document.getElementById("topbar");
+  if(bar){
+    window.addEventListener("scroll", function(){
+      bar.classList.toggle("scrolled", window.scrollY > 8);
+    }, {passive: true});
   }
 
   if(reduce) return; /* final state already in the markup */
@@ -174,7 +335,7 @@
   }
 
   /* ---- sections: type the command, then stream the output ---- */
-  var secs = document.querySelectorAll("section[id]");
+  var secs = document.querySelectorAll("section[id]:not(#about)");
   secs.forEach(function(sec){
     sec.querySelectorAll(".sechead .t").forEach(function(sp){
       sp.dataset.t = sp.textContent;
