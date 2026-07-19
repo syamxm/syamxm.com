@@ -26,20 +26,35 @@
 
 <a class="skiplink" href="#projects">skip to content</a>
 
-<div class="statusbar" role="presentation">
-  <div class="dots"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span></div>
-  <span class="path">syamxm@<b>homeserver</b>: ~</span>
-  <div class="right">
-    <span>tailscale</span>
-    <span>6/6 gates</span>
+<nav class="statusbar" id="topbar" aria-label="site navigation">
+  <a class="launcher" href="#" aria-label="back to top">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M14.3,19.414c0.216-0.569,0.342-1.218,0.342-1.913c0-2.129-1.139-3.86-2.539-3.86c-1.412,0-2.55,1.731-2.55,3.86	c0,0.683,0.114,1.332,0.33,1.89c-4.657,0.49-7.936,2.437-9.268,3.313c2.243-3.234,4.589-7.025,6.831-11.386	c0.558-1.082,1.082-2.152,1.571-3.199C9.21,8.244,9.404,8.381,9.62,8.518c1.002,0.626,1.936,0.968,2.619,1.15	c-0.501-0.376-1.047-0.831-1.605-1.389c-0.421-0.421-0.797-0.843-1.116-1.253C10.463,4.954,11.283,2.961,12,1.071	c1.195,3.165,2.687,6.615,4.554,10.247c1.207,2.334,2.437,4.509,3.666,6.513c-0.353-0.193-0.74-0.376-1.15-0.535	c-0.706-0.273-1.366-0.444-1.936-0.546c0.774,0.387,1.674,0.9,2.619,1.583c0.615,0.456,1.161,0.911,1.628,1.355	c0.011,0.011,0.011,0.011,0.023,0.023c0.649,1.059,1.321,2.038,1.981,2.994C22.076,21.839,18.854,19.926,14.3,19.414z"/></svg>
+  </a>
+  <div class="wsp">
+    <a class="ws on" href="#about"><span class="wnum">I</span><span class="wlabel">about</span></a>
+    <a class="ws" href="#projects"><span class="wnum">II</span><span class="wlabel">projects</span></a>
+    <a class="ws" href="#posture"><span class="wnum">III</span><span class="wlabel">security</span></a>
+    <a class="ws" href="#contact"><span class="wnum">IV</span><span class="wlabel">contact</span></a>
   </div>
-</div>
+  <div class="right">
+    <span class="sensor" id="temp">47 °C</span>
+    <span class="sensor" id="pup">up 0m</span>
+    <a class="tray" href="https://github.com/syamxm" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.21.67.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+    </a>
+    <a class="tray" href="mailto:ahmadsyamim200@gmail.com" aria-label="email">
+      <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M3 5.5h18v13H3z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 6.5L21 7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    </a>
+    <span class="clock"><b id="clk-t"></b><i id="clk-d"></i></span>
+  </div>
+  <span class="scrollprogress" aria-hidden="true"></span>
+</nav>
 
 <div class="shell">
 <main>
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="about">
     <div class="cmdline">
       <span class="prompt"><span class="tick">~&gt;</span> </span><span id="typed">whoami</span><span class="cursor blink" id="hero-cursor"></span>
     </div>
@@ -272,7 +287,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
       <div id="tout" aria-live="polite"></div>
       <div class="finalprompt ln" id="fp">
         <span class="prompt"><span class="tick">~&gt;</span> </span>
-        <input id="tin" type="text" autocomplete="off" spellcheck="false" aria-label="terminal input" placeholder="press / · type 'help'">
+        <input id="tin" type="text" autocomplete="off" spellcheck="false" aria-label="terminal input" placeholder="press / · 'help' · tab completes">
       </div>
 
       <div class="foot ln">
