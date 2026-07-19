@@ -263,25 +263,50 @@
 
   /* ---- workspace pills follow the section in view ---- */
   var pills = document.querySelectorAll(".ws");
-  if(pills.length && "IntersectionObserver" in window){
+  var secList = document.querySelectorAll("main section[id]");
+  var spyLock = 0;
+  function setActive(id){
+    pills.forEach(function(p){
+      p.classList.toggle("on", p.getAttribute("href") === "#" + id);
+    });
+  }
+  function atBottom(){
+    return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+  }
+  if(pills.length && secList.length && "IntersectionObserver" in window){
+    var vis = {};
     var spy = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
-        if(!e.isIntersecting) return;
-        pills.forEach(function(p){
-          p.classList.toggle("on", p.getAttribute("href") === "#" + e.target.id);
-        });
+        var cap = Math.min(e.rootBounds ? e.rootBounds.height : window.innerHeight,
+                           e.target.offsetHeight || 1);
+        vis[e.target.id] = e.isIntersecting ? e.intersectionRect.height / cap : 0;
       });
-    }, {rootMargin: "-40% 0px -55% 0px"});
-    document.querySelectorAll("main section[id]").forEach(function(s){ spy.observe(s); });
+      if(Date.now() < spyLock) return;
+      if(atBottom()){ setActive(secList[secList.length - 1].id); return; }
+      var best = "", max = 0;
+      secList.forEach(function(s){
+        var r = vis[s.id] || 0;
+        if(r > max){ max = r; best = s.id; }
+      });
+      if(best) setActive(best);
+    }, {threshold: [0, .15, .35, .55, .75, 1]});
+    secList.forEach(function(s){ spy.observe(s); });
+    pills.forEach(function(p){
+      p.addEventListener("click", function(){
+        spyLock = Date.now() + 800;
+        setActive(p.getAttribute("href").slice(1));
+      });
+    });
   }
 
-  /* ---- bar glow once scrolled ---- */
+  /* ---- bar glow once scrolled + bottom pin for last pill ---- */
   var bar = document.getElementById("topbar");
-  if(bar){
-    window.addEventListener("scroll", function(){
-      bar.classList.toggle("scrolled", window.scrollY > 8);
-    }, {passive: true});
-  }
+  window.addEventListener("scroll", function(){
+    if(bar) bar.classList.toggle("scrolled", window.scrollY > 8);
+    if(pills.length && atBottom() && Date.now() >= spyLock){
+      setActive(secList[secList.length - 1].id);
+    }
+  }, {passive: true});
 
   if(reduce) return; /* final state already in the markup */
 

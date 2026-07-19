@@ -13,34 +13,40 @@
   position:fixed;top:8px;left:10px;right:10px;z-index:5;
   display:flex;align-items:center;gap:14px;
   height:44px;padding:0 16px;
-  background:rgba(17,17,27,.88);
-  border:1px solid rgba(189,147,249,.3);
+  background:var(--bar-bg);
+  border:1px solid var(--bar-border);
   border-radius:14px;
   font-size:12px;color:var(--dim);
   overflow:hidden;
+  box-shadow:0 0 16px -8px var(--accent-glow);
   transition:border-color .35s var(--ease),box-shadow .35s var(--ease);
 }
 .statusbar a{text-decoration:none}
 .statusbar.scrolled{
-  border-color:rgba(189,147,249,.5);
-  box-shadow:0 12px 36px -14px rgba(0,0,0,.65),0 0 24px -8px var(--glow-purple);
+  border-color:var(--accent);
+  box-shadow:0 12px 36px -14px rgba(0,0,0,.65),0 0 26px -6px var(--accent-glow);
 }
 .launcher{
-  display:flex;flex:none;color:var(--purple);
-  filter:drop-shadow(0 0 6px var(--glow-purple));
+  display:flex;flex:none;color:var(--accent);
+  filter:drop-shadow(0 0 6px var(--accent-glow));
   transition:color .3s,transform .3s var(--ease);
 }
-.launcher:hover,.launcher:focus-visible{color:var(--fg);transform:translateY(-1px)}
+.launcher:hover,.launcher:focus-visible{color:var(--purple);transform:translateY(-1px)}
 .wsp{display:flex;gap:6px}
 .ws{
   display:flex;align-items:baseline;gap:6px;
   padding:2px 11px;border-radius:999px;
-  text-decoration:none;color:var(--muted);
-  border:1px solid transparent;
-  transition:color .3s,border-color .3s,background .3s;
+  text-decoration:none;color:var(--purple);
+  background:var(--pill-bg);
+  border:1px solid var(--pill-border);
+  transition:color .3s,border-color .3s,background .3s,box-shadow .3s;
 }
-.ws:hover,.ws:focus-visible{color:var(--fg);border-color:rgba(189,147,249,.4)}
-.ws.on{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:600}
+.ws:hover,.ws:focus-visible{color:var(--fg);border-color:var(--accent)}
+.ws.on{
+  background:var(--accent);border-color:var(--accent);
+  color:#fff;font-weight:600;
+  box-shadow:0 0 12px -3px var(--accent-glow);
+}
 .ws .wnum{letter-spacing:.06em}
 .ws .wlabel{font-size:11px}
 .statusbar .right{margin-left:auto;display:flex;align-items:center;gap:14px}
