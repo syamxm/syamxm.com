@@ -136,6 +136,12 @@ body{
 /* breathe pauses while the hero is scrolled out of view */
 .hero-off .hero::before,.hero-off .hero::after{animation-play-state:paused}
 
+.sr-only{
+  position:absolute;width:1px;height:1px;
+  margin:-1px;padding:0;border:0;
+  clip-path:inset(50%);overflow:hidden;white-space:nowrap;
+}
+
 .skiplink{
   position:fixed;top:-100%;left:16px;z-index:30;
   padding:8px 14px;
