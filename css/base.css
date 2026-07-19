@@ -136,17 +136,14 @@ body{
 /* breathe pauses while the hero is scrolled out of view */
 .hero-off .hero::before,.hero-off .hero::after{animation-play-state:paused}
 
-/* TEMP verification badge — shows whenever the heavy-effect gate is closed.
-   Remove after confirming on a real phone. */
-.litebadge{display:block}
-@media (min-width:769px){.litebadge{display:none}}
-.lite-root .litebadge{display:block}
-.litebadge{
-  position:fixed;right:10px;bottom:10px;z-index:30;
-  font-size:10px;letter-spacing:.12em;color:var(--yellow);
-  border:1px solid var(--line);border-radius:3px;
-  background:var(--bg-raise);padding:2px 7px;
+.skiplink{
+  position:fixed;top:-100%;left:16px;z-index:30;
+  padding:8px 14px;
+  background:var(--bg-raise);color:var(--fg);
+  border:1px solid var(--purple);border-radius:4px;
+  text-decoration:none;font-size:13px;
 }
+.skiplink:focus-visible{top:52px;outline:none}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}

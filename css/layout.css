@@ -74,13 +74,14 @@ section{padding:0}
   color:var(--fg);
   max-width:18ch;
   margin:.35em 0 .6em;
+  text-wrap:balance;
 }
 .hero h1 .accent{
   color:var(--purple);
   text-decoration:none;
   text-shadow:0 0 20px rgba(189,147,249,.4),0 0 60px rgba(189,147,249,.18);
 }
-.hero .sub{color:var(--muted);max-width:62ch}
+.hero .sub{color:var(--muted);max-width:62ch;text-wrap:pretty}
 .hero .sub a{
   color:var(--purple);text-decoration:none;border-bottom:1px solid transparent;
   transition:background .25s,border-color .25s,text-shadow .25s;
