@@ -20,6 +20,7 @@
   overflow:hidden;
   transition:border-color .35s var(--ease),box-shadow .35s var(--ease);
 }
+.statusbar a{text-decoration:none}
 .statusbar.scrolled{
   border-color:rgba(189,147,249,.5);
   box-shadow:0 12px 36px -14px rgba(0,0,0,.65),0 0 24px -8px var(--glow-purple);
