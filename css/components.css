@@ -24,25 +24,26 @@
     -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
     mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
     -webkit-mask-composite:xor;mask-composite:exclude;
-    opacity:.5;
+    opacity:.55;
     transition:opacity .45s var(--ease);
     pointer-events:none;
   }
-  .proj:hover::before,.proj:focus-visible::before{opacity:1}
-  .proj.featured::before{opacity:.75}
+  .proj.featured::before{opacity:.8}
+  .proj:hover::before,.proj:focus-visible::before{opacity:.22}
 }
 @media(min-width:769px) and (prefers-reduced-motion:no-preference){
   body:not(.lite-root) .proj::after{
     content:"";position:absolute;inset:0;border-radius:6px;padding:1px;
     background:conic-gradient(from var(--angle),
-      transparent 0 62%,rgba(124,58,237,.95) 76%,rgba(167,139,250,.9) 86%,transparent 96%);
+      transparent 0 55%,rgba(124,58,237,.5) 70%,rgba(167,139,250,1) 84%,#fff 88%,transparent 92%);
     -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
     mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
     -webkit-mask-composite:xor;mask-composite:exclude;
+    filter:drop-shadow(0 0 6px var(--glow-purple));
     opacity:0;transition:opacity .4s var(--ease);pointer-events:none;
   }
   body:not(.lite-root) .proj:hover::after,
-  body:not(.lite-root) .proj:focus-visible::after{opacity:1;animation:orbit 3.2s linear infinite}
+  body:not(.lite-root) .proj:focus-visible::after{opacity:1;animation:orbit 2.6s linear infinite}
   @keyframes orbit{to{--angle:360deg}}
 }
 .proj:hover,.proj:focus-visible{
