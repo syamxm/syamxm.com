@@ -401,6 +401,22 @@
   function matches(group, cat){ return cat === "all" || group.dataset.cat === cat; }
   function rowsOf(group){ return group.querySelectorAll(".psrow"); }
 
+  /* a click mid-transition cancels pending timers, so land the previous
+     filter instantly first — otherwise its half-applied state sticks */
+  function commitPending(){
+    if(!filterTimers.length) return;
+    filterTimers.forEach(clearTimeout);
+    filterTimers = [];
+    stackGroups.forEach(function(g){
+      g.classList.remove("leaving");
+      g.hidden = !matches(g, activeCat);
+    });
+    stackRows.forEach(function(r){
+      r.classList.remove("fresh");
+      r.style.setProperty("--d", r.dataset.depth);
+    });
+  }
+
   /* groups leave, the list closes up, then the surviving rows stream back in */
   function applyStackFilter(cat){
     if(STACK_CATS.indexOf(cat) < 0) return 0;
@@ -411,10 +427,8 @@
     if(psflag) psflag.textContent = "--" + cat;
     if(psecho) psecho.textContent = shown + " unit" + (shown === 1 ? "" : "s") + " matched --" + cat;
     if(cat === activeCat) return shown;
+    commitPending();
     activeCat = cat;
-
-    filterTimers.forEach(clearTimeout);
-    filterTimers = [];
 
     var leaving = [], entering = [];
     stackGroups.forEach(function(g){
@@ -575,7 +589,10 @@
       io.unobserve(e.target);
       var sec = e.target;
       typeSpans(sec.querySelectorAll(".sechead .t"), function(){
-        if(sec.id === "stack") runStack();
+        if(sec.id === "stack"){
+          if(psflag) psflag.textContent = "--" + activeCat;
+          runStack();
+        }
         if(sec.id === "timeline") runLog();
         reveal(sec, sec.id === "projects" ? runGates : null);
       });
