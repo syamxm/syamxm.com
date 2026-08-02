@@ -328,21 +328,70 @@
   var psecho = document.getElementById("psecho");
   var STACK_CATS = ["all", "infra", "ci-cd", "security", "observability", "backend", "frontend", "languages"];
 
+  var stackEl = document.getElementById("stack");
+  var filterTimers = [];
+  var activeCat = "all";
+
+  function matches(group, cat){ return cat === "all" || group.dataset.cat === cat; }
+  function rowsOf(group){ return group.querySelectorAll(".psrow"); }
+
+  /* groups leave, the list closes up, then the surviving rows stream back in */
   function applyStackFilter(cat){
     if(STACK_CATS.indexOf(cat) < 0) return 0;
     var shown = 0;
-    stackRows.forEach(function(r){
-      var hit = cat === "all" || r.dataset.cat === cat;
-      r.classList.toggle("dim", !hit);
-      if(hit) shown++;
-    });
-    stackGroups.forEach(function(g){
-      g.classList.toggle("dim", !(cat === "all" || g.dataset.cat === cat));
-    });
+    stackGroups.forEach(function(g){ if(matches(g, cat)) shown += rowsOf(g).length; });
+
     fpills.forEach(function(p){ p.classList.toggle("on", p.dataset.cat === cat); });
     if(psflag) psflag.textContent = "--" + cat;
     if(psecho) psecho.textContent = shown + " unit" + (shown === 1 ? "" : "s") + " matched --" + cat;
+    if(cat === activeCat) return shown;
+    activeCat = cat;
+
+    filterTimers.forEach(clearTimeout);
+    filterTimers = [];
+
+    var leaving = [], entering = [];
+    stackGroups.forEach(function(g){
+      if(matches(g, cat)){ if(g.hidden) entering.push(g); }
+      else if(!g.hidden) leaving.push(g);
+    });
+
+    leaving.forEach(function(g){ g.classList.add("leaving"); });
+    entering.forEach(function(g){
+      g.classList.add("leaving");
+      rowsOf(g).forEach(function(r){
+        r.style.setProperty("--d", 0);
+        if(!reduce) r.classList.add("fresh");
+      });
+      g.hidden = false;
+    });
+
+    filterTimers.push(setTimeout(function(){
+      leaving.forEach(function(g){ g.hidden = true; g.classList.remove("leaving"); });
+      entering.forEach(function(g){ g.classList.remove("leaving"); });
+      streamIn(cat);
+      if(stackEl.getBoundingClientRect().top < 0){
+        stackEl.scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+      }
+    }, reduce ? 0 : 220));
+
     return shown;
+  }
+
+  /* every visible bar refills, so the filter reads as the command re-running */
+  function streamIn(cat){
+    var i = 0;
+    stackGroups.forEach(function(g){
+      if(!matches(g, cat)) return;
+      rowsOf(g).forEach(function(r){
+        var delay = reduce ? 0 : i++ * 35;
+        r.style.setProperty("--d", 0);
+        filterTimers.push(setTimeout(function(){
+          r.classList.remove("fresh");
+          r.style.setProperty("--d", r.dataset.depth);
+        }, delay + 30));
+      });
+    });
   }
   fpills.forEach(function(p){
     p.addEventListener("click", function(){ applyStackFilter(p.dataset.cat); });

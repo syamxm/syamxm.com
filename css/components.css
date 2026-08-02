@@ -178,10 +178,12 @@
 }
 .psrow:hover .used{color:var(--muted)}
 .psrow:hover .bar i{filter:brightness(1.25)}
-.psgh{transition:opacity .4s var(--ease),filter .4s var(--ease)}
-.psgroup.dim .psgh{opacity:.16;filter:grayscale(1)}
-.psrow.dim{opacity:.16;filter:grayscale(1)}
-.psrow.dim:hover{transform:none;box-shadow:none;background:none}
+.psgh{transition:opacity .22s var(--ease),transform .22s var(--ease)}
+.psgroup.leaving{pointer-events:none}
+.psgroup.leaving .psgh,
+.psgroup.leaving .psrow{opacity:0;transform:translateY(-6px);transition-duration:.2s}
+.psrow[hidden],.psgroup[hidden]{display:none}
+.psrow.fresh,.anim .psrow.fresh{opacity:0;transform:translateY(8px)}
 @media(min-width:769px) and (prefers-reduced-motion:no-preference){
   body:not(.lite-root) .psrow.settled .dot{animation:pulse 2.8s var(--ease) infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
