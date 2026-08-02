@@ -141,15 +141,15 @@
   var history = [];
   var hidx = 0;
   var COMMANDS = ["help", "whoami", "ls", "open ", "cat contact.txt", "cat security.txt",
-    "neofetch", "uptime", "tree", "history", "fortune", "ping", "date", "echo ",
-    "clear", "sudo hire syamxm", "cmatrix"];
+    "skills ps", "skills ps --", "neofetch", "uptime", "tree", "history", "fortune",
+    "ping", "date", "echo ", "clear", "sudo hire syamxm", "cmatrix"];
 
   function run(c){
     var parts = c.split(/\s+/);
     if(c === "clear"){ tout.textContent = ""; return; }
     echo(c);
     if(c === "help"){
-      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nuptime  fortune  ping  date  echo  history  clear  sudo hire syamxm", "out");
+      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  uptime  fortune  ping  date  echo  history  clear\nsudo hire syamxm", "out");
     } else if(c === "whoami"){
       tprint("visitor — guest session on syamxm@homeserver", "out");
     } else if(c === "ls" || c === "ls ~/projects" || c === "ls projects"){
@@ -180,6 +180,15 @@
     } else if(c === "cmatrix" || c === "matrix"){
       tprint("wake up, visitor ... (any key to exit)", "out");
       cmatrix();
+    } else if(parts[0] === "skills"){
+      var cat = (parts[2] || "--all").replace(/^--/, "");
+      var shown = applyStackFilter(cat);
+      if(!shown){
+        tprint("skills: unknown group '" + cat + "' — try: " + STACK_CATS.join(", "), "err");
+      } else {
+        document.getElementById("stack").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+        tprint(shown + " unit" + (shown === 1 ? "" : "s") + " matched --" + cat + " — rendered above ↑", "out");
+      }
     } else if(c === "uptime"){
       tprint("up " + uptime() + " · all systems green", "out");
     } else if(c === "sudo hire syamxm"){
@@ -210,9 +219,12 @@
       e.preventDefault();
       var v = tin.value;
       if(!v) return;
-      var pool = /^open\s+/.test(v)
-        ? Object.keys(PROJECTS).map(function(k){ return "open " + k; })
-        : COMMANDS;
+      var pool = COMMANDS;
+      if(/^open\s+/.test(v)){
+        pool = Object.keys(PROJECTS).map(function(k){ return "open " + k; });
+      } else if(/^skills\s+ps\s+-/.test(v)){
+        pool = STACK_CATS.map(function(k){ return "skills ps --" + k; });
+      }
       var hits = pool.filter(function(cmd){ return cmd.indexOf(v) === 0; });
       if(hits.length === 1){ tin.value = hits[0]; }
       else if(hits.length > 1){ tprint(hits.join("  "), "out"); tin.scrollIntoView({block: "nearest"}); }
@@ -308,7 +320,39 @@
     }
   }, {passive: true});
 
-  if(reduce) return; /* final state already in the markup */
+  /* ---- stack: filter pills behave like shell flags ---- */
+  var stackRows = document.querySelectorAll("#stack .psrow");
+  var stackGroups = document.querySelectorAll("#stack .psgroup");
+  var fpills = document.querySelectorAll(".fpill");
+  var psflag = document.getElementById("psflag");
+  var psecho = document.getElementById("psecho");
+  var STACK_CATS = ["all", "infra", "ci-cd", "security", "observability", "backend", "frontend", "languages"];
+
+  function applyStackFilter(cat){
+    if(STACK_CATS.indexOf(cat) < 0) return 0;
+    var shown = 0;
+    stackRows.forEach(function(r){
+      var hit = cat === "all" || r.dataset.cat === cat;
+      r.classList.toggle("dim", !hit);
+      if(hit) shown++;
+    });
+    stackGroups.forEach(function(g){
+      g.classList.toggle("dim", !(cat === "all" || g.dataset.cat === cat));
+    });
+    fpills.forEach(function(p){ p.classList.toggle("on", p.dataset.cat === cat); });
+    if(psflag) psflag.textContent = "--" + cat;
+    if(psecho) psecho.textContent = shown + " unit" + (shown === 1 ? "" : "s") + " matched --" + cat;
+    return shown;
+  }
+  fpills.forEach(function(p){
+    p.addEventListener("click", function(){ applyStackFilter(p.dataset.cat); });
+  });
+
+  function fillDepth(){
+    stackRows.forEach(function(r){ r.style.setProperty("--d", r.dataset.depth); });
+  }
+
+  if(reduce){ fillDepth(); return; } /* final state already in the markup */
 
   if(document.getElementById("boot")){
     document.addEventListener("boot:done", start, {once: true});
@@ -359,6 +403,26 @@
     });
   }
 
+  /* ---- stack units: "starting" then their real state, row by row ---- */
+  stackRows.forEach(function(r){
+    var txt = r.querySelector(".state .txt");
+    r.dataset.state = txt.textContent;
+    txt.textContent = "starting";
+    r.classList.add("starting");
+  });
+  /* each unit settles shortly after its own line has streamed in */
+  function runStack(){
+    var lines = Array.prototype.slice.call(document.querySelectorAll("#stack .ln"));
+    stackRows.forEach(function(r){
+      setTimeout(function(){
+        r.querySelector(".state .txt").textContent = r.dataset.state;
+        r.classList.remove("starting");
+        r.classList.add("settled");
+        r.style.setProperty("--d", r.dataset.depth);
+      }, lines.indexOf(r) * 55 + 420);
+    });
+  }
+
   /* ---- sections: type the command, then stream the output ---- */
   var secs = document.querySelectorAll("section[id]:not(#about)");
   secs.forEach(function(sec){
@@ -373,6 +437,7 @@
       io.unobserve(e.target);
       var sec = e.target;
       typeSpans(sec.querySelectorAll(".sechead .t"), function(){
+        if(sec.id === "stack") runStack();
         reveal(sec, sec.id === "projects" ? runGates : null);
       });
     });

@@ -17,10 +17,10 @@
 <meta name="twitter:image" content="https://syamxm.com/assets/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='12'%20fill='%230D0B14'/%3E%3Ctext%20x='32'%20y='44'%20font-family='monospace'%20font-size='32'%20font-weight='700'%20fill='%237C3AED'%20text-anchor='middle'%3E~%26gt;%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=4">
-<link rel="stylesheet" href="css/base.css?v=4">
-<link rel="stylesheet" href="css/layout.css?v=4">
-<link rel="stylesheet" href="css/components.css?v=4">
+<link rel="stylesheet" href="css/fonts.css?v=5">
+<link rel="stylesheet" href="css/base.css?v=5">
+<link rel="stylesheet" href="css/layout.css?v=5">
+<link rel="stylesheet" href="css/components.css?v=5">
 </head>
 <body>
 
@@ -33,8 +33,9 @@
   <div class="wsp">
     <a class="ws on" href="#about"><span class="wnum">I</span><span class="wlabel">about</span></a>
     <a class="ws" href="#projects"><span class="wnum">II</span><span class="wlabel">projects</span></a>
-    <a class="ws" href="#posture"><span class="wnum">III</span><span class="wlabel">security</span></a>
-    <a class="ws" href="#contact"><span class="wnum">IV</span><span class="wlabel">contact</span></a>
+    <a class="ws" href="#stack"><span class="wnum">III</span><span class="wlabel">stack</span></a>
+    <a class="ws" href="#posture"><span class="wnum">IV</span><span class="wlabel">security</span></a>
+    <a class="ws" href="#contact"><span class="wnum">V</span><span class="wlabel">contact</span></a>
   </div>
   <div class="right">
     <span class="sensor" id="temp">47 °C</span>
@@ -245,6 +246,187 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         </button>
         <div class="shotecho" aria-live="polite"></div>
       </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <h2 class="sr-only">Stack</h2>
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">skills</span> <span class="t arg">ps</span> <span class="t flag" id="psflag">--all</span></span>
+      <span class="note"># 42 units · depth = how much of the stack leans on it</span>
+    </div>
+
+    <div class="ps" id="ps">
+      <div class="psfilter ln" role="group" aria-label="filter units by group">
+        <button class="fpill on" type="button" data-cat="all">all</button>
+        <button class="fpill" type="button" data-cat="infra">infra</button>
+        <button class="fpill" type="button" data-cat="ci-cd">ci/cd</button>
+        <button class="fpill" type="button" data-cat="security">security</button>
+        <button class="fpill" type="button" data-cat="observability">observability</button>
+        <button class="fpill" type="button" data-cat="backend">backend</button>
+        <button class="fpill" type="button" data-cat="frontend">frontend</button>
+        <button class="fpill" type="button" data-cat="languages">languages</button>
+      </div>
+      <div class="psecho" id="psecho" aria-live="polite"></div>
+
+      <div class="pshead ln" aria-hidden="true">
+        <span>service</span><span>state</span><span>depth</span><span>used by</span>
+      </div>
+
+      <div class="psgroup" data-cat="infra">
+        <div class="psgh ln"><span class="gname">infra/</span><span class="gcount">6 units</span></div>
+        <div class="psrow ln" data-cat="infra" data-depth="1">
+          <span class="svc"><i class="dot"></i>docker</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">7 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="infra" data-depth="1">
+          <span class="svc"><i class="dot"></i>debian 13</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">every service</span>
+        </div>
+        <div class="psrow ln" data-cat="infra" data-depth=".86">
+          <span class="svc"><i class="dot"></i>nginx</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">reverse proxy</span>
+        </div>
+        <div class="psrow ln" data-cat="infra" data-depth=".86">
+          <span class="svc"><i class="dot"></i>cloudflare tunnel</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">6 public hosts</span>
+        </div>
+        <div class="psrow ln" data-cat="infra" data-depth=".57">
+          <span class="svc"><i class="dot"></i>tailscale</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="infra" data-depth=".5">
+          <span class="svc"><i class="dot"></i>bash</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">ops scripts</span>
+        </div>
+      </div>
+
+      <div class="psgroup" data-cat="ci-cd">
+        <div class="psgh ln"><span class="gname">ci-cd/</span><span class="gcount">4 units</span></div>
+        <div class="psrow ln" data-cat="ci-cd" data-depth=".57">
+          <span class="svc"><i class="dot"></i>github actions</span><span class="state"><span class="txt">passing</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 pipelines</span>
+        </div>
+        <div class="psrow ln" data-cat="ci-cd" data-depth="1">
+          <span class="svc"><i class="dot"></i>git</span><span class="state"><span class="txt">clean</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">7 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="ci-cd" data-depth="1">
+          <span class="svc"><i class="dot"></i>docker compose</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">7 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="ci-cd" data-depth=".57">
+          <span class="svc"><i class="dot"></i>ssh deploy</span><span class="state"><span class="txt">over tailscale</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 pipelines</span>
+        </div>
+      </div>
+
+      <div class="psgroup" data-cat="security">
+        <div class="psgh ln"><span class="gname">security/</span><span class="gcount">9 units</span></div>
+        <div class="psrow ln" data-cat="security" data-depth=".43">
+          <span class="svc"><i class="dot"></i>gitleaks</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">3 pipelines</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".3">
+          <span class="svc"><i class="dot"></i>semgrep</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 pipelines</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".3">
+          <span class="svc"><i class="dot"></i>trivy</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 pipelines</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".3">
+          <span class="svc"><i class="dot"></i>ufw</span><span class="state"><span class="txt">enforcing</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">homeserver</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".3">
+          <span class="svc"><i class="dot"></i>fail2ban</span><span class="state"><span class="txt">enforcing</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">homeserver</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".3">
+          <span class="svc"><i class="dot"></i>crowdsec</span><span class="state"><span class="txt">enforcing</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">homeserver</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".57">
+          <span class="svc"><i class="dot"></i>jwt + bcrypt</span><span class="state"><span class="txt">enforcing</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".43">
+          <span class="svc"><i class="dot"></i>csrf + rate limit</span><span class="state"><span class="txt">enforcing</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">3 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".3">
+          <span class="svc"><i class="dot y"></i>nmap</span><span class="state"><span class="txt">on demand</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">recon labs</span>
+        </div>
+      </div>
+
+      <div class="psgroup" data-cat="observability">
+        <div class="psgh ln"><span class="gname">observability/</span><span class="gcount">4 units</span></div>
+        <div class="psrow ln" data-cat="observability" data-depth=".5">
+          <span class="svc"><i class="dot"></i>prometheus</span><span class="state"><span class="txt">scraping</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">homeserver</span>
+        </div>
+        <div class="psrow ln" data-cat="observability" data-depth=".5">
+          <span class="svc"><i class="dot"></i>grafana</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">homeserver</span>
+        </div>
+        <div class="psrow ln" data-cat="observability" data-depth=".5">
+          <span class="svc"><i class="dot"></i>loki</span><span class="state"><span class="txt">ingesting</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">auth + fail2ban logs</span>
+        </div>
+        <div class="psrow ln" data-cat="observability" data-depth=".3">
+          <span class="svc"><i class="dot"></i>umami</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">syamxm.com</span>
+        </div>
+      </div>
+
+      <div class="psgroup" data-cat="backend">
+        <div class="psgh ln"><span class="gname">backend/</span><span class="gcount">7 units</span></div>
+        <div class="psrow ln" data-cat="backend" data-depth=".43">
+          <span class="svc"><i class="dot"></i>fastapi</span><span class="state"><span class="txt">listening</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">3 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="backend" data-depth=".3">
+          <span class="svc"><i class="dot"></i>node + express</span><span class="state"><span class="txt">listening</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="backend" data-depth=".7">
+          <span class="svc"><i class="dot"></i>rest api design</span><span class="state"><span class="txt">shipped</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">5 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="backend" data-depth=".3">
+          <span class="svc"><i class="dot"></i>postgresql</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">cv-api</span>
+        </div>
+        <div class="psrow ln" data-cat="backend" data-depth=".3">
+          <span class="svc"><i class="dot"></i>mongodb</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="backend" data-depth=".2">
+          <span class="svc"><i class="dot"></i>mariadb</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">beanthere</span>
+        </div>
+        <div class="psrow ln" data-cat="backend" data-depth=".2">
+          <span class="svc"><i class="dot"></i>redis</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">rate-limited login</span>
+        </div>
+      </div>
+
+      <div class="psgroup" data-cat="frontend">
+        <div class="psgh ln"><span class="gname">frontend/</span><span class="gcount">5 units</span></div>
+        <div class="psrow ln" data-cat="frontend" data-depth=".3">
+          <span class="svc"><i class="dot"></i>react</span><span class="state"><span class="txt">built</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="frontend" data-depth=".3">
+          <span class="svc"><i class="dot"></i>vanilla js + css</span><span class="state"><span class="txt">built</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">this site</span>
+        </div>
+        <div class="psrow ln" data-cat="frontend" data-depth=".3">
+          <span class="svc"><i class="dot"></i>tailwind css</span><span class="state"><span class="txt">built</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="frontend" data-depth=".2">
+          <span class="svc"><i class="dot"></i>flutter</span><span class="state"><span class="txt">shipped</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">student reminder</span>
+        </div>
+        <div class="psrow ln" data-cat="frontend" data-depth=".2">
+          <span class="svc"><i class="dot y"></i>android · kotlin</span><span class="state"><span class="txt">building</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">final year project</span>
+        </div>
+      </div>
+
+      <div class="psgroup" data-cat="languages">
+        <div class="psgh ln"><span class="gname">languages/</span><span class="gcount">7 units</span></div>
+        <div class="psrow ln" data-cat="languages" data-depth=".7">
+          <span class="svc"><i class="dot"></i>javascript</span><span class="state"><span class="txt">fluent</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="languages" data-depth=".57">
+          <span class="svc"><i class="dot"></i>python</span><span class="state"><span class="txt">fluent</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">3 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="languages" data-depth=".57">
+          <span class="svc"><i class="dot"></i>sql</span><span class="state"><span class="txt">fluent</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="languages" data-depth=".5">
+          <span class="svc"><i class="dot"></i>bash</span><span class="state"><span class="txt">fluent</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">ops scripts</span>
+        </div>
+        <div class="psrow ln" data-cat="languages" data-depth=".3">
+          <span class="svc"><i class="dot"></i>php</span><span class="state"><span class="txt">working</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">beanthere</span>
+        </div>
+        <div class="psrow ln" data-cat="languages" data-depth=".3">
+          <span class="svc"><i class="dot"></i>java</span><span class="state"><span class="txt">working</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">enigma-java</span>
+        </div>
+        <div class="psrow ln" data-cat="languages" data-depth=".3">
+          <span class="svc"><i class="dot"></i>kotlin · dart</span><span class="state"><span class="txt">working</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 mobile apps</span>
+        </div>
       </div>
     </div>
   </section>
