@@ -17,6 +17,21 @@
     "cv": "https://cv.syamxm.com"
   };
 
+  var INTERN_START = Date.parse("2026-09-07T00:00:00+08:00");
+  var INTERN_END = Date.parse("2026-12-11T23:59:59+08:00");
+
+  /* the pill counts down, flips to "available now", then retires itself */
+  function availability(){
+    var now = Date.now();
+    if(now > INTERN_END) return null;
+    if(now >= INTERN_START) return {pill: "available now", note: "Available now."};
+    var days = Math.ceil((INTERN_START - now) / 86400000);
+    return {
+      pill: "sep 2026",
+      note: "Starts in " + days + " day" + (days === 1 ? "" : "s") + "."
+    };
+  }
+
   function pad(n){ return (n < 10 ? "0" : "") + n; }
   function uptime(){
     var s = Math.max(0, Math.floor((Date.now() - BOOT_EPOCH) / 1000));
@@ -141,7 +156,7 @@
   var history = [];
   var hidx = 0;
   var COMMANDS = ["help", "whoami", "ls", "open ", "cat contact.txt", "cat security.txt",
-    "skills ps", "skills ps --", "neofetch", "uptime", "tree", "history", "fortune",
+    "skills ps", "skills ps --", "avail", "neofetch", "uptime", "tree", "history", "fortune",
     "ping", "date", "echo ", "clear", "sudo hire syamxm", "cmatrix"];
 
   function run(c){
@@ -149,7 +164,7 @@
     if(c === "clear"){ tout.textContent = ""; return; }
     echo(c);
     if(c === "help"){
-      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  uptime  fortune  ping  date  echo  history  clear\nsudo hire syamxm", "out");
+      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  avail  uptime  fortune  ping  date  echo  history\nclear  sudo hire syamxm", "out");
     } else if(c === "whoami"){
       tprint("visitor — guest session on syamxm@homeserver", "out");
     } else if(c === "ls" || c === "ls ~/projects" || c === "ls projects"){
@@ -180,6 +195,11 @@
     } else if(c === "cmatrix" || c === "matrix"){
       tprint("wake up, visitor ... (any key to exit)", "out");
       cmatrix();
+    } else if(c === "avail" || c === "availability"){
+      var a = availability();
+      tprint("internship  7 sep – 11 dec 2026 · 14 weeks, extendable to 6 months\n" +
+             "status      " + (a ? a.note.replace(/\.$/, "") : "window closed") + "\n" +
+             "contact     ahmadsyamim200@gmail.com", "out");
     } else if(parts[0] === "skills"){
       var cat = (parts[2] || "--all").replace(/^--/, "");
       var shown = applyStackFilter(cat);
@@ -272,6 +292,23 @@
   }
   tick();
   setInterval(tick, 1000);
+
+  /* ---- internship availability ---- */
+  var availEl = document.getElementById("avail");
+  var availWhen = document.getElementById("availwhen");
+  var availCount = document.getElementById("availcount");
+  function paintAvailability(){
+    var a = availability();
+    if(!a){
+      if(availEl) availEl.remove();
+      if(availCount) availCount.textContent = "";
+      return;
+    }
+    if(availWhen) availWhen.textContent = a.pill;
+    if(availCount) availCount.textContent = a.note;
+  }
+  paintAvailability();
+  setInterval(paintAvailability, 3600000);
 
   /* ---- workspace pills follow the section in view ---- */
   var pills = document.querySelectorAll(".ws");

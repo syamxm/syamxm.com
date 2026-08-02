@@ -214,7 +214,16 @@
 
 /* ---- contact ---- */
 .contact{border-top:1px solid var(--line);margin-top:20px}
-.contact .lead{color:var(--muted);max-width:60ch;margin:8px 0 26px}
+.contact .lead{color:var(--muted);max-width:60ch;margin:8px 0 14px}
+.availnote{
+  max-width:64ch;margin:0 0 26px;
+  font-size:13.5px;color:var(--muted);
+  padding:10px 14px;border-left:2px solid var(--green);
+  background:rgba(166,227,161,.06);border-radius:0 5px 5px 0;
+}
+.availnote b{color:var(--fg);font-weight:500}
+.availcount{color:var(--green);text-shadow:0 0 10px var(--glow-green)}
+.availcount:empty{display:none}
 .links{display:flex;flex-direction:column;gap:2px}
 .links a{
   text-decoration:none;color:var(--fg);

@@ -52,6 +52,29 @@
 .statusbar .right{margin-left:auto;display:flex;align-items:center;gap:14px}
 .sensor{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .sensor::before{content:"● ";color:var(--green);text-shadow:0 0 6px var(--glow-green)}
+.avail{
+  display:flex;align-items:baseline;gap:7px;
+  padding:2px 11px;border-radius:999px;white-space:nowrap;
+  color:var(--green);
+  background:rgba(166,227,161,.1);
+  border:1px solid rgba(166,227,161,.32);
+  transition:border-color .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease);
+}
+.avail::before{
+  content:"●";font-size:8px;line-height:1;align-self:center;
+  text-shadow:0 0 8px var(--glow-green);
+}
+.avail .awhen{color:var(--muted);font-size:11px}
+.avail:hover,.avail:focus-visible{
+  border-color:var(--green);
+  box-shadow:0 0 16px -5px var(--glow-green);
+  transform:translateY(-1px);outline:none;
+}
+@media(min-width:769px) and (prefers-reduced-motion:no-preference){
+  body:not(.lite-root) .avail::before{animation:availpulse 2.6s var(--ease) infinite}
+  @keyframes availpulse{0%,100%{opacity:1}50%{opacity:.3}}
+}
+.tab-hidden .avail::before{animation-play-state:paused}
 .tray{display:flex;color:var(--muted);transition:color .3s}
 .tray:hover,.tray:focus-visible{color:var(--purple)}
 .clock{
@@ -64,6 +87,7 @@
   .ws .wlabel{display:none}
   .ws{padding:2px 9px}
   .sensor,.tray{display:none}
+  .avail .awhen{display:none}
   .statusbar{gap:10px;padding:0 14px}
 }
 @media(min-width:769px){
