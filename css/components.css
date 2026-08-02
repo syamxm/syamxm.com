@@ -202,6 +202,65 @@
   .psrow .used{grid-area:used;text-align:left}
 }
 
+/* ---- timeline: git log --graph ---- */
+#timeline{border-top:1px solid var(--line);margin-top:26px;padding-bottom:8px}
+.glog{list-style:none;position:relative;padding-left:26px}
+.glog::before{
+  content:"";position:absolute;left:4px;top:6px;bottom:14px;width:1px;
+  background:linear-gradient(180deg,var(--accent),rgba(124,58,237,.15));
+  transform-origin:50% 0;
+}
+.anim .glog::before{transform:scaleY(0);transition:transform 1.4s var(--ease)}
+.anim .glog.drawn::before{transform:scaleY(1)}
+.commit{
+  position:relative;
+  padding:14px 14px 16px;margin:0 -14px 4px;
+  border-radius:6px;
+  transition:background .35s var(--ease),transform .35s var(--ease),box-shadow .35s var(--ease);
+}
+.commit .node{
+  position:absolute;left:-17px;top:22px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--bg);border:1.5px solid var(--accent);
+  box-shadow:0 0 12px -2px var(--accent-glow);
+  transition:transform .45s var(--ease),opacity .45s var(--ease),background .35s var(--ease);
+}
+.anim .commit .node{opacity:0;transform:scale(.3)}
+.anim .commit.committed .node{opacity:1;transform:none}
+.commit:hover{
+  background:
+    linear-gradient(100deg,rgba(124,58,237,.14) 0%,rgba(124,58,237,.04) 42%,transparent 70%),
+    rgba(34,27,51,.45);
+  transform:translateY(-2px);
+  box-shadow:0 14px 34px -22px rgba(0,0,0,.7),-6px 0 26px -20px var(--glow-purple);
+}
+.commit:hover .node{background:var(--accent)}
+.cmeta{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;font-size:12px}
+.cmeta .hash{color:var(--yellow);letter-spacing:.05em;min-width:7ch}
+.cmeta .cdate{color:var(--dim);margin-left:auto}
+.refs{display:flex;flex-wrap:wrap;gap:6px}
+.ref{
+  color:var(--dim);font-size:11px;line-height:1.6;
+  border:1px solid var(--line);border-radius:999px;padding:0 9px;
+  transition:color .3s,border-color .3s;
+}
+.ref.head{color:var(--green);border-color:rgba(166,227,161,.35)}
+.ref.work{color:var(--purple);border-color:var(--pill-border)}
+.ref.root{color:var(--yellow);border-color:rgba(249,226,175,.3)}
+.commit:hover .ref{border-color:rgba(124,58,237,.4)}
+.csubject{
+  color:var(--fg);font-weight:500;font-size:15px;line-height:1.5;
+  margin:8px 0 6px;max-width:62ch;text-wrap:pretty;
+}
+.cbody{list-style:none;display:flex;flex-direction:column;gap:3px}
+.cbody li{color:var(--muted);font-size:13.5px;max-width:70ch;text-wrap:pretty}
+.cbody li::before{content:"+ ";color:var(--green)}
+@media(max-width:620px){
+  .glog{padding-left:20px}
+  .commit .node{left:-16px}
+  .cmeta .cdate{margin-left:0;flex-basis:100%}
+}
+
 /* ---- security posture ---- */
 #posture{border-top:1px solid var(--line);margin-top:26px}
 .facts{border-collapse:collapse;width:100%;font-size:13.5px}

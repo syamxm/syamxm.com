@@ -60,6 +60,15 @@
     "               theme   cachyos violet"
   ].join("\n");
 
+  var TIMELINE = [
+    "* a7f3e21 (HEAD -> main) BSc Computer Science (Hons) — UiTM Shah Alam",
+    "* 3d90c4f exam invigilator — Community Tuition Group",
+    "* 8b2e510 Foundation in Engineering — UiTM Dengkil",
+    "* c15af73 SPM — SMK Saujana Utama",
+    "* 0e4d6a1 part-time crew — Subway, Eco Grandeur",
+    "rendered above ↑"
+  ].join("\n");
+
   function tprint(text, cls){
     text.split("\n").forEach(function(line){
       var d = document.createElement("div");
@@ -156,7 +165,7 @@
   var history = [];
   var hidx = 0;
   var COMMANDS = ["help", "whoami", "ls", "open ", "cat contact.txt", "cat security.txt",
-    "skills ps", "skills ps --", "avail", "neofetch", "uptime", "tree", "history", "fortune",
+    "skills ps", "skills ps --", "git log", "avail", "neofetch", "uptime", "tree", "history", "fortune",
     "ping", "date", "echo ", "clear", "sudo hire syamxm", "cmatrix"];
 
   function run(c){
@@ -164,7 +173,7 @@
     if(c === "clear"){ tout.textContent = ""; return; }
     echo(c);
     if(c === "help"){
-      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  avail  uptime  fortune  ping  date  echo  history\nclear  sudo hire syamxm", "out");
+      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  git log  avail  uptime  fortune  ping  date  echo\nhistory  clear  sudo hire syamxm", "out");
     } else if(c === "whoami"){
       tprint("visitor — guest session on syamxm@homeserver", "out");
     } else if(c === "ls" || c === "ls ~/projects" || c === "ls projects"){
@@ -195,6 +204,13 @@
     } else if(c === "cmatrix" || c === "matrix"){
       tprint("wake up, visitor ... (any key to exit)", "out");
       cmatrix();
+    } else if(parts[0] === "git" || c === "timeline"){
+      if(parts[0] === "git" && parts[1] !== "log" && parts[1] !== undefined){
+        tprint("git: '" + parts[1] + "' is not supported here — try 'git log'", "err");
+      } else {
+        document.getElementById("timeline").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+        tprint(TIMELINE, "out");
+      }
     } else if(c === "avail" || c === "availability"){
       var a = availability();
       tprint("internship  7 sep – 11 dec 2026 · 14 weeks, extendable to 6 months\n" +
@@ -509,6 +525,29 @@
     });
   }
 
+  /* ---- timeline: hashes resolve as the graph rail draws down ---- */
+  var commits = document.querySelectorAll("#timeline .commit");
+  commits.forEach(function(c){ c.querySelector(".hash").textContent = "·······"; });
+  function randHash(){
+    var h = "";
+    while(h.length < 7) h += "0123456789abcdef".charAt(Math.floor(Math.random() * 16));
+    return h;
+  }
+  function runLog(){
+    var glog = document.querySelector(".glog");
+    var lines = Array.prototype.slice.call(document.querySelectorAll("#timeline .ln"));
+    if(glog) setTimeout(function(){ glog.classList.add("drawn"); }, 260);
+    commits.forEach(function(c){
+      setTimeout(function(){
+        var el = c.querySelector(".hash"), spins = 0;
+        (function flick(){
+          if(spins++ < 6){ el.textContent = randHash(); setTimeout(flick, 55); }
+          else { el.textContent = c.dataset.hash; c.classList.add("committed"); }
+        })();
+      }, lines.indexOf(c) * 55 + 380);
+    });
+  }
+
   /* ---- sections: type the command, then stream the output ---- */
   var secs = document.querySelectorAll("section[id]:not(#about)");
   secs.forEach(function(sec){
@@ -524,6 +563,7 @@
       var sec = e.target;
       typeSpans(sec.querySelectorAll(".sechead .t"), function(){
         if(sec.id === "stack") runStack();
+        if(sec.id === "timeline") runLog();
         reveal(sec, sec.id === "projects" ? runGates : null);
       });
     });

@@ -83,6 +83,8 @@
 }
 .clock b{color:var(--fg);font-weight:600}
 .clock i{font-style:normal;color:var(--dim);font-size:10px}
+/* six workspaces — labels give way before the tray does */
+@media(max-width:1024px){.ws .wlabel{display:none}}
 @media(max-width:620px){
   .ws .wlabel{display:none}
   .ws{padding:2px 9px}

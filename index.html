@@ -17,10 +17,10 @@
 <meta name="twitter:image" content="https://syamxm.com/assets/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='12'%20fill='%230D0B14'/%3E%3Ctext%20x='32'%20y='44'%20font-family='monospace'%20font-size='32'%20font-weight='700'%20fill='%237C3AED'%20text-anchor='middle'%3E~%26gt;%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=6">
-<link rel="stylesheet" href="css/base.css?v=6">
-<link rel="stylesheet" href="css/layout.css?v=6">
-<link rel="stylesheet" href="css/components.css?v=6">
+<link rel="stylesheet" href="css/fonts.css?v=7">
+<link rel="stylesheet" href="css/base.css?v=7">
+<link rel="stylesheet" href="css/layout.css?v=7">
+<link rel="stylesheet" href="css/components.css?v=7">
 </head>
 <body>
 
@@ -34,8 +34,9 @@
     <a class="ws on" href="#about"><span class="wnum">I</span><span class="wlabel">about</span></a>
     <a class="ws" href="#projects"><span class="wnum">II</span><span class="wlabel">projects</span></a>
     <a class="ws" href="#stack"><span class="wnum">III</span><span class="wlabel">stack</span></a>
-    <a class="ws" href="#posture"><span class="wnum">IV</span><span class="wlabel">security</span></a>
-    <a class="ws" href="#contact"><span class="wnum">V</span><span class="wlabel">contact</span></a>
+    <a class="ws" href="#timeline"><span class="wnum">IV</span><span class="wlabel">timeline</span></a>
+    <a class="ws" href="#posture"><span class="wnum">V</span><span class="wlabel">security</span></a>
+    <a class="ws" href="#contact"><span class="wnum">VI</span><span class="wlabel">contact</span></a>
   </div>
   <div class="right">
     <a class="avail" href="#contact" id="avail">
@@ -433,6 +434,84 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <h2 class="sr-only">Timeline</h2>
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">git</span> <span class="t flag">log --graph</span> <span class="t path-c">~/timeline</span></span>
+      <span class="note"># 5 commits · newest first</span>
+    </div>
+
+    <ol class="glog">
+      <li class="commit ln" data-hash="a7f3e21">
+        <span class="node" aria-hidden="true"></span>
+        <div class="cmeta">
+          <span class="hash">a7f3e21</span>
+          <span class="refs"><span class="ref head">HEAD -&gt; main</span><span class="ref">edu</span></span>
+          <span class="cdate">oct 2023 – mar 2027 (expected)</span>
+        </div>
+        <h3 class="csubject">BSc Computer Science (Hons) — UiTM Shah Alam</h3>
+        <ul class="cbody">
+          <li>CGPA 3.66 · Dean's List every semester</li>
+          <li>Final year project: C-Aegis — Android parental monitoring, geofencing and tamper-resistant app control</li>
+        </ul>
+      </li>
+
+      <li class="commit ln" data-hash="3d90c4f">
+        <span class="node" aria-hidden="true"></span>
+        <div class="cmeta">
+          <span class="hash">3d90c4f</span>
+          <span class="refs"><span class="ref work">work</span></span>
+          <span class="cdate">may 2025</span>
+        </div>
+        <h3 class="csubject">Exam invigilator — Community Tuition Group, Selangor</h3>
+        <ul class="cbody">
+          <li>Ran a hall of 20+ students solo — seating, materials, and order start to finish</li>
+        </ul>
+      </li>
+
+      <li class="commit ln" data-hash="8b2e510">
+        <span class="node" aria-hidden="true"></span>
+        <div class="cmeta">
+          <span class="hash">8b2e510</span>
+          <span class="refs"><span class="ref">edu</span></span>
+          <span class="cdate">aug 2022 – jun 2023</span>
+        </div>
+        <h3 class="csubject">Foundation in Engineering — UiTM Dengkil</h3>
+        <ul class="cbody">
+          <li>CGPA 3.81 · top 10% of the faculty cohort</li>
+          <li>Ranked 1st in cohort, second semester</li>
+        </ul>
+      </li>
+
+      <li class="commit ln" data-hash="c15af73">
+        <span class="node" aria-hidden="true"></span>
+        <div class="cmeta">
+          <span class="hash">c15af73</span>
+          <span class="refs"><span class="ref">edu</span></span>
+          <span class="cdate">2022</span>
+        </div>
+        <h3 class="csubject">SPM — SMK Saujana Utama</h3>
+        <ul class="cbody">
+          <li>8A out of 9 subjects</li>
+        </ul>
+      </li>
+
+      <li class="commit ln" data-hash="0e4d6a1">
+        <span class="node" aria-hidden="true"></span>
+        <div class="cmeta">
+          <span class="hash">0e4d6a1</span>
+          <span class="refs"><span class="ref work">work</span><span class="ref root">root-commit</span></span>
+          <span class="cdate">apr 2022 – jul 2022</span>
+        </div>
+        <h3 class="csubject">Part-time crew — Subway, Eco Grandeur Puncak Alam</h3>
+        <ul class="cbody">
+          <li>Open to close through peak volume, accuracy held under pressure</li>
+        </ul>
+      </li>
+    </ol>
   </section>
 
   <!-- SECURITY -->
