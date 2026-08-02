@@ -15,4 +15,11 @@
       root.classList.toggle("hero-off", !entries[0].isIntersecting);
     }).observe(hero);
   }
+
+  var netmap = document.querySelector(".netmap");
+  if(netmap && "IntersectionObserver" in window){
+    new IntersectionObserver(function(entries){
+      root.classList.toggle("netmap-off", !entries[0].isIntersecting);
+    }).observe(netmap);
+  }
 })();

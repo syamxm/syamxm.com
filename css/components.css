@@ -202,6 +202,47 @@
   .psrow .used{grid-area:used;text-align:left}
 }
 
+/* ---- uses: homeserver spec + traffic path ---- */
+#uses{border-top:1px solid var(--line);margin-top:26px;padding-bottom:8px}
+.usesgrid{display:grid;gap:22px;align-items:start}
+@media(min-width:900px){.usesgrid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}}
+.netmap{
+  position:relative;
+  padding:22px 18px;
+  background:rgba(22,18,31,.92);
+  border:1px solid var(--line);border-radius:6px;
+  overflow-x:auto;
+  box-shadow:inset 0 1px 0 rgba(205,214,244,.04),0 12px 32px -20px rgba(0,0,0,.6);
+}
+.netmap .label{color:var(--dim);font-size:11px;margin-bottom:14px;display:block}
+.netmap pre{font-size:12px;line-height:1.75;color:var(--muted);white-space:pre}
+.netmap .p{color:var(--purple);text-shadow:0 0 9px var(--glow-purple)}
+.netmap .g{color:var(--green);text-shadow:0 0 9px var(--glow-green)}
+.netmap .dim-t{color:var(--fg)}
+/* a packet runs the trunk from the edge down to the bridge */
+.netmap .flow{
+  position:absolute;left:38px;top:74px;
+  width:5px;height:5px;border-radius:50%;
+  background:var(--purple);
+  box-shadow:0 0 10px 2px var(--glow-purple);
+  opacity:0;pointer-events:none;
+}
+@media(min-width:769px) and (prefers-reduced-motion:no-preference){
+  body:not(.lite-root) .netmap .flow{animation:packet 3.4s var(--ease) infinite}
+  @keyframes packet{
+    0%{opacity:0;transform:translateY(0)}
+    12%{opacity:1}
+    88%{opacity:1}
+    100%{opacity:0;transform:translateY(122px)}
+  }
+}
+.tab-hidden .netmap .flow,
+.netmap-off .netmap .flow{animation-play-state:paused}
+.usesside{display:flex;flex-direction:column;gap:22px}
+.specs{font-size:13px}
+.specs .key{width:11ch}
+@media(max-width:620px){.netmap{padding:18px 14px}.netmap pre{font-size:11px}}
+
 /* ---- timeline: git log --graph ---- */
 #timeline{border-top:1px solid var(--line);margin-top:26px;padding-bottom:8px}
 .glog{list-style:none;position:relative;padding-left:26px}

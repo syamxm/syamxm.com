@@ -60,6 +60,15 @@
     "               theme   cachyos violet"
   ].join("\n");
 
+  var USES = [
+    "host       debian 13 · docker · 8+ services, none with a published port",
+    "edge       cloudflare tunnel → nginx (hsts · csp · real-ip)",
+    "host edge  ufw · fail2ban · crowdsec",
+    "private    tailscale — ssh and ci deploys",
+    "workstation cachyos · waybar · fish",
+    "rendered above ↑"
+  ].join("\n");
+
   var TIMELINE = [
     "* a7f3e21 (HEAD -> main) BSc Computer Science (Hons) — UiTM Shah Alam",
     "* 3d90c4f exam invigilator — Community Tuition Group",
@@ -165,7 +174,8 @@
   var history = [];
   var hidx = 0;
   var COMMANDS = ["help", "whoami", "ls", "open ", "cat contact.txt", "cat security.txt",
-    "skills ps", "skills ps --", "git log", "avail", "neofetch", "uptime", "tree", "history", "fortune",
+    "skills ps", "skills ps --", "uses", "git log", "avail", "neofetch", "uptime", "tree",
+    "history", "fortune",
     "ping", "date", "echo ", "clear", "sudo hire syamxm", "cmatrix"];
 
   function run(c){
@@ -173,7 +183,7 @@
     if(c === "clear"){ tout.textContent = ""; return; }
     echo(c);
     if(c === "help"){
-      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  git log  avail  uptime  fortune  ping  date  echo\nhistory  clear  sudo hire syamxm", "out");
+      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  uses  git log  avail  uptime  fortune  ping  date\necho  history  clear  sudo hire syamxm", "out");
     } else if(c === "whoami"){
       tprint("visitor — guest session on syamxm@homeserver", "out");
     } else if(c === "ls" || c === "ls ~/projects" || c === "ls projects"){
@@ -204,6 +214,9 @@
     } else if(c === "cmatrix" || c === "matrix"){
       tprint("wake up, visitor ... (any key to exit)", "out");
       cmatrix();
+    } else if(c === "uses" || c === "cat uses" || c === "cat ~/uses"){
+      document.getElementById("uses").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+      tprint(USES, "out");
     } else if(parts[0] === "git" || c === "timeline"){
       if(parts[0] === "git" && parts[1] !== "log" && parts[1] !== undefined){
         tprint("git: '" + parts[1] + "' is not supported here — try 'git log'", "err");

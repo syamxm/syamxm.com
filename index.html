@@ -17,10 +17,10 @@
 <meta name="twitter:image" content="https://syamxm.com/assets/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='12'%20fill='%230D0B14'/%3E%3Ctext%20x='32'%20y='44'%20font-family='monospace'%20font-size='32'%20font-weight='700'%20fill='%237C3AED'%20text-anchor='middle'%3E~%26gt;%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=7">
-<link rel="stylesheet" href="css/base.css?v=7">
-<link rel="stylesheet" href="css/layout.css?v=7">
-<link rel="stylesheet" href="css/components.css?v=7">
+<link rel="stylesheet" href="css/fonts.css?v=8">
+<link rel="stylesheet" href="css/base.css?v=8">
+<link rel="stylesheet" href="css/layout.css?v=8">
+<link rel="stylesheet" href="css/components.css?v=8">
 </head>
 <body>
 
@@ -34,9 +34,10 @@
     <a class="ws on" href="#about"><span class="wnum">I</span><span class="wlabel">about</span></a>
     <a class="ws" href="#projects"><span class="wnum">II</span><span class="wlabel">projects</span></a>
     <a class="ws" href="#stack"><span class="wnum">III</span><span class="wlabel">stack</span></a>
-    <a class="ws" href="#timeline"><span class="wnum">IV</span><span class="wlabel">timeline</span></a>
-    <a class="ws" href="#posture"><span class="wnum">V</span><span class="wlabel">security</span></a>
-    <a class="ws" href="#contact"><span class="wnum">VI</span><span class="wlabel">contact</span></a>
+    <a class="ws" href="#uses"><span class="wnum">IV</span><span class="wlabel">uses</span></a>
+    <a class="ws" href="#timeline"><span class="wnum">V</span><span class="wlabel">timeline</span></a>
+    <a class="ws" href="#posture"><span class="wnum">VI</span><span class="wlabel">security</span></a>
+    <a class="ws" href="#contact"><span class="wnum">VII</span><span class="wlabel">contact</span></a>
   </div>
   <div class="right">
     <a class="avail" href="#contact" id="avail">
@@ -432,6 +433,64 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <div class="psrow ln" data-cat="languages" data-depth=".3">
           <span class="svc"><i class="dot"></i>kotlin · dart</span><span class="state"><span class="txt">working</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 mobile apps</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USES -->
+  <section id="uses">
+    <h2 class="sr-only">Uses</h2>
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">cat</span> <span class="t arg">~/uses</span></span>
+      <span class="note"># the machine everything on this page runs on</span>
+    </div>
+
+    <div class="usesgrid">
+      <div class="netmap ln">
+        <span class="label"># traffic path — nothing reaches a container without passing every hop above it</span>
+<pre>            <span class="dim-t">internet</span>
+                │
+       ╭────────┴────────╮
+       │ <span class="p">cloudflare tunnel</span> │  <span class="comment">zero inbound ports</span>
+       ╰────────┬────────╯
+                │ <span class="comment">outbound-only</span>
+       ╭────────┴────────╮
+       │ <span class="p">nginx</span>             │  <span class="comment">hsts · csp · real-ip</span>
+       ╰────────┬────────╯
+                │ <span class="comment">docker bridge — internal only</span>
+       ├── beanthere      <span class="comment">php · mariadb</span>
+       ├── taskflow       <span class="comment">mern</span>
+       ├── cipher-agent   <span class="comment">fastapi</span>
+       ├── cipher-forge   <span class="comment">react · fastapi · mongo</span>
+       ├── cv-api         <span class="comment">node · postgres</span>
+       ├── vaultwarden    <span class="comment">secrets</span>
+       └── grafana        <span class="comment">prometheus · loki</span>
+
+       <span class="g">ufw · fail2ban · crowdsec</span>   <span class="comment">host edge, always on</span>
+       <span class="p">tailscale</span>                   <span class="comment">ssh + ci deploys, private</span></pre>
+        <span class="flow" aria-hidden="true"></span>
+      </div>
+
+      <div class="usesside">
+        <table class="facts specs">
+          <caption class="sr-only">Homeserver specification</caption>
+          <tr class="ln"><td class="key">host</td><td class="val">debian 13 · self-hosted at home</td></tr>
+          <tr class="ln"><td class="key">cpu</td><td class="val">—</td></tr>
+          <tr class="ln"><td class="key">memory</td><td class="val">—</td></tr>
+          <tr class="ln"><td class="key">storage</td><td class="val">—</td></tr>
+          <tr class="ln"><td class="key">gpu</td><td class="val">4 GB — runs the local Ollama model behind BeanThere</td></tr>
+          <tr class="ln"><td class="key">runtime</td><td class="val"><code>docker</code> — 8+ services, non-root, internal network</td></tr>
+          <tr class="ln"><td class="key">patching</td><td class="val"><code>unattended-upgrades</code> — unattended, on schedule</td></tr>
+          <tr class="ln"><td class="key">exposure</td><td class="val"><span class="y">zero</span> published host ports</td></tr>
+        </table>
+
+        <table class="facts specs">
+          <caption class="sr-only">Workstation</caption>
+          <tr class="ln"><td class="key">workstation</td><td class="val">cachyos · arch-based</td></tr>
+          <tr class="ln"><td class="key">bar</td><td class="val">waybar — this site borrows its palette</td></tr>
+          <tr class="ln"><td class="key">shell</td><td class="val"><code>fish</code></td></tr>
+          <tr class="ln"><td class="key">type</td><td class="val">jetbrains mono, everywhere</td></tr>
+        </table>
       </div>
     </div>
   </section>
