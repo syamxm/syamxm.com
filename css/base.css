@@ -73,10 +73,9 @@ body{
   }
 }
 ::selection{background:var(--accent);color:#fff}
-::-webkit-scrollbar{width:10px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--sel);border-radius:5px;border:2px solid var(--bg)}
-::-webkit-scrollbar-thumb:hover{background:var(--dim)}
+/* no scrollbar chrome — the statusbar progress line is the position indicator */
+html{scrollbar-width:none}
+::-webkit-scrollbar{width:0;height:0}
 
 .prompt{color:var(--green);text-shadow:0 0 10px rgba(166,227,161,.22)}
 .prompt .tick{color:var(--purple);text-shadow:0 0 8px var(--glow-purple),0 0 26px rgba(124,58,237,.25)}
