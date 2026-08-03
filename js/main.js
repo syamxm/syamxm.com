@@ -300,9 +300,10 @@
   var footstat = document.getElementById("footstat");
   var clkT = document.getElementById("clk-t");
   var clkD = document.getElementById("clk-d");
-  var temp = document.getElementById("temp");
-  var pup = document.getElementById("pup");
+  var tempEls = document.querySelectorAll("[data-temp]");
+  var upEls = document.querySelectorAll("[data-uptime]");
   var loadT = Date.now();
+  function setAll(els, text){ els.forEach(function(el){ el.textContent = text; }); }
   function tick(){
     if(document.hidden) return;
     var d = new Date();
@@ -311,33 +312,59 @@
       clkD.textContent = pad(d.getMonth() + 1) + "/" + pad(d.getDate()) + "/" + String(d.getFullYear()).slice(2);
     }
     if(footstat) footstat.textContent = "up " + uptime() + " · 6/6 gates · fail-closed";
-    if(pup){
-      var m = Math.floor((Date.now() - loadT) / 60000);
-      pup.textContent = "up " + (m < 60 ? m + "m" : Math.floor(m / 60) + "h " + (m % 60) + "m");
-    }
-    if(temp && d.getSeconds() % 5 === 0){
-      temp.textContent = (45 + Math.floor(Math.random() * 8)) + " °C";
+    var m = Math.floor((Date.now() - loadT) / 60000);
+    setAll(upEls, "up " + (m < 60 ? m + "m" : Math.floor(m / 60) + "h " + (m % 60) + "m"));
+    if(d.getSeconds() % 5 === 0){
+      setAll(tempEls, (45 + Math.floor(Math.random() * 8)) + " °C");
     }
   }
   tick();
   setInterval(tick, 1000);
 
   /* ---- internship availability ---- */
-  var availEl = document.getElementById("avail");
-  var availWhen = document.getElementById("availwhen");
+  var availEls = document.querySelectorAll("[data-avail]");
+  var availWhenEls = document.querySelectorAll("[data-availwhen]");
   var availCount = document.getElementById("availcount");
   function paintAvailability(){
     var a = availability();
     if(!a){
-      if(availEl) availEl.remove();
+      availEls.forEach(function(el){ el.remove(); });
       if(availCount) availCount.textContent = "";
       return;
     }
-    if(availWhen) availWhen.textContent = a.pill;
+    setAll(availWhenEls, a.pill);
     if(availCount) availCount.textContent = a.note;
   }
   paintAvailability();
   setInterval(paintAvailability, 3600000);
+
+  /* ---- mobile burger menu ---- */
+  var burger = document.getElementById("burger");
+  var barmenu = document.getElementById("barmenu");
+  function setMenu(open){
+    if(!burger || !barmenu) return;
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    barmenu.hidden = !open;
+  }
+  if(burger && barmenu){
+    burger.addEventListener("click", function(){
+      setMenu(barmenu.hidden);
+    });
+    barmenu.addEventListener("click", function(e){
+      if(e.target.closest("a")) setMenu(false);
+    });
+    document.addEventListener("click", function(e){
+      if(barmenu.hidden) return;
+      if(burger.contains(e.target) || barmenu.contains(e.target)) return;
+      setMenu(false);
+    });
+    document.addEventListener("keydown", function(e){
+      if(e.key === "Escape" && !barmenu.hidden){ setMenu(false); burger.focus(); }
+    });
+    window.addEventListener("resize", function(){
+      if(window.innerWidth > 620) setMenu(false);
+    }, {passive: true});
+  }
 
   /* ---- workspace pills follow the section in view ---- */
   var pills = document.querySelectorAll(".ws");
