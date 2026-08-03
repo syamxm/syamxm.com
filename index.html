@@ -17,10 +17,10 @@
 <meta name="twitter:image" content="https://syamxm.com/assets/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='12'%20fill='%230D0B14'/%3E%3Ctext%20x='32'%20y='44'%20font-family='monospace'%20font-size='32'%20font-weight='700'%20fill='%237C3AED'%20text-anchor='middle'%3E~%26gt;%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=8">
-<link rel="stylesheet" href="css/base.css?v=8">
-<link rel="stylesheet" href="css/layout.css?v=8">
-<link rel="stylesheet" href="css/components.css?v=8">
+<link rel="stylesheet" href="css/fonts.css?v=9">
+<link rel="stylesheet" href="css/base.css?v=9">
+<link rel="stylesheet" href="css/layout.css?v=9">
+<link rel="stylesheet" href="css/components.css?v=9">
 </head>
 <body>
 
@@ -40,11 +40,11 @@
     <a class="ws" href="#contact"><span class="wnum">VII</span><span class="wlabel">contact</span></a>
   </div>
   <div class="right">
-    <a class="avail" href="#contact" id="avail">
-      <span class="alabel">available</span><span class="awhen" id="availwhen">sep 2026</span>
+    <a class="avail" href="#contact" data-avail>
+      <span class="alabel">available</span><span class="awhen" data-availwhen>sep 2026</span>
     </a>
-    <span class="sensor" id="temp">47 °C</span>
-    <span class="sensor" id="pup">up 0m</span>
+    <span class="sensor" data-temp>47 °C</span>
+    <span class="sensor" data-uptime>up 0m</span>
     <a class="tray" href="https://github.com/syamxm" target="_blank" rel="noopener" aria-label="GitHub">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.21.67.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
     </a>
@@ -52,9 +52,30 @@
       <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M3 5.5h18v13H3z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m3 7 9 6.5L21 7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
     </a>
     <span class="clock"><b id="clk-t"></b><i id="clk-d"></i></span>
+    <button class="burger" id="burger" type="button" aria-label="menu" aria-expanded="false" aria-controls="barmenu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
   <span class="scrollprogress" aria-hidden="true"></span>
 </nav>
+
+<div class="barmenu" id="barmenu" hidden>
+  <a class="bmrow" href="#contact" data-avail>
+    <span class="bmk">available</span><span class="bmv green" data-availwhen>sep 2026</span>
+  </a>
+  <a class="bmrow" href="https://github.com/syamxm" target="_blank" rel="noopener">
+    <span class="bmk">github</span><span class="bmv">@syamxm</span>
+  </a>
+  <a class="bmrow" href="mailto:ahmadsyamim200@gmail.com">
+    <span class="bmk">email</span><span class="bmv">ahmadsyamim200@gmail.com</span>
+  </a>
+  <div class="bmrow">
+    <span class="bmk">temp</span><span class="bmv sensor" data-temp>47 °C</span>
+  </div>
+  <div class="bmrow">
+    <span class="bmk">session</span><span class="bmv sensor" data-uptime>up 0m</span>
+  </div>
+</div>
 
 <div class="shell">
 <main>
@@ -635,9 +656,9 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
   </figure>
 </div>
 
-<script src="js/perf.js?v=8"></script>
-<script src="js/boot.js?v=8"></script>
-<script src="js/main.js?v=8"></script>
-<script src="js/gallery.js?v=8"></script>
+<script src="js/perf.js?v=9"></script>
+<script src="js/boot.js?v=9"></script>
+<script src="js/main.js?v=9"></script>
+<script src="js/gallery.js?v=9"></script>
 </body>
 </html>

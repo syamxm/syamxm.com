@@ -83,15 +83,60 @@
 }
 .clock b{color:var(--fg);font-weight:600}
 .clock i{font-style:normal;color:var(--dim);font-size:10px}
+/* burger — mobile only, opens the tray items as a dropdown */
+.burger{
+  display:none;flex:none;
+  flex-direction:column;justify-content:center;gap:4px;
+  width:30px;height:30px;padding:0 6px;
+  background:var(--pill-bg);
+  border:1px solid var(--pill-border);
+  border-radius:9px;cursor:pointer;
+  transition:border-color .3s,background .3s;
+}
+.burger span{
+  display:block;height:1.5px;border-radius:2px;
+  background:var(--purple);
+  transition:transform .25s var(--ease),opacity .2s var(--ease);
+}
+.burger[aria-expanded="true"]{border-color:var(--accent)}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
+
+.barmenu{
+  position:fixed;top:58px;right:10px;left:10px;z-index:6;
+  display:flex;flex-direction:column;
+  padding:6px;
+  background:var(--bar-bg);
+  border:1px solid var(--accent);
+  border-radius:14px;
+  font-size:12px;
+  box-shadow:0 16px 40px -18px rgba(0,0,0,.75),0 0 22px -8px var(--accent-glow);
+}
+.barmenu[hidden]{display:none}
+.bmrow{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:9px 10px;border-radius:9px;
+  text-decoration:none;color:var(--muted);
+  transition:background .2s,color .2s;
+}
+a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);outline:none}
+.bmk{color:var(--purple)}
+.bmv{color:var(--fg);font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bmv.green{color:var(--green)}
+.barmenu .sensor::before{content:none}
+
 /* six workspaces — labels give way before the tray does */
 @media(max-width:1024px){.ws .wlabel{display:none}}
 @media(max-width:620px){
   .ws .wlabel{display:none}
   .ws{padding:2px 9px}
-  .sensor,.tray{display:none}
-  .avail .awhen{display:none}
-  .statusbar{gap:10px;padding:0 14px}
+  .sensor,.tray,.statusbar .avail{display:none}
+  .burger{display:flex}
+  .statusbar{gap:10px;padding:0 10px}
+  .statusbar .right{gap:10px}
 }
+@media(min-width:621px){.barmenu{display:none}}
 @media(min-width:769px){
   body:not(.lite-root) .statusbar{
     background:rgba(13,11,20,.6);
