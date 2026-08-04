@@ -5,7 +5,10 @@
   var tin = document.getElementById("tin");
   var tout = document.getElementById("tout");
   var fp = document.getElementById("fp");
-  var BOOT_EPOCH = Date.parse("2026-07-17T04:00:00Z");
+
+  /* latest reading from js/metrics.js — null until the homeserver answers */
+  var live = null;
+  document.addEventListener("metrics", function(e){ live = e.detail; });
 
   var PROJECTS = {
     "beanthere": "https://beanthere.syamxm.com",
@@ -33,12 +36,6 @@
   }
 
   function pad(n){ return (n < 10 ? "0" : "") + n; }
-  function uptime(){
-    var s = Math.max(0, Math.floor((Date.now() - BOOT_EPOCH) / 1000));
-    var d = Math.floor(s / 86400);
-    s -= d * 86400;
-    return d + "d " + pad(Math.floor(s / 3600)) + ":" + pad(Math.floor(s % 3600 / 60)) + ":" + pad(s % 60);
-  }
 
   var FORTUNES = [
     "the S in IoT stands for security",
@@ -50,15 +47,23 @@
     "127.0.0.1 is where the heart is"
   ];
 
-  var NEOFETCH = [
-    "   ▄▄▄▄▄▄▄     visitor@syamxm.com",
-    "  █ ~> ▌  █    ------------------",
-    "  █       █    os      debian 13 · self-hosted",
-    "  █ ▂▂▂▂▂ █    shell   fish",
-    "   ▀▀▀▀▀▀▀     net     tailscale + cloudflare tunnel",
-    "               ci      6/6 gates · fail-closed",
-    "               theme   cachyos violet"
-  ].join("\n");
+  function neofetch(){
+    var d = live && live.data;
+    return [
+      "   ▄▄▄▄▄▄▄     visitor@syamxm.com",
+      "  █ ~> ▌  █    ------------------",
+      "  █       █    os      debian 13 · self-hosted",
+      "  █       █    kernel  " + (d ? d.host.kernel : "—"),
+      "  █ ▂▂▂▂▂ █    uptime  " + (live ? live.uptime : "—"),
+      "   ▀▀▀▀▀▀▀     cpu     " + (d ? d.host.cpu_model + " · " + d.host.threads + " threads" : "—"),
+      "               load    " + (d ? d.cpu.pct + "% · " + live.temp : "—"),
+      "               docker  " + (d ? d.containers_running + " containers running" : "—"),
+      "               shell   fish",
+      "               net     tailscale + cloudflare tunnel",
+      "               ci      6/6 gates · fail-closed",
+      "               theme   cachyos violet"
+    ].join("\n");
+  }
 
   var USES = [
     "host       debian 13 · docker · 8+ services, none with a published port",
@@ -174,7 +179,7 @@
   var history = [];
   var hidx = 0;
   var COMMANDS = ["help", "whoami", "ls", "open ", "cat contact.txt", "cat security.txt",
-    "skills ps", "skills ps --", "uses", "git log", "avail", "neofetch", "uptime", "tree",
+    "skills ps", "skills ps --", "uses", "git log", "avail", "neofetch", "uptime", "tree", "btop",
     "history", "fortune",
     "ping", "date", "echo ", "clear", "sudo hire syamxm", "cmatrix"];
 
@@ -183,7 +188,7 @@
     if(c === "clear"){ tout.textContent = ""; return; }
     echo(c);
     if(c === "help"){
-      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  uses  git log  avail  uptime  fortune  ping  date\necho  history  clear  sudo hire syamxm", "out");
+      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  uses  btop  git log  avail  uptime  fortune  ping\ndate  echo  history  clear  sudo hire syamxm", "out");
     } else if(c === "whoami"){
       tprint("visitor — guest session on syamxm@homeserver", "out");
     } else if(c === "ls" || c === "ls ~/projects" || c === "ls projects"){
@@ -198,7 +203,7 @@
       document.getElementById("posture").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
       tprint("rendered above ↑", "out");
     } else if(c === "neofetch"){
-      tprint(NEOFETCH, "out");
+      tprint(neofetch(), "out");
     } else if(c === "tree" || c === "tree ~/projects" || c === "tree projects"){
       tree();
     } else if(c === "history"){
@@ -239,7 +244,18 @@
         tprint(shown + " unit" + (shown === 1 ? "" : "s") + " matched --" + cat + " — rendered above ↑", "out");
       }
     } else if(c === "uptime"){
-      tprint("up " + uptime() + " · all systems green", "out");
+      if(!live) tprint("uptime: no reading yet — the homeserver has not answered", "err");
+      else tprint("up " + live.uptime + " · cpu " + live.temp + " · all systems green", "out");
+    } else if(c === "btop" || c === "htop" || c === "top"){
+      document.getElementById("btop").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+      if(!live) tprint("btop: waiting for the homeserver to answer ↑", "out");
+      else {
+        var d = live.data;
+        tprint("cpu  " + d.cpu.pct + "%  " + live.temp + "  load " + d.cpu.load.join(" ") + "\n" +
+               "mem  " + d.mem.pct + "% used · swap " + d.mem.swap_pct + "%\n" +
+               "disk " + d.disk.pct + "% of root · " + d.containers_running + " containers running\n" +
+               "rendered above ↑", "out");
+      }
     } else if(c === "sudo hire syamxm"){
       tprint("[sudo] password for recruiter: ********\naccess granted — forwarding to ahmadsyamim200@gmail.com ...", "out");
     } else if(c === "rm -rf /" || c === "sudo rm -rf /"){
@@ -296,27 +312,14 @@
     tin.focus({preventScroll: true});
   });
 
-  /* ---- footer uptime + waybar clock / sensors ---- */
-  var footstat = document.getElementById("footstat");
+  /* ---- waybar clock — the sensors next to it are painted by js/metrics.js ---- */
   var clkT = document.getElementById("clk-t");
   var clkD = document.getElementById("clk-d");
-  var tempEls = document.querySelectorAll("[data-temp]");
-  var upEls = document.querySelectorAll("[data-uptime]");
-  var loadT = Date.now();
-  function setAll(els, text){ els.forEach(function(el){ el.textContent = text; }); }
   function tick(){
-    if(document.hidden) return;
+    if(document.hidden || !clkT) return;
     var d = new Date();
-    if(clkT){
-      clkT.textContent = pad(d.getHours()) + ":" + pad(d.getMinutes());
-      clkD.textContent = pad(d.getMonth() + 1) + "/" + pad(d.getDate()) + "/" + String(d.getFullYear()).slice(2);
-    }
-    if(footstat) footstat.textContent = "up " + uptime() + " · 6/6 gates · fail-closed";
-    var m = Math.floor((Date.now() - loadT) / 60000);
-    setAll(upEls, "up " + (m < 60 ? m + "m" : Math.floor(m / 60) + "h " + (m % 60) + "m"));
-    if(d.getSeconds() % 5 === 0){
-      setAll(tempEls, (45 + Math.floor(Math.random() * 8)) + " °C");
-    }
+    clkT.textContent = pad(d.getHours()) + ":" + pad(d.getMinutes());
+    clkD.textContent = pad(d.getMonth() + 1) + "/" + pad(d.getDate()) + "/" + String(d.getFullYear()).slice(2);
   }
   tick();
   setInterval(tick, 1000);
@@ -332,7 +335,7 @@
       if(availCount) availCount.textContent = "";
       return;
     }
-    setAll(availWhenEls, a.pill);
+    availWhenEls.forEach(function(el){ el.textContent = a.pill; });
     if(availCount) availCount.textContent = a.note;
   }
   paintAvailability();

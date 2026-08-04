@@ -17,10 +17,10 @@
 <meta name="twitter:image" content="https://syamxm.com/assets/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='12'%20fill='%230D0B14'/%3E%3Ctext%20x='32'%20y='44'%20font-family='monospace'%20font-size='32'%20font-weight='700'%20fill='%237C3AED'%20text-anchor='middle'%3E~%26gt;%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=9">
-<link rel="stylesheet" href="css/base.css?v=9">
-<link rel="stylesheet" href="css/layout.css?v=9">
-<link rel="stylesheet" href="css/components.css?v=9">
+<link rel="stylesheet" href="css/fonts.css?v=10">
+<link rel="stylesheet" href="css/base.css?v=10">
+<link rel="stylesheet" href="css/layout.css?v=10">
+<link rel="stylesheet" href="css/components.css?v=10">
 </head>
 <body>
 
@@ -35,16 +35,17 @@
     <a class="ws" href="#projects"><span class="wnum">II</span><span class="wlabel">projects</span></a>
     <a class="ws" href="#stack"><span class="wnum">III</span><span class="wlabel">stack</span></a>
     <a class="ws" href="#uses"><span class="wnum">IV</span><span class="wlabel">uses</span></a>
-    <a class="ws" href="#timeline"><span class="wnum">V</span><span class="wlabel">timeline</span></a>
-    <a class="ws" href="#posture"><span class="wnum">VI</span><span class="wlabel">security</span></a>
-    <a class="ws" href="#contact"><span class="wnum">VII</span><span class="wlabel">contact</span></a>
+    <a class="ws" href="#btop"><span class="wnum">V</span><span class="wlabel">live</span></a>
+    <a class="ws" href="#timeline"><span class="wnum">VI</span><span class="wlabel">timeline</span></a>
+    <a class="ws" href="#posture"><span class="wnum">VII</span><span class="wlabel">security</span></a>
+    <a class="ws" href="#contact"><span class="wnum">VIII</span><span class="wlabel">contact</span></a>
   </div>
   <div class="right">
     <a class="avail" href="#contact" data-avail>
       <span class="alabel">available</span><span class="awhen" data-availwhen>sep 2026</span>
     </a>
-    <span class="sensor" data-temp>47 °C</span>
-    <span class="sensor" data-uptime>up 0m</span>
+    <a class="sensor" href="#btop" data-temp title="live cpu temperature">— °C</a>
+    <a class="sensor" href="#btop" data-uptime title="live server uptime">up —</a>
     <a class="tray" href="https://github.com/syamxm" target="_blank" rel="noopener" aria-label="GitHub">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.21.67.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
     </a>
@@ -69,12 +70,12 @@
   <a class="bmrow" href="mailto:ahmadsyamim200@gmail.com">
     <span class="bmk">email</span><span class="bmv">ahmadsyamim200@gmail.com</span>
   </a>
-  <div class="bmrow">
-    <span class="bmk">temp</span><span class="bmv sensor" data-temp>47 °C</span>
-  </div>
-  <div class="bmrow">
-    <span class="bmk">session</span><span class="bmv sensor" data-uptime>up 0m</span>
-  </div>
+  <a class="bmrow" href="#btop">
+    <span class="bmk">cpu temp</span><span class="bmv sensor" data-temp>— °C</span>
+  </a>
+  <a class="bmrow" href="#btop">
+    <span class="bmk">uptime</span><span class="bmv sensor" data-uptime>up —</span>
+  </a>
 </div>
 
 <div class="shell">
@@ -496,9 +497,9 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <table class="facts specs">
           <caption class="sr-only">Homeserver specification</caption>
           <tr class="ln"><td class="key">host</td><td class="val">debian 13 · self-hosted at home</td></tr>
-          <tr class="ln"><td class="key">cpu</td><td class="val">—</td></tr>
-          <tr class="ln"><td class="key">memory</td><td class="val">—</td></tr>
-          <tr class="ln"><td class="key">storage</td><td class="val">—</td></tr>
+          <tr class="ln"><td class="key">cpu</td><td class="val" data-spec-cpu>—</td></tr>
+          <tr class="ln"><td class="key">memory</td><td class="val" data-spec-mem>—</td></tr>
+          <tr class="ln"><td class="key">storage</td><td class="val" data-spec-disk>—</td></tr>
           <tr class="ln"><td class="key">gpu</td><td class="val">4 GB — runs the local Ollama model behind BeanThere</td></tr>
           <tr class="ln"><td class="key">runtime</td><td class="val"><code>docker</code> — 8+ services, non-root, internal network</td></tr>
           <tr class="ln"><td class="key">patching</td><td class="val"><code>unattended-upgrades</code> — unattended, on schedule</td></tr>
@@ -513,6 +514,88 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
           <tr class="ln"><td class="key">type</td><td class="val">jetbrains mono, everywhere</td></tr>
         </table>
       </div>
+    </div>
+  </section>
+
+  <!-- LIVE — btop -->
+  <section id="btop">
+    <h2 class="sr-only">Live server monitor</h2>
+    <div class="sechead">
+      <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">btop</span></span>
+      <span class="note"># real metrics from the box this page is served from</span>
+    </div>
+
+    <div class="btop" data-btop data-state="waiting">
+      <div class="bpanel bcpu ln">
+        <div class="bhead">
+          <span class="btitle">cpu</span>
+          <span class="bsub" data-cpu-model>—</span>
+          <span class="bnums">
+            <b class="bpct" data-cpu-pct>—</b>
+            <span class="btemp" data-cpu-temp>—</span>
+          </span>
+        </div>
+        <div class="bgraph" data-cpu-graph aria-hidden="true"></div>
+        <div class="bcores" data-cores></div>
+        <div class="bfoot">
+          <span>load <b data-load>—</b></span>
+          <span>procs <b data-procs>—</b></span>
+          <span>up <b data-uptime-long>—</b></span>
+          <span>kernel <b data-kernel>—</b></span>
+        </div>
+      </div>
+
+      <div class="bpanel bmem ln">
+        <div class="bhead"><span class="btitle">memory</span></div>
+        <div class="bmeters">
+          <div class="bmeter">
+            <span class="mk">ram</span>
+            <span class="meter" aria-hidden="true"><i data-mem-bar></i></span>
+            <span class="mv" data-mem>—</span>
+          </div>
+          <div class="bmeter">
+            <span class="mk">swap</span>
+            <span class="meter" aria-hidden="true"><i data-swap-bar></i></span>
+            <span class="mv" data-swap>—</span>
+          </div>
+          <div class="bmeter">
+            <span class="mk">/</span>
+            <span class="meter" aria-hidden="true"><i data-disk-bar></i></span>
+            <span class="mv" data-disk>—</span>
+          </div>
+          <div class="bmeter">
+            <span class="mk">/home</span>
+            <span class="meter" aria-hidden="true"><i data-home-bar></i></span>
+            <span class="mv" data-home>—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bpanel bio ln">
+        <div class="bhead"><span class="btitle">i/o</span></div>
+        <div class="biogrid">
+          <div class="biocell"><span class="ik">net ↓</span><b data-net-rx>—</b></div>
+          <div class="biocell"><span class="ik">net ↑</span><b data-net-tx>—</b></div>
+          <div class="biocell"><span class="ik">disk r</span><b data-disk-read>—</b></div>
+          <div class="biocell"><span class="ik">disk w</span><b data-disk-write>—</b></div>
+          <div class="biocell"><span class="ik">nvme</span><b class="btemp" data-nvme-temp>—</b></div>
+          <div class="biocell"><span class="ik">gpu</span><b class="btemp" data-gpu-temp>—</b></div>
+        </div>
+      </div>
+
+      <div class="bpanel bproc ln">
+        <div class="bhead">
+          <span class="btitle">containers</span>
+          <span class="bsub" data-run-count>—</span>
+        </div>
+        <div class="chead" aria-hidden="true">
+          <span>name</span><span>image</span><span>cpu</span><span class="num">%</span><span class="num">mem</span>
+        </div>
+        <div class="crows" data-crows></div>
+        <p class="bmore" data-more hidden></p>
+      </div>
+
+      <p class="bstatus" data-btop-status>connecting to the homeserver …</p>
     </div>
   </section>
 
@@ -656,9 +739,10 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
   </figure>
 </div>
 
-<script src="js/perf.js?v=9"></script>
-<script src="js/boot.js?v=9"></script>
-<script src="js/main.js?v=9"></script>
-<script src="js/gallery.js?v=9"></script>
+<script src="js/perf.js?v=10"></script>
+<script src="js/boot.js?v=10"></script>
+<script src="js/main.js?v=10"></script>
+<script src="js/metrics.js?v=10"></script>
+<script src="js/gallery.js?v=10"></script>
 </body>
 </html>
