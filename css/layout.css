@@ -121,6 +121,19 @@
   transition:background .2s,color .2s;
 }
 a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);outline:none}
+.bmnav{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.bmsec{
+  display:flex;align-items:baseline;gap:8px;
+  padding:10px;border-radius:9px;
+  text-decoration:none;color:var(--muted);
+  border:1px solid transparent;
+  transition:background .2s,color .2s,border-color .2s;
+}
+.bmsec:hover,.bmsec:focus-visible{background:var(--pill-bg);color:var(--fg);outline:none}
+.bmsec .bmnum{color:var(--purple);font-size:11px;letter-spacing:.06em;min-width:26px}
+.bmsec.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.bmsec.on .bmnum{color:#fff}
+.bmsep{height:1px;margin:6px 4px;background:var(--line)}
 .bmk{color:var(--purple)}
 .bmv{color:var(--fg);font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bmv.green{color:var(--green)}
@@ -129,9 +142,7 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
 /* six workspaces — labels give way before the tray does */
 @media(max-width:1024px){.ws .wlabel{display:none}}
 @media(max-width:620px){
-  .ws .wlabel{display:none}
-  .ws{padding:2px 9px}
-  .sensor,.tray,.statusbar .avail{display:none}
+  .wsp,.sensor,.tray,.statusbar .avail{display:none}
   .burger{display:flex}
   .statusbar{gap:10px;padding:0 10px}
   .statusbar .right{gap:10px}
