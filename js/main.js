@@ -370,7 +370,7 @@
   }
 
   /* ---- workspace pills follow the section in view ---- */
-  var pills = document.querySelectorAll(".ws");
+  var pills = document.querySelectorAll("[data-nav]");
   var secList = document.querySelectorAll("main section[id]");
   var spyLock = 0;
   function setActive(id){
