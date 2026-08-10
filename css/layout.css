@@ -10,9 +10,9 @@
 
 /* status bar — waybar-style floating glass pill */
 .statusbar{
-  position:fixed;top:8px;left:10px;right:10px;z-index:5;
+  position:fixed;top:var(--bar-top);left:10px;right:10px;z-index:5;
   display:flex;align-items:center;gap:14px;
-  height:44px;padding:0 16px;
+  height:var(--bar-h);padding:0 16px;
   background:var(--bar-bg);
   border:1px solid var(--bar-border);
   border-radius:14px;
