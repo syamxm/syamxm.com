@@ -13,6 +13,7 @@
   var moreLine = document.querySelector("[data-more]");
   var tempEls = document.querySelectorAll("[data-temp]");
   var upEls = document.querySelectorAll("[data-uptime]");
+  var upShortEls = document.querySelectorAll("[data-uptime-short]");
   var footstat = document.getElementById("footstat");
 
   var history = [];
@@ -49,6 +50,11 @@
     var d = Math.floor(seconds / 86400);
     var rest = seconds - d * 86400;
     return d + "d " + pad(Math.floor(rest / 3600)) + ":" + pad(Math.floor(rest % 3600 / 60));
+  }
+  function uptimeShortText(seconds){
+    if(seconds === null || seconds === undefined) return "—";
+    var d = Math.floor(seconds / 86400);
+    return d + "d " + pad(Math.floor((seconds - d * 86400) / 3600)) + "h";
   }
 
   function heatClass(temp){
@@ -192,6 +198,8 @@
     var up = "up " + uptimeText(data.uptime_s);
     tempEls.forEach(function(node){ node.textContent = temp; });
     upEls.forEach(function(node){ node.textContent = up; });
+    var upShort = "up " + uptimeShortText(data.uptime_s);
+    upShortEls.forEach(function(node){ node.textContent = upShort; });
     if(footstat) footstat.textContent = up + " · 6/6 gates · fail-closed";
 
     win.dataset.state = "live";

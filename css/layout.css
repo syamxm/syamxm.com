@@ -51,6 +51,7 @@
 .ws .wlabel{font-size:11px}
 .statusbar .right{margin-left:auto;display:flex;align-items:center;gap:14px}
 .sensor{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.upshort{display:none}
 .sensor::before{content:"● ";color:var(--green);text-shadow:0 0 6px var(--glow-green)}
 .avail{
   display:flex;align-items:baseline;gap:7px;
@@ -161,10 +162,12 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
 /* six workspaces — labels give way before the tray does */
 @media(max-width:1024px){.ws .wlabel{display:none}}
 @media(max-width:620px){
-  .wsp,.sensor,.tray,.statusbar .avail,.statusbar .visitors{display:none}
+  .wsp,.tray,.statusbar .avail,.statusbar .visitors{display:none}
   .burger{display:flex}
   .statusbar{gap:10px;padding:0 10px}
   .statusbar .right{gap:10px}
+  .statusbar .upfull{display:none}
+  .statusbar .upshort{display:inline}
 }
 @media(min-width:621px){.barmenu{display:none}}
 @media(min-width:769px){
