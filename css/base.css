@@ -10,6 +10,8 @@
   --accent-glow:rgba(124,58,237,.5);
   --bar-bg:rgba(13,11,20,.85);
   --bar-border:rgba(124,58,237,.55);
+  --bar-top:8px;
+  --bar-h:44px;
   --pill-bg:rgba(124,58,237,.12);
   --pill-border:rgba(124,58,237,.4);
   --green:#A6E3A1;
@@ -24,7 +26,7 @@
 }
 @property --angle{syntax:"<angle>";initial-value:0deg;inherits:false}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--bar-top) + var(--bar-h) + 5px)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
   background:
