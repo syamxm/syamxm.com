@@ -227,10 +227,34 @@ section{padding:0}
   margin:.35em 0 .6em;
   text-wrap:balance;
 }
-.hero h1 .accent{
+.hero h1 .accent,.wordmark-name .accent{
   color:var(--accent);
   text-decoration:none;
   text-shadow:0 0 20px var(--accent-glow),0 0 60px rgba(124,58,237,.25);
+}
+/* the wordmark is 55 monospace columns wide; cqw keeps it filling the text
+   column at every width instead of overflowing or needing a scroller */
+#hero-out{container-type:inline-size}
+.hero h1.wordmark{max-width:none;margin:14px 0 0}
+.figlet{
+  display:block;
+  white-space:pre;
+  font-weight:700;
+  font-size:12px;
+  font-size:min(3cqw,16px);
+  line-height:1.04;
+  /* the tight tracking + hairline stroke overlap adjacent block glyphs so the
+     solid fills read as one shape instead of a grid of antialiased cells */
+  letter-spacing:-.02em;
+  -webkit-text-stroke:1px currentColor;
+  color:var(--fg);
+  text-shadow:0 0 18px var(--accent-glow),0 0 60px rgba(124,58,237,.22);
+}
+.wordmark-name{
+  margin:14px 0 22px;
+  font-size:14px;
+  color:var(--dim);
+  letter-spacing:.08em;
 }
 .hero .sub{color:var(--muted);max-width:62ch;text-wrap:pretty}
 .hero .sub a{
