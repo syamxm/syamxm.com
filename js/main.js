@@ -13,24 +13,27 @@
   var PROJECTS = {
     "beanthere": "https://beanthere.syamxm.com",
     "taskflow": "https://taskflow.syamxm.com",
+    "debian-watch": "https://debian-watch.syamxm.com",
     "dashboard": "https://dash.syamxm.com",
     "reminder": "https://github.com/syamxm/student_reminder_system",
     "cipher-agent": "https://cipher-agent.syamxm.com",
     "cipher-forge": "https://cipher-forge.syamxm.com",
-    "cv": "https://cv.syamxm.com"
+    "cv": "https://cv.syamxm.com",
+    "cv-spring": "https://cv-spring.syamxm.com",
+    "c-aegis": "https://c-aegis.syamxm.com"
   };
 
   var INTERN_START = Date.parse("2026-09-07T00:00:00+08:00");
-  var INTERN_END = Date.parse("2026-12-11T23:59:59+08:00");
+  var INTERN_END = Date.parse("2027-03-05T23:59:59+08:00");
 
-  /* the pill counts down, flips to "available now", then retires itself */
+  /* the pill counts down to the start, flips to "in progress", then retires itself */
   function availability(){
     var now = Date.now();
     if(now > INTERN_END) return null;
-    if(now >= INTERN_START) return {pill: "available now", note: "Available now."};
+    if(now >= INTERN_START) return {pill: "in progress", note: "In progress until 5 March 2027."};
     var days = Math.ceil((INTERN_START - now) / 86400000);
     return {
-      pill: "sep 2026",
+      pill: "placed · sep 2026",
       note: "Starts in " + days + " day" + (days === 1 ? "" : "s") + "."
     };
   }
@@ -75,7 +78,8 @@
   ].join("\n");
 
   var TIMELINE = [
-    "* a7f3e21 (HEAD -> main) BSc Computer Science (Hons) — UiTM Shah Alam",
+    "* f1c9d04 (HEAD -> main) DevOps intern — 6-month industrial placement",
+    "* a7f3e21 BSc Computer Science (Hons) — UiTM Shah Alam",
     "* 3d90c4f exam invigilator — Community Tuition Group",
     "* 8b2e510 Foundation in Engineering — UiTM Dengkil",
     "* c15af73 SPM — SMK Saujana Utama",
@@ -231,8 +235,8 @@
       }
     } else if(c === "avail" || c === "availability"){
       var a = availability();
-      tprint("internship  7 sep – 11 dec 2026 · 14 weeks, extendable to 6 months\n" +
-             "status      " + (a ? a.note.replace(/\.$/, "") : "window closed") + "\n" +
+      tprint("internship  devops intern · 7 sep 2026 – 5 mar 2027 · 6 months, confirmed\n" +
+             "status      placed — " + (a ? a.note.replace(/\.$/, "") : "window closed") + "\n" +
              "contact     ahmadsyamim200@gmail.com", "out");
     } else if(parts[0] === "skills"){
       var cat = (parts[2] || "--all").replace(/^--/, "");

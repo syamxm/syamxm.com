@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>syamxm — ~/</title>
-<meta name="description" content="Ahmad Syamim (syamxm). Final-year CS student at UiTM Shah Alam, DevSecOps specialisation. Available for a 14-week internship, 7 September – 11 December 2026.">
+<meta name="description" content="Ahmad Syamim (syamxm). Final-year CS student at UiTM Shah Alam, DevSecOps specialisation. DevOps intern on a 6-month placement, 7 September 2026 – 5 March 2027.">
 <meta name="theme-color" content="#0D0B14">
 <meta property="og:type" content="website">
 <meta property="og:title" content="syamxm — ~/">
@@ -44,7 +44,7 @@
   </div>
   <div class="right">
     <a class="avail" href="#contact" data-avail>
-      <span class="alabel">available</span><span class="awhen" data-availwhen>sep 2026</span>
+      <span class="alabel">internship</span><span class="awhen" data-availwhen>placed · sep 2026</span>
     </a>
     <a class="visitors" href="#btop" data-visitors hidden title="visitors on this site in the last 5 minutes">
       <span data-visitors-count>—</span>
@@ -78,7 +78,7 @@
   </nav>
   <div class="bmsep" aria-hidden="true"></div>
   <a class="bmrow" href="#contact" data-avail>
-    <span class="bmk">available</span><span class="bmv green" data-availwhen>sep 2026</span>
+    <span class="bmk">internship</span><span class="bmv green" data-availwhen>placed · sep 2026</span>
   </a>
   <a class="bmrow" href="https://github.com/syamxm" target="_blank" rel="noopener">
     <span class="bmk">github</span><span class="bmv">@syamxm</span>
@@ -124,11 +124,11 @@
         because I want to know how it all actually works.
       </p>
       <div class="meta-row ln">
-        <span class="k">role</span> <b>student · devsecops</b>
+        <span class="k">role</span> <b>student · devops intern</b>
         <span class="k">host</span> <b>self-hosted / tailscale</b>
         <span class="k">shell</span> <b>fish</b>
         <span class="k">status</span> <b>all systems green</b>
-        <span class="k">available</span> <b>7 sep – 11 dec 2026</b>
+        <span class="k">internship</span> <b>placed · 7 sep 2026 – 5 mar 2027</b>
       </div>
     </div>
     <div class="hero-logo" aria-hidden="true"><pre id="ascii-logo"></pre></div>
@@ -139,7 +139,7 @@
     <h2 class="sr-only">Projects</h2>
     <div class="sechead">
       <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">ls</span> <span class="t path-c">~/projects</span></span>
-      <span class="note"># 7 dirs · sorted by importance</span>
+      <span class="note"># 10 dirs · sorted by importance</span>
     </div>
 
     <div class="plist">
@@ -207,6 +207,25 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <button class="shot" type="button">
           <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/taskflow/taskflow-2.webp</span></span>
           <span class="simg"><img src="assets/screenshots/taskflow-2.webp" width="1200" height="622" alt="TaskFlow project view — lines-of-code breakdown, branch list, and kanban task board" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
+
+      <div class="pentry">
+      <a class="proj ln" href="https://debian-watch.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">debian-watch/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">Go monitoring dashboard for the homeserver — per-core CPU, memory, disks, network, temperatures and Docker containers, rendered server-side with <code>html/template</code> and HTMX. It never mounts the Docker socket: it reads through an nginx allowlist that forwards two endpoints and 403s everything else. Each collector degrades alone, so a missing sensor hides a panel instead of taking the app down.</p>
+        <div class="stack"><span class="chip">go</span><span class="chip">htmx</span><span class="chip">docker</span><span class="chip">codeql</span><span class="chip">trivy</span><span class="chip">govulncheck</span></div>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/debian-watch/debian-watch-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/debian-watch-1.webp" width="1200" height="622" alt="debian-watch dashboard — per-core CPU bars, memory and swap, load average, uptime and network throughput" loading="lazy"></span>
         </button>
         <div class="shotecho" aria-live="polite"></div>
       </div>
@@ -289,6 +308,25 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
       </div>
 
       <div class="pentry">
+      <a class="proj ln" href="https://cv-spring.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">cv-api-spring/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">The same CV, rebuilt on Spring Boot 3.5 and Java 21 to learn the ecosystem properly — Postgres with Flyway, JSON byte-for-byte identical to the Node API so the two can be diffed. One Thymeleaf definition of the ATS resume renders the page, the PDF and its A4 previews. 55 tests, Postgres via Testcontainers.</p>
+        <div class="stack"><span class="chip">java-21</span><span class="chip">spring-boot</span><span class="chip">postgres</span><span class="chip">flyway</span><span class="chip">testcontainers</span><span class="chip">thymeleaf</span></div>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/cv-api-spring/cv-api-spring-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/cv-api-spring-1.webp" width="1200" height="622" alt="cv-spring.syamxm.com — ATS resume as two side-by-side A4 pages, with PDF and plain-text downloads" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
+
+      <div class="pentry">
       <a class="proj ln" href="https://cv.syamxm.com" target="_blank" rel="noopener">
         <div class="head">
           <span class="perm">drwxr-xr-x</span>
@@ -306,6 +344,25 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <div class="shotecho" aria-live="polite"></div>
       </div>
       </div>
+
+      <div class="pentry">
+      <a class="proj ln" href="https://c-aegis.syamxm.com" target="_blank" rel="noopener">
+        <div class="head">
+          <span class="perm">drwxr-xr-x</span>
+          <span class="name">c-aegis-landing/</span>
+          <span class="arrow">cd →</span>
+        </div>
+        <p class="desc">Landing page for C-Aegis, my final-year Android project — features, how it works, screenshots, and the APK straight off GitHub Releases. Plain HTML, CSS and vanilla JS: no framework, no build step, with the download URL and screenshot list in a single config file. Served from GitHub Pages on its own subdomain.</p>
+        <div class="stack"><span class="chip">html</span><span class="chip">css</span><span class="chip">vanilla-js</span><span class="chip">github-pages</span></div>
+      </a>
+      <div class="shots ln">
+        <button class="shot" type="button">
+          <span class="shotbar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="shotname">~/projects/c-aegis-landing/c-aegis-landing-1.webp</span></span>
+          <span class="simg"><img src="assets/screenshots/c-aegis-landing-1.webp" width="1200" height="622" alt="C-Aegis landing page — 'Safety they agree to' hero with APK download and a phone showing the live radar map" loading="lazy"></span>
+        </button>
+        <div class="shotecho" aria-live="polite"></div>
+      </div>
+      </div>
     </div>
   </section>
 
@@ -314,7 +371,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
     <h2 class="sr-only">Stack</h2>
     <div class="sechead">
       <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">skills</span> <span class="t arg">ps</span> <span class="t flag" id="psflag">--all</span></span>
-      <span class="note"># 42 units · depth = how much of the stack leans on it</span>
+      <span class="note"># 50 units · depth = how much of the stack leans on it</span>
     </div>
 
     <div class="ps" id="ps">
@@ -337,7 +394,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
       <div class="psgroup" data-cat="infra">
         <div class="psgh ln"><span class="gname">infra/</span><span class="gcount">6 units</span></div>
         <div class="psrow ln" data-cat="infra" data-depth="1">
-          <span class="svc"><i class="dot"></i>docker</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">7 projects</span>
+          <span class="svc"><i class="dot"></i>docker</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">9 projects</span>
         </div>
         <div class="psrow ln" data-cat="infra" data-depth="1">
           <span class="svc"><i class="dot"></i>debian 13</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">every service</span>
@@ -346,10 +403,10 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
           <span class="svc"><i class="dot"></i>nginx</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">reverse proxy</span>
         </div>
         <div class="psrow ln" data-cat="infra" data-depth=".86">
-          <span class="svc"><i class="dot"></i>cloudflare tunnel</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">6 public hosts</span>
+          <span class="svc"><i class="dot"></i>cloudflare tunnel</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">8 public hosts</span>
         </div>
         <div class="psrow ln" data-cat="infra" data-depth=".57">
-          <span class="svc"><i class="dot"></i>tailscale</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 projects</span>
+          <span class="svc"><i class="dot"></i>tailscale</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">5 projects</span>
         </div>
         <div class="psrow ln" data-cat="infra" data-depth=".5">
           <span class="svc"><i class="dot"></i>bash</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">ops scripts</span>
@@ -359,29 +416,35 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
       <div class="psgroup" data-cat="ci-cd">
         <div class="psgh ln"><span class="gname">ci-cd/</span><span class="gcount">4 units</span></div>
         <div class="psrow ln" data-cat="ci-cd" data-depth=".57">
-          <span class="svc"><i class="dot"></i>github actions</span><span class="state"><span class="txt">passing</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 pipelines</span>
+          <span class="svc"><i class="dot"></i>github actions</span><span class="state"><span class="txt">passing</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">6 pipelines</span>
         </div>
         <div class="psrow ln" data-cat="ci-cd" data-depth="1">
-          <span class="svc"><i class="dot"></i>git</span><span class="state"><span class="txt">clean</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">7 projects</span>
+          <span class="svc"><i class="dot"></i>git</span><span class="state"><span class="txt">clean</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">10 projects</span>
         </div>
         <div class="psrow ln" data-cat="ci-cd" data-depth="1">
-          <span class="svc"><i class="dot"></i>docker compose</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">7 projects</span>
+          <span class="svc"><i class="dot"></i>docker compose</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">9 projects</span>
         </div>
         <div class="psrow ln" data-cat="ci-cd" data-depth=".57">
-          <span class="svc"><i class="dot"></i>ssh deploy</span><span class="state"><span class="txt">over tailscale</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 pipelines</span>
+          <span class="svc"><i class="dot"></i>ssh deploy</span><span class="state"><span class="txt">over tailscale</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">5 pipelines</span>
         </div>
       </div>
 
       <div class="psgroup" data-cat="security">
-        <div class="psgh ln"><span class="gname">security/</span><span class="gcount">9 units</span></div>
+        <div class="psgh ln"><span class="gname">security/</span><span class="gcount">11 units</span></div>
         <div class="psrow ln" data-cat="security" data-depth=".43">
-          <span class="svc"><i class="dot"></i>gitleaks</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">3 pipelines</span>
+          <span class="svc"><i class="dot"></i>gitleaks</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 pipelines</span>
         </div>
         <div class="psrow ln" data-cat="security" data-depth=".3">
           <span class="svc"><i class="dot"></i>semgrep</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 pipelines</span>
         </div>
         <div class="psrow ln" data-cat="security" data-depth=".3">
-          <span class="svc"><i class="dot"></i>trivy</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 pipelines</span>
+          <span class="svc"><i class="dot"></i>trivy</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">3 pipelines</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".2">
+          <span class="svc"><i class="dot"></i>codeql</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">debian-watch</span>
+        </div>
+        <div class="psrow ln" data-cat="security" data-depth=".2">
+          <span class="svc"><i class="dot"></i>govulncheck</span><span class="state"><span class="txt">gate ok</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">debian-watch</span>
         </div>
         <div class="psrow ln" data-cat="security" data-depth=".3">
           <span class="svc"><i class="dot"></i>ufw</span><span class="state"><span class="txt">enforcing</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">homeserver</span>
@@ -406,7 +469,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
       <div class="psgroup" data-cat="observability">
         <div class="psgh ln"><span class="gname">observability/</span><span class="gcount">4 units</span></div>
         <div class="psrow ln" data-cat="observability" data-depth=".5">
-          <span class="svc"><i class="dot"></i>prometheus</span><span class="state"><span class="txt">scraping</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">homeserver</span>
+          <span class="svc"><i class="dot"></i>prometheus</span><span class="state"><span class="txt">scraping</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">homeserver · cv-spring</span>
         </div>
         <div class="psrow ln" data-cat="observability" data-depth=".5">
           <span class="svc"><i class="dot"></i>grafana</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">homeserver</span>
@@ -420,18 +483,24 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
       </div>
 
       <div class="psgroup" data-cat="backend">
-        <div class="psgh ln"><span class="gname">backend/</span><span class="gcount">7 units</span></div>
+        <div class="psgh ln"><span class="gname">backend/</span><span class="gcount">10 units</span></div>
         <div class="psrow ln" data-cat="backend" data-depth=".43">
           <span class="svc"><i class="dot"></i>fastapi</span><span class="state"><span class="txt">listening</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">3 projects</span>
         </div>
         <div class="psrow ln" data-cat="backend" data-depth=".3">
           <span class="svc"><i class="dot"></i>node + express</span><span class="state"><span class="txt">listening</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
         </div>
+        <div class="psrow ln" data-cat="backend" data-depth=".2">
+          <span class="svc"><i class="dot"></i>spring boot</span><span class="state"><span class="txt">listening</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">cv-api-spring</span>
+        </div>
+        <div class="psrow ln" data-cat="backend" data-depth=".2">
+          <span class="svc"><i class="dot"></i>go net/http</span><span class="state"><span class="txt">listening</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">debian-watch</span>
+        </div>
         <div class="psrow ln" data-cat="backend" data-depth=".7">
           <span class="svc"><i class="dot"></i>rest api design</span><span class="state"><span class="txt">shipped</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">5 projects</span>
         </div>
         <div class="psrow ln" data-cat="backend" data-depth=".3">
-          <span class="svc"><i class="dot"></i>postgresql</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">cv-api</span>
+          <span class="svc"><i class="dot"></i>postgresql</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
         </div>
         <div class="psrow ln" data-cat="backend" data-depth=".3">
           <span class="svc"><i class="dot"></i>mongodb</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
@@ -439,18 +508,24 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <div class="psrow ln" data-cat="backend" data-depth=".2">
           <span class="svc"><i class="dot"></i>mariadb</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">beanthere</span>
         </div>
+        <div class="psrow ln" data-cat="backend" data-depth=".43">
+          <span class="svc"><i class="dot y"></i>postman</span><span class="state"><span class="txt">on demand</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">api testing</span>
+        </div>
         <div class="psrow ln" data-cat="backend" data-depth=".2">
           <span class="svc"><i class="dot"></i>redis</span><span class="state"><span class="txt">running</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">rate-limited login</span>
         </div>
       </div>
 
       <div class="psgroup" data-cat="frontend">
-        <div class="psgh ln"><span class="gname">frontend/</span><span class="gcount">5 units</span></div>
+        <div class="psgh ln"><span class="gname">frontend/</span><span class="gcount">6 units</span></div>
         <div class="psrow ln" data-cat="frontend" data-depth=".3">
           <span class="svc"><i class="dot"></i>react</span><span class="state"><span class="txt">built</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
         </div>
         <div class="psrow ln" data-cat="frontend" data-depth=".3">
           <span class="svc"><i class="dot"></i>vanilla js + css</span><span class="state"><span class="txt">built</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">this site</span>
+        </div>
+        <div class="psrow ln" data-cat="frontend" data-depth=".2">
+          <span class="svc"><i class="dot"></i>htmx</span><span class="state"><span class="txt">built</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">debian-watch</span>
         </div>
         <div class="psrow ln" data-cat="frontend" data-depth=".3">
           <span class="svc"><i class="dot"></i>tailwind css</span><span class="state"><span class="txt">built</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
@@ -464,7 +539,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
       </div>
 
       <div class="psgroup" data-cat="languages">
-        <div class="psgh ln"><span class="gname">languages/</span><span class="gcount">7 units</span></div>
+        <div class="psgh ln"><span class="gname">languages/</span><span class="gcount">9 units</span></div>
         <div class="psrow ln" data-cat="languages" data-depth=".7">
           <span class="svc"><i class="dot"></i>javascript</span><span class="state"><span class="txt">fluent</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">4 projects</span>
         </div>
@@ -481,7 +556,13 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
           <span class="svc"><i class="dot"></i>php</span><span class="state"><span class="txt">working</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">beanthere</span>
         </div>
         <div class="psrow ln" data-cat="languages" data-depth=".3">
-          <span class="svc"><i class="dot"></i>java</span><span class="state"><span class="txt">working</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">enigma-java</span>
+          <span class="svc"><i class="dot"></i>java</span><span class="state"><span class="txt">working</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 projects</span>
+        </div>
+        <div class="psrow ln" data-cat="languages" data-depth=".3">
+          <span class="svc"><i class="dot"></i>go</span><span class="state"><span class="txt">working</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">debian-watch</span>
+        </div>
+        <div class="psrow ln" data-cat="languages" data-depth=".2">
+          <span class="svc"><i class="dot y"></i>c++</span><span class="state"><span class="txt">coursework</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">uitm units</span>
         </div>
         <div class="psrow ln" data-cat="languages" data-depth=".3">
           <span class="svc"><i class="dot"></i>kotlin · dart</span><span class="state"><span class="txt">working</span></span><span class="bar" aria-hidden="true"><i></i></span><span class="used">2 mobile apps</span>
@@ -513,9 +594,11 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
                 │ <span class="comment">docker bridge — internal only</span>
        ├── beanthere      <span class="comment">php · mariadb</span>
        ├── taskflow       <span class="comment">mern</span>
+       ├── debian-watch   <span class="comment">go · htmx</span>
        ├── cipher-agent   <span class="comment">fastapi</span>
        ├── cipher-forge   <span class="comment">react · fastapi · mongo</span>
        ├── cv-api         <span class="comment">node · postgres</span>
+       ├── cv-spring      <span class="comment">java · spring · postgres</span>
        ├── vaultwarden    <span class="comment">secrets</span>
        └── grafana        <span class="comment">prometheus · loki</span>
 
@@ -635,15 +718,28 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
     <h2 class="sr-only">Timeline</h2>
     <div class="sechead">
       <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">git</span> <span class="t flag">log --graph</span> <span class="t path-c">~/timeline</span></span>
-      <span class="note"># 5 commits · newest first</span>
+      <span class="note"># 6 commits · newest first</span>
     </div>
 
     <ol class="glog">
+      <li class="commit ln" data-hash="f1c9d04">
+        <span class="node" aria-hidden="true"></span>
+        <div class="cmeta">
+          <span class="hash">f1c9d04</span>
+          <span class="refs"><span class="ref head">HEAD -&gt; main</span><span class="ref work">work</span></span>
+          <span class="cdate">sep 2026 – mar 2027</span>
+        </div>
+        <h3 class="csubject">DevOps intern — 6-month industrial placement</h3>
+        <ul class="cbody">
+          <li>Six months confirmed, 7 September 2026 – 5 March 2027</li>
+        </ul>
+      </li>
+
       <li class="commit ln" data-hash="a7f3e21">
         <span class="node" aria-hidden="true"></span>
         <div class="cmeta">
           <span class="hash">a7f3e21</span>
-          <span class="refs"><span class="ref head">HEAD -&gt; main</span><span class="ref">edu</span></span>
+          <span class="refs"><span class="ref">edu</span></span>
           <span class="cdate">oct 2023 – mar 2027 (expected)</span>
         </div>
         <h3 class="csubject">BSc Computer Science (Hons) — UiTM Shah Alam</h3>
@@ -738,8 +834,8 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
     <div>
       <p class="lead ln">If you're building something similar or just want to talk shop, reach out.</p>
       <p class="availnote ln">
-        Open for a <b>14-week internship</b>, 7 September – 11 December 2026, extendable to
-        6 months. <span class="availcount" id="availcount"></span>
+Placed for a confirmed <b>6-month internship</b> as a <b>DevOps intern</b>,
+        7 September 2026 – 5 March 2027. <span class="availcount" id="availcount"></span>
       </p>
       <div class="links">
         <a class="ln" href="mailto:ahmadsyamim200@gmail.com"><span class="lk">email</span><span class="lv">ahmadsyamim200@gmail.com</span></a>
@@ -772,7 +868,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
 
 <script src="js/perf.js?v=12"></script>
 <script src="js/boot.js?v=12"></script>
-<script src="js/main.js?v=12"></script>
+<script src="js/main.js?v=13"></script>
 <script src="js/metrics.js?v=13"></script>
 <script src="js/visitors.js?v=12"></script>
 <script src="js/gallery.js?v=12"></script>
