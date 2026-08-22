@@ -190,7 +190,7 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
   @keyframes pagegrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 }
 
-main{padding-top:clamp(96px,12vh,140px)}
+main{padding-top:clamp(6px,12vh,140px)}
 
 section{padding:0}
 .block{padding:14px 0 40px}
