@@ -190,13 +190,13 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
   @keyframes pagegrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 }
 
-main{padding-top:clamp(6px,12vh,140px)}
+main{padding-top:clamp(96px,12vh,140px)}
 
 section{padding:0}
 .block{padding:14px 0 40px}
 
 /* ---- HERO ---- */
-.hero{padding:2vh 0 8vh;border-bottom:1px solid var(--line);position:relative}
+.hero{padding:9vh 0 8vh;border-bottom:1px solid var(--line);position:relative}
 @media(min-width:769px){
   body:not(.lite-root) .hero::before,body:not(.lite-root) .hero::after{
     content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%;
