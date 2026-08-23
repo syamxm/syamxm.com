@@ -197,10 +197,13 @@ section{padding:0}
 
 /* ---- HERO ---- */
 .hero{
+  /* centred content reads low against a top-anchored navbar, so the extra
+     bottom padding lifts the block by half its value — --hero-lift px */
+  --hero-lift:25px;
   min-height:calc(100vh - var(--bar-top) - var(--bar-h) - 5px);
   min-height:calc(100svh - var(--bar-top) - var(--bar-h) - 5px);
   display:flex;flex-direction:column;justify-content:center;
-  padding:34px 0;
+  padding:34px 0 calc(34px + var(--hero-lift) * 2);
   border-bottom:1px solid var(--line);position:relative;
 }
 @media(min-width:769px){
