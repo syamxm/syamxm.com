@@ -202,7 +202,7 @@
       if(url){ tprint("opening " + url + " ...", "out"); window.open(url, "_blank", "noopener"); }
       else tprint("open: unknown project '" + (parts[1] || "") + "' — try: " + Object.keys(PROJECTS).join(", "), "err");
     } else if(c === "cat contact.txt"){
-      tprint("email   ahmadsyamim200@gmail.com\ngithub  github.com/syamxm", "out");
+      tprint("email     ahmadsyamim200@gmail.com\ngithub    github.com/syamxm\nlinkedin  linkedin.com/in/syamxm", "out");
     } else if(c === "cat security.txt"){
       document.getElementById("posture").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
       tprint("rendered above ↑", "out");
