@@ -515,6 +515,20 @@
     stackRows.forEach(function(r){ r.style.setProperty("--d", r.dataset.depth); });
   }
 
+  /* ---- whatsapp: href built on first interaction, so the number never sits in the served markup ---- */
+  var WA_NUMBER = "NjAxNzc5NjcyOTA=";
+  var WA_GREETING = "Hi Syamim, saw your portfolio.";
+  var walink = document.getElementById("walink");
+
+  function setWaHref(){
+    walink.href = "https://wa.me/" + atob(WA_NUMBER) + "?text=" + encodeURIComponent(WA_GREETING);
+  }
+
+  if(walink){
+    walink.addEventListener("pointerdown", setWaHref, {once: true});
+    walink.addEventListener("focus", setWaHref, {once: true});
+  }
+
   if(reduce){ fillDepth(); return; } /* final state already in the markup */
 
   if(document.getElementById("boot")){
