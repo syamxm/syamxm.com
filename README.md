@@ -1,12 +1,10 @@
 # syamxm.com
-# Under Construction 
-# Internship Update
 
 Personal portfolio site — a Linux desktop in the browser. Waybar-style status bar, terminal prompts, live server metrics.
 
-Built with plain HTML, CSS and JavaScript. No framework, no build step, no dependencies.
+Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies.
 
-Live: [syamxm.com](https://syamxm.com)
+Live: [syamxm.com](https://syamxm.com) — open to freelance work. More features on the way.
 
 ## Structure
 
@@ -19,34 +17,33 @@ css/
   components.css  cards, terminal windows, pills, gallery
   fonts.css       self-hosted JetBrains Mono
 js/
+  perf.js         disables heavy effects on weak devices and hidden tabs
   boot.js         BIOS/kernel boot sequence (once per session)
   main.js         interactive shell, scrollspy, stack filter, typed output
   metrics.js      live btop panel — polls /api/metrics
+  visitors.js     "n here now" pill, fed by the metrics poll
   gallery.js      project screenshot lightbox
-  perf.js         disables heavy effects on weak devices and hidden tabs
+  ascii3d.js      ASCII 3D renderer
+  hero-logo.js    spins the hero wordmark using ascii3d
 assets/           fonts, screenshots, og image
 ```
 
+CSS and JS are loaded with `?v=` cache-busting params. Bump them in `index.html` when you change a file, or the server keeps serving the old one.
+
 ## Sections
 
-| # | Section | What it shows |
-|---|---------|---------------|
-| I | about | hero, typed `whoami` output |
-| II | projects | project cards with screenshot galleries |
-| III | stack | filterable tooling list, styled as `ps` output |
-| IV | uses | daily-driver hardware and software |
-| V | live | real-time CPU, temperature and uptime from the home server |
-| VI | timeline | commit-graph career history |
-| VII | security | pipeline gates and server hardening |
-| VIII | contact | email, GitHub, internship availability |
+| # | Nav label | Anchor | What it shows |
+|---|-----------|--------|---------------|
+| I | about | `#about` | hero, typed `whoami` output |
+| II | projects | `#projects` | project cards with screenshot galleries |
+| III | stack | `#stack` | filterable tooling list, styled as `ps` output |
+| IV | uses | `#uses` | daily-driver hardware and software |
+| V | live | `#btop` | real-time CPU, temperature and uptime from the home server |
+| VI | timeline | `#timeline` | commit-graph career history |
+| VII | security | `#posture` | pipeline gates and server hardening |
+| VIII | contact | `#contact` | email, WhatsApp, GitHub, LinkedIn |
 
-## Features
-
-- Interactive prompt — type `help` to list commands
-- Live metrics polled from a self-hosted endpoint, with backoff on failure
-- Scrollspy that keeps the status bar workspace pills in sync
-- Burger menu navigation on mobile
-- Respects `prefers-reduced-motion` and throttles animation on low-core devices
+Type `help` in the prompt to list shell commands.
 
 ## Running locally
 
@@ -58,18 +55,13 @@ python3 -m http.server 8000
 
 Then open <http://localhost:8000>.
 
-The live metrics panel needs `/api/metrics` behind the same origin. Without it the panel degrades to an offline state — everything else works.
+The live metrics panel needs `/api/metrics` on the same origin. Without it the panel shows an offline state and the visitor pill stays hidden — everything else works.
 
 ## Deployment
 
-Push to `main` triggers CI (`.github/workflows/ci.yml`):
+Every change goes through a PR — no direct pushes to `main`.
 
-- HTML validation
-- `node --check` on every JS file
-- local asset references resolve
-- gitleaks secret scan
-
-On green, `deploy.yml` connects over Tailscale and pulls `main` on the server. No direct pushes to `main` — every change goes through a PR.
+CI (`.github/workflows/ci.yml`) runs HTML validation, `node --check` on every JS file, a local asset reference check and a gitleaks secret scan. On green, `deploy.yml` connects over Tailscale and pulls `main` on the server.
 
 ## License
 
