@@ -650,7 +650,7 @@
 
   /* ---- hero: type "whoami", then stream the answer ---- */
   var typed = document.getElementById("typed");
-  var out = document.getElementById("hero-out");
+  var heroBlock = document.querySelector(".hero");
   var text = "whoami";
   typed.textContent = "";
   var i = 0;
@@ -659,7 +659,7 @@
       typed.textContent = text.slice(0, ++i);
       setTimeout(tick, 52 + Math.random()*70);
     } else {
-      setTimeout(function(){ reveal(out); }, 340);
+      setTimeout(function(){ reveal(heroBlock); }, 340);
     }
   }, 520);
   }

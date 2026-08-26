@@ -572,10 +572,14 @@ main{transition:opacity .5s var(--ease)}
   --dot-edge:1.15px;
   position:relative;
   margin-top:30px;
-  max-width:62ch;
+  /* the hero text column is only ~535px wide inside .shell, so the strip is
+     pulled back out to the viewport edges */
+  width:100vw;
+  margin-left:calc(50% - 50vw);
   padding:5px;
   border:1px solid var(--line);
-  border-radius:7px;
+  border-left:0;border-right:0;
+  border-radius:0;
   background:rgba(5,4,9,.6);
   box-shadow:
     inset 0 1px 3px rgba(0,0,0,.75),

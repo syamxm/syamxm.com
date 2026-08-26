@@ -285,7 +285,7 @@ section{padding:0}
   text-shadow:0 0 14px var(--glow-purple);
 }
 @media(min-width:1100px){
-  .hero{flex-direction:row;align-items:center;gap:48px}
+  .hero-row{display:flex;align-items:center;gap:48px}
   .hero-text{flex:1 1 auto;min-width:0}
   .hero-logo{display:block;flex:none;margin-top:0}
   .hero-logo pre{font-size:10px}
