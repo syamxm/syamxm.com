@@ -7,18 +7,16 @@
     "open to freelance work"
   ];
 
-  var MOTD_MAX_LENGTH = 80;
-
   var root = document.querySelector("[data-ticker]");
   var windowEl = root && root.querySelector("[data-ticker-window]");
   if (!windowEl) return;
 
-  function buildRun(items, duplicate) {
+  function buildRun(duplicate) {
     var run = document.createElement("div");
     run.className = "ticker-run";
     if (duplicate) run.setAttribute("aria-hidden", "true");
 
-    items.forEach(function (text) {
+    UPDATES.forEach(function (text) {
       var item = document.createElement("span");
       item.className = "ticker-item";
       item.textContent = text;
@@ -34,26 +32,13 @@
     return run;
   }
 
-  function render(items) {
-    var track = document.createElement("div");
-    track.className = "ticker-track";
-    track.appendChild(buildRun(items, false));
-    track.appendChild(buildRun(items, true));
+  var track = document.createElement("div");
+  track.className = "ticker-track";
+  track.appendChild(buildRun(false));
+  track.appendChild(buildRun(true));
 
-    var chars = items.join("").length + items.length * 3;
-    track.style.setProperty("--ticker-duration", Math.max(20, Math.round(chars * 0.34)) + "s");
+  var chars = UPDATES.join("").length + UPDATES.length * 3;
+  track.style.setProperty("--ticker-duration", Math.max(20, Math.round(chars * 0.34)) + "s");
 
-    windowEl.replaceChildren(track);
-  }
-
-  render(UPDATES);
-
-  fetch("/motd.json", { cache: "no-store" })
-    .then(function (res) { return res.ok ? res.json() : null; })
-    .then(function (data) {
-      var text = data && typeof data.text === "string" ? data.text.trim() : "";
-      if (!text || text.length > MOTD_MAX_LENGTH) return;
-      render([text].concat(UPDATES));
-    })
-    .catch(function () {});
+  windowEl.replaceChildren(track);
 })();

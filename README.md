@@ -25,11 +25,8 @@ js/
   gallery.js      project screenshot lightbox
   ascii3d.js      ASCII 3D renderer
   hero-logo.js    spins the hero wordmark using ascii3d
-  ticker.js       hero dot-matrix ticker — updates array lives at the top
-scripts/
-  generate-motd   asks local Ollama for the message of the day
+  ticker.js       hero dot-matrix ticker — edit the updates array at the top
 assets/           fonts, screenshots, og image
-motd.json         generated, gitignored — absent means the ticker shows updates only
 ```
 
 CSS and JS are loaded with `?v=` cache-busting params. Bump them in `index.html` when you change a file, or the server keeps serving the old one.
@@ -58,8 +55,6 @@ python3 -m http.server 8000
 ```
 
 Then open <http://localhost:8000>.
-
-To refresh the ticker's message of the day, schedule `OLLAMA_URL=http://localhost:11434 OLLAMA_MODEL=llama3.2 /path/to/syamxm.com/scripts/generate-motd` on the server twice a day.
 
 The live metrics panel needs `/api/metrics` on the same origin. Without it the panel shows an offline state and the visitor pill stays hidden — everything else works.
 
