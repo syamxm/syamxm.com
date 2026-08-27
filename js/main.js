@@ -30,10 +30,11 @@
   function availability(){
     var now = Date.now();
     if(now > INTERN_END) return null;
-    if(now >= INTERN_START) return {pill: "in progress", note: "In progress until 5 March 2027."};
+    if(now >= INTERN_START) return {pill: "in progress", pillShort: "running", note: "In progress until 5 March 2027."};
     var days = Math.ceil((INTERN_START - now) / 86400000);
     return {
       pill: "placed · sep 2026",
+      pillShort: "sep 2026",
       note: "Starts in " + days + " day" + (days === 1 ? "" : "s") + "."
     };
   }
@@ -331,6 +332,7 @@
   /* ---- internship availability ---- */
   var availEls = document.querySelectorAll("[data-avail]");
   var availWhenEls = document.querySelectorAll("[data-availwhen]");
+  var availWhenShortEls = document.querySelectorAll("[data-availwhenshort]");
   var availCount = document.getElementById("availcount");
   function paintAvailability(){
     var a = availability();
@@ -340,6 +342,7 @@
       return;
     }
     availWhenEls.forEach(function(el){ el.textContent = a.pill; });
+    availWhenShortEls.forEach(function(el){ el.textContent = a.pillShort; });
     if(availCount) availCount.textContent = a.note;
   }
   paintAvailability();
