@@ -338,6 +338,66 @@
 .links a:hover,.links a:focus-visible{background:rgba(34,27,51,.55);border-left-color:var(--purple);outline:none}
 .links a:hover .lv,.links a:focus-visible .lv{color:var(--fg);text-shadow:0 0 12px rgba(205,214,244,.2)}
 
+/* ---- jomqr — giant ANSI Shadow wordmark that drops in like tetris ---- */
+.jomqr{
+  container-type:inline-size;
+  display:block;text-decoration:none;
+  margin:34px 0 8px;padding:22px 18px 16px;
+  background:linear-gradient(180deg,rgba(34,27,51,.5),rgba(22,18,31,.5));
+  border:1px solid var(--line);border-radius:8px;
+  transition:border-color .4s var(--ease),box-shadow .4s var(--ease),transform .4s var(--ease);
+}
+.jart{
+  /* 45 glyphs at JetBrains Mono's .6em advance — fills the card, capped so
+     it stays a wordmark and not a billboard on ultrawide */
+  font-family:inherit;
+  font-size:min(calc(100cqw / 27.4),30px);
+  line-height:1; /* block glyphs tile seamlessly only at exactly 1em */
+  color:var(--purple);
+  text-shadow:0 0 18px rgba(124,58,237,.28);
+  transition:color .4s var(--ease),text-shadow .4s var(--ease);
+  /* rows break themselves, so the newlines between them must collapse */
+  white-space:normal;
+}
+.jrow{display:block;white-space:pre}
+.jcap{
+  display:block;margin-top:14px;
+  font-size:13px;color:var(--muted);
+  transition:color .3s var(--ease);
+}
+.jurl{color:var(--fg)}
+.jarrow{display:inline-block;transition:transform .4s var(--ease)}
+.jomqr:hover,.jomqr:focus-visible{
+  outline:none;
+  border-color:rgba(124,58,237,.55);
+  box-shadow:0 0 0 1px rgba(124,58,237,.25),0 22px 60px -30px var(--glow-purple);
+  transform:translateY(-2px);
+}
+.jomqr:hover .jart,.jomqr:focus-visible .jart{
+  color:var(--fg);
+  text-shadow:0 0 26px var(--glow-purple);
+}
+.jomqr:hover .jcap,.jomqr:focus-visible .jcap{color:var(--fg)}
+.jomqr:hover .jarrow,.jomqr:focus-visible .jarrow{transform:translate(3px,-3px)}
+.jomqr:active{transform:translateY(0) scale(.995)}
+
+/* the card itself skips the shared .ln fade — its rows carry the motion */
+.anim .jomqr{opacity:1;transform:none;filter:none}
+.anim .jomqr .jrow{opacity:0}
+.anim .jomqr.in .jrow{
+  animation:tetrisdrop .62s both;
+  animation-delay:calc(var(--i) * 90ms);
+  transform-origin:50% 100%;
+}
+@keyframes tetrisdrop{
+  0%{opacity:0;transform:translateY(-320%);animation-timing-function:cubic-bezier(.55,.06,.68,.19)}
+  6%{opacity:1}
+  62%{transform:translateY(0) scaleY(1);animation-timing-function:cubic-bezier(.22,1,.36,1)}
+  74%{transform:translateY(0) scaleY(.82)}
+  88%{transform:translateY(0) scaleY(1.06)}
+  100%{opacity:1;transform:translateY(0) scaleY(1)}
+}
+
 /* ---- interactive prompt — frosted input card ---- */
 #tout{margin-top:40px;font-size:14px}
 #tout div{white-space:pre-wrap;word-break:break-word}

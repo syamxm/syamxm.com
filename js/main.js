@@ -185,7 +185,7 @@
   var hidx = 0;
   var COMMANDS = ["help", "whoami", "ls", "open ", "cat contact.txt", "cat security.txt",
     "skills ps", "skills ps --", "uses", "git log", "avail", "neofetch", "uptime", "tree", "btop",
-    "history", "fortune",
+    "history", "fortune", "qr",
     "ping", "date", "echo ", "clear", "sudo hire syamxm", "cmatrix"];
 
   function run(c){
@@ -193,7 +193,7 @@
     if(c === "clear"){ tout.textContent = ""; return; }
     echo(c);
     if(c === "help"){
-      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  uses  btop  git log  avail  uptime  fortune  ping\ndate  echo  history  clear  sudo hire syamxm", "out");
+      tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  uses  btop  git log  avail  uptime  fortune  ping\ndate  echo  history  qr  clear  sudo hire syamxm", "out");
     } else if(c === "whoami"){
       tprint("visitor — guest session on syamxm@homeserver", "out");
     } else if(c === "ls" || c === "ls ~/projects" || c === "ls projects"){
@@ -203,7 +203,10 @@
       if(url){ tprint("opening " + url + " ...", "out"); window.open(url, "_blank", "noopener"); }
       else tprint("open: unknown project '" + (parts[1] || "") + "' — try: " + Object.keys(PROJECTS).join(", "), "err");
     } else if(c === "cat contact.txt"){
-      tprint("email     ahmadsyamim200@gmail.com\ngithub    github.com/syamxm\nlinkedin  linkedin.com/in/syamxm", "out");
+      tprint("email     ahmadsyamim200@gmail.com\ngithub    github.com/syamxm\nlinkedin  linkedin.com/in/syamxm\njomqr     jomqr.my/syamxm", "out");
+    } else if(c === "qr" || c === "jomqr"){
+      tprint("opening https://jomqr.my/syamxm ...", "out");
+      window.open("https://jomqr.my/syamxm", "_blank", "noopener");
     } else if(c === "cat security.txt"){
       document.getElementById("posture").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
       tprint("rendered above ↑", "out");
