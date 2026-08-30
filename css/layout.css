@@ -6,6 +6,9 @@
   z-index:1;
 }
 @media(min-width:1600px){.shell{max-width:1160px}}
+/* below 1190 the centred gutter is narrower than the section ruler, so the
+   content has to give the fixed rail its own lane instead of running under it */
+@media(min-width:621px) and (max-width:1189px){.shell{padding-right:76px}}
 @media(max-width:620px){.shell{padding:0 20px}}
 
 /* status bar — waybar-style floating glass pill */
@@ -48,7 +51,9 @@
   box-shadow:0 0 12px -3px var(--accent-glow);
 }
 .ws .wnum{letter-spacing:.06em}
-.ws .wlabel{font-size:11px}
+/* the section ruler owns the labels now, so the pills stay numerals at every
+   width — this is what buys the statusbar its breathing room */
+.ws .wlabel{display:none}
 .statusbar .right{margin-left:auto;display:flex;align-items:center;gap:14px}
 .sensor{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .upshort{display:none}
@@ -173,9 +178,6 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
   .statusbar .avail .awhen{display:none}
   .statusbar .avail .awhenshort{display:inline}
 }
-@media(max-width:1339px) and (min-width:621px){
-  .ws .wlabel{display:none}
-}
 @media(max-width:959px) and (min-width:621px){
   .statusbar .sensor.uptime{display:none}
 }
@@ -217,7 +219,7 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
 }
-@media(max-width:1339px) and (min-width:621px){.rail{display:flex}}
+@media(min-width:621px){.rail{display:flex}}
 /* every mark is a solid block so the column reads as one continuous gauge —
    ▓ and ░ dither into mush at this size, so the three states are carried by
    tone instead of by glyph */
