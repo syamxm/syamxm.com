@@ -203,6 +203,61 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
   }
 }
 
+/* ---- section ruler — vertical block gauge, only in the band where the
+   statusbar pills have shed their text labels. shares [data-nav] with the
+   existing scrollspy, so it needs no JS of its own. ---- */
+.rail{
+  display:none;
+  position:fixed;top:50%;right:20px;z-index:4;
+  transform:translateY(-50%);
+  flex-direction:column;gap:0;
+  padding:10px 9px;
+  background:rgba(13,11,20,.55);
+  border:1px solid var(--line);border-radius:4px;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+@media(max-width:1339px) and (min-width:621px){.rail{display:flex}}
+/* every mark is a solid block so the column reads as one continuous gauge —
+   ▓ and ░ dither into mush at this size, so the three states are carried by
+   tone instead of by glyph */
+/* tone is carried by colour alpha, never by opacity — opacity here would
+   clamp the hover label nested inside the mark */
+.rmark{
+  position:relative;
+  display:block;
+  text-decoration:none;
+  font-size:18px;line-height:1;
+  color:rgba(167,139,250,.62);
+  transition:color .45s var(--ease),text-shadow .45s var(--ease);
+}
+.rmark::before{content:"█"}
+/* the ruler reads itself: no previous-sibling selector needed — marks after
+   the active one are still ahead, everything before it has been passed.
+   :where() keeps this at the same weight as :hover so hover still wins. */
+.rmark.on ~ :where(.rmark){color:rgba(167,139,250,.14)}
+.rmark.on{
+  color:var(--purple);
+  text-shadow:0 0 10px var(--glow-purple),0 0 22px rgba(124,58,237,.35);
+}
+.rmark:hover,.rmark:focus-visible{color:var(--fg);outline:none}
+.rtag{
+  position:absolute;right:calc(100% + 12px);top:50%;
+  display:flex;align-items:baseline;gap:7px;
+  padding:4px 9px;
+  white-space:nowrap;font-size:11px;
+  color:var(--fg);
+  background:rgba(22,18,31,.94);
+  border:1px solid rgba(124,58,237,.4);border-radius:3px;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  opacity:0;transform:translate(6px,-50%);
+  pointer-events:none;
+  transition:opacity .45s var(--ease),transform .45s var(--ease);
+}
+.rtag i{font-style:normal;color:var(--purple);font-size:10px;letter-spacing:.08em}
+.rmark:hover .rtag,.rmark:focus-visible .rtag{opacity:1;transform:translate(0,-50%)}
+
 /* scroll progress — pure CSS scroll-timeline, no JS */
 .scrollprogress{
   position:absolute;left:0;right:0;bottom:0;height:2px;

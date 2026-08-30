@@ -75,9 +75,25 @@ body{
   }
 }
 ::selection{background:var(--accent);color:#fff}
-/* no scrollbar chrome — the statusbar progress line is the position indicator */
-html{scrollbar-width:none}
-::-webkit-scrollbar{width:0;height:0}
+/* scrollbar as a stack of pixel blocks. webkit gets the real thing; firefox
+   only supports a width keyword and two colours, so it gets the plain bar. */
+html{scrollbar-width:thin;scrollbar-color:var(--accent) transparent}
+/* height stays 0 so the ticker and the wide tables keep scrolling bare */
+::-webkit-scrollbar{width:10px;height:0}
+::-webkit-scrollbar-track{
+  background:rgba(22,18,31,.6);
+  border-left:1px solid var(--line);
+}
+::-webkit-scrollbar-thumb{
+  border:2px solid transparent;
+  background:repeating-linear-gradient(180deg,
+    var(--accent) 0 5px,rgba(124,58,237,.25) 5px 7px) padding-box;
+}
+::-webkit-scrollbar-thumb:hover{
+  background:repeating-linear-gradient(180deg,
+    var(--purple) 0 5px,rgba(167,139,250,.3) 5px 7px) padding-box;
+}
+::-webkit-scrollbar-corner{background:transparent}
 
 .prompt{color:var(--green);text-shadow:0 0 10px rgba(166,227,161,.22)}
 .prompt .tick{color:var(--purple);text-shadow:0 0 8px var(--glow-purple),0 0 26px rgba(124,58,237,.25)}
