@@ -6,9 +6,9 @@
   z-index:1;
 }
 @media(min-width:1600px){.shell{max-width:1160px}}
-/* below 1190 the centred gutter is narrower than the section ruler, so the
+/* below 1190 the centred gutter is narrower than the section rail, so the
    content has to give the fixed rail its own lane instead of running under it */
-@media(min-width:621px) and (max-width:1189px){.shell{padding-right:76px}}
+@media(min-width:621px) and (max-width:1189px){.shell{padding-right:90px}}
 @media(max-width:620px){.shell{padding:0 20px}}
 
 /* status bar — waybar-style floating glass pill */
@@ -51,9 +51,7 @@
   box-shadow:0 0 12px -3px var(--accent-glow);
 }
 .ws .wnum{letter-spacing:.06em}
-/* the section ruler owns the labels now, so the pills stay numerals at every
-   width — this is what buys the statusbar its breathing room */
-.ws .wlabel{display:none}
+.ws .wlabel{font-size:11px}
 .statusbar .right{margin-left:auto;display:flex;align-items:center;gap:14px}
 .sensor{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .upshort{display:none}
@@ -178,6 +176,9 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
   .statusbar .avail .awhen{display:none}
   .statusbar .avail .awhenshort{display:inline}
 }
+@media(max-width:1339px) and (min-width:621px){
+  .ws .wlabel{display:none}
+}
 @media(max-width:959px) and (min-width:621px){
   .statusbar .sensor.uptime{display:none}
 }
@@ -205,49 +206,42 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
   }
 }
 
-/* ---- section ruler — vertical block gauge, only in the band where the
-   statusbar pills have shed their text labels. shares [data-nav] with the
-   existing scrollspy, so it needs no JS of its own. ---- */
+/* ---- section rail — the waybar workspace pills turned on their side.
+   shares [data-nav] with the existing scrollspy, so it needs no JS. ---- */
 .rail{
   display:none;
   position:fixed;top:50%;right:20px;z-index:4;
   transform:translateY(-50%);
-  flex-direction:column;gap:0;
-  padding:10px 9px;
+  flex-direction:column;gap:3px;
+  padding:7px;
   background:rgba(13,11,20,.55);
-  border:1px solid var(--line);border-radius:4px;
+  border:1px solid var(--line);border-radius:6px;
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
 }
 @media(min-width:621px){.rail{display:flex}}
-/* every mark is a solid block so the column reads as one continuous gauge —
-   ▓ and ░ dither into mush at this size, so the three states are carried by
-   tone instead of by glyph */
-/* tone is carried by colour alpha, never by opacity — opacity here would
-   clamp the hover label nested inside the mark */
 .rmark{
   position:relative;
   display:block;
-  text-decoration:none;
-  font-size:18px;line-height:1;
-  color:rgba(167,139,250,.62);
-  transition:color .45s var(--ease),text-shadow .45s var(--ease);
-}
-.rmark::before{content:"█"}
-/* the ruler reads itself: no previous-sibling selector needed — marks after
-   the active one are still ahead, everything before it has been passed.
-   :where() keeps this at the same weight as :hover so hover still wins. */
-.rmark.on ~ :where(.rmark){color:rgba(167,139,250,.14)}
-.rmark.on{
+  padding:2px 0;border-radius:3px;
+  text-align:center;text-decoration:none;
+  font-size:11px;line-height:1.5;letter-spacing:.06em;
   color:var(--purple);
-  text-shadow:0 0 10px var(--glow-purple),0 0 22px rgba(124,58,237,.35);
+  transition:color .3s,background .3s,box-shadow .3s;
 }
-.rmark:hover,.rmark:focus-visible{color:var(--fg);outline:none}
+/* the active chip is the .ws.on treatment, so the rail and the statusbar
+   pills read as one component seen from two angles */
+.rmark.on{
+  background:var(--accent);
+  color:#fff;font-weight:600;
+  box-shadow:0 0 12px -3px var(--accent-glow);
+}
+.rmark:hover,.rmark:focus-visible{color:var(--fg);background:var(--pill-bg);outline:none}
+.rmark.on:hover,.rmark.on:focus-visible{background:var(--accent)}
 .rtag{
-  position:absolute;right:calc(100% + 12px);top:50%;
-  display:flex;align-items:baseline;gap:7px;
+  position:absolute;right:calc(100% + 10px);top:50%;
   padding:4px 9px;
-  white-space:nowrap;font-size:11px;
+  white-space:nowrap;font-size:11px;letter-spacing:0;
   color:var(--fg);
   background:rgba(22,18,31,.94);
   border:1px solid rgba(124,58,237,.4);border-radius:3px;
@@ -257,7 +251,6 @@ a.bmrow:hover,a.bmrow:focus-visible{background:var(--pill-bg);color:var(--fg);ou
   pointer-events:none;
   transition:opacity .45s var(--ease),transform .45s var(--ease);
 }
-.rtag i{font-style:normal;color:var(--purple);font-size:10px;letter-spacing:.08em}
 .rmark:hover .rtag,.rmark:focus-visible .rtag{opacity:1;transform:translate(0,-50%)}
 
 /* scroll progress — pure CSS scroll-timeline, no JS */
