@@ -4,8 +4,6 @@ Personal portfolio site — a Linux desktop in the browser. Waybar-style status 
 
 Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies.
 
-Live: [syamxm.com](https://syamxm.com) — open to freelance work. More features on the way.
-
 ## Structure
 
 ```
