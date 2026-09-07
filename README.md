@@ -1,4 +1,7 @@
 # syamxm.com
+# TODO: Rollback for Prod to not be served from homeserver
+# Use instead Github Pages, Vercel, Cloudflare Pages and so on. Makes it better, can set status like server down.
+# Websites can be seen as inaccessible
 
 Personal portfolio site — a Linux desktop in the browser. Waybar-style status bar, terminal prompts, live server metrics.
 
