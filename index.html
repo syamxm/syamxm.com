@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://analytics.syamxm.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://analytics.syamxm.com https://metrics.syamxm.com https://status.syamxm.com; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>syamxm — ~/</title>
 <meta name="description" content="Ahmad Syamim (syamxm). Final-year CS student at UiTM Shah Alam, DevSecOps specialisation. DevOps intern on a 6-month placement, 7 September 2026 – 5 March 2027.">
 <meta name="theme-color" content="#0D0B14">
 <meta property="og:type" content="website">
 <meta property="og:title" content="syamxm — ~/">
-<meta property="og:description" content="Ahmad Syamim (syamxm). Final-year CS student at UiTM Shah Alam, DevSecOps specialisation. Self-hosted, six-gate fail-closed pipeline.">
+<meta property="og:description" content="Ahmad Syamim (syamxm). Final-year CS student at UiTM Shah Alam, DevSecOps specialisation. Self-hosted projects, CI-gated pipelines.">
 <meta property="og:url" content="https://syamxm.com/">
 <meta property="og:image" content="https://syamxm.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -21,7 +23,7 @@
 <link rel="stylesheet" href="css/fonts.css?v=13">
 <link rel="stylesheet" href="css/base.css?v=14">
 <link rel="stylesheet" href="css/layout.css?v=19">
-<link rel="stylesheet" href="css/components.css?v=14">
+<link rel="stylesheet" href="css/components.css?v=15">
 <script defer src="https://analytics.syamxm.com/script.js" data-website-id="dbf1a401-2675-400b-9680-7041df0dfdf9"></script>
 </head>
 <body>
@@ -135,15 +137,15 @@
       </h1>
       <p class="wordmark-name ln">ahmad syamim · <a class="accent" href="#contact">contact</a></p>
       <p class="sub ln">
-        Final-year CS student at UiTM Shah Alam, DevSecOps specialisation. I self-host
-        everything I ship — the code, the pipeline, and the server it runs on. Mostly
+        Final-year CS student at UiTM Shah Alam, DevSecOps specialisation. I run
+        projects and pipelines on my home server; this page lives on GitHub Pages. Mostly
         because I want to know how it all actually works.
       </p>
       <div class="meta-row ln">
         <span class="k">role</span> <b>student · devops intern</b>
-        <span class="k">host</span> <b>self-hosted / tailscale</b>
+        <span class="k">host</span> <b>github pages / projects at home</b>
         <span class="k">shell</span> <b>fish</b>
-        <span class="k">status</span> <b>all systems green</b>
+        <span class="k">status</span> <b data-server-status>checking homeserver…</b>
         <span class="k">internship</span> <b>placed · 7 sep 2026 – 5 mar 2027</b>
       </div>
     </div>
@@ -164,6 +166,8 @@
     </div>
 
     <div class="plist">
+      <p class="note" data-project-summary role="status">checking project availability…</p>
+      <noscript><p class="note">JavaScript is needed for live status. Project availability is unverified.</p></noscript>
       <!-- BeanThere flagship -->
       <div class="pentry featured">
       <a class="proj featured ln" href="https://beanthere.syamxm.com" target="_blank" rel="noopener">
@@ -190,7 +194,7 @@
         </div>
 
         <div class="pipeline">
-          <span class="label"># ci.yml — every push, fail-closed · gitleaks also runs a weekly full-history scan</span>
+          <span class="label"># ci.yml — pipeline illustration, not live status · fail-closed · weekly secret scan</span>
 <pre>php -l    <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span>─┐
 semgrep   <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span>─┼──▶ docker build ──▶ trivy fs + image ──▶ deploy
 gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span>─┘    <span class="gate g" data-step="1" data-done="✓ pass">✓ pass</span>       <span class="gate g" data-step="2" data-done="✓ pass">✓ pass</span>           <span class="gate p" data-step="3" data-done="✓ live">✓ live</span>
@@ -411,7 +415,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
     <h2 class="sr-only">Stack</h2>
     <div class="sechead">
       <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">skills</span> <span class="t arg">ps</span> <span class="t flag" id="psflag">--all</span></span>
-      <span class="note"># 50 units · depth = how much of the stack leans on it</span>
+      <span class="note"># 50 units · configured roles, not live service status · depth = usage</span>
     </div>
 
     <div class="ps" id="ps">
@@ -621,7 +625,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
 
     <div class="usesgrid">
       <div class="netmap ln">
-        <span class="label"># traffic path — nothing reaches a container without passing every hop above it</span>
+        <span class="label"># homeserver traffic path · configured architecture, not live status · portfolio hosted on GitHub Pages</span>
 <pre>            <span class="dim-t">internet</span>
                 │
        ╭────────┴────────╮
@@ -642,7 +646,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
        ├── vaultwarden    <span class="comment">secrets</span>
        └── grafana        <span class="comment">prometheus · loki</span>
 
-       <span class="g">ufw · fail2ban · crowdsec</span>   <span class="comment">host edge, always on</span>
+       <span class="g">ufw · fail2ban · crowdsec</span>   <span class="comment">configured host protection</span>
        <span class="p">tailscale</span>                   <span class="comment">ssh + ci deploys, private</span></pre>
         <span class="flow" aria-hidden="true"></span>
       </div>
@@ -676,7 +680,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
     <h2 class="sr-only">Live server monitor</h2>
     <div class="sechead">
       <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">btop</span></span>
-      <span class="note"># real metrics from the box this page is served from</span>
+      <span class="note"># real metrics from my home server · this page stays online independently</span>
     </div>
 
     <div class="btop" data-btop data-state="waiting">
@@ -749,7 +753,7 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
         <p class="bmore" data-more hidden></p>
       </div>
 
-      <p class="bstatus" data-btop-status>connecting to the homeserver …</p>
+      <p class="bstatus" data-btop-status role="status">connecting to the homeserver …</p>
     </div>
   </section>
 
@@ -849,17 +853,17 @@ gitleaks  <span class="gate g" data-step="0" data-done="✓ pass">✓ pass</span
     <h2 class="sr-only">Security posture</h2>
     <div class="sechead">
       <span class="prompt"><span class="tick">~&gt;</span> <span class="t cmd">cat</span> <span class="t arg">security.txt</span></span>
-      <span class="note"># security posture — facts, not marketing</span>
+      <span class="note"># project security configuration — not live health checks</span>
     </div>
     <div>
       <table class="facts">
-        <tr class="ln"><td class="key">CSP</td><td class="val"><code>default-src 'self'</code> — no third-party origins, no inline eval</td></tr>
+        <tr class="ln"><td class="key">CSP</td><td class="val"><code>default-src 'self'</code> — explicit analytics and status API origins, no eval</td></tr>
         <tr class="ln"><td class="key">passwords</td><td class="val"><code>bcrypt</code> — salted, work-factor tuned, never reversible</td></tr>
         <tr class="ln"><td class="key">queries</td><td class="val">prepared statements only — <span class="y">zero</span> string-built SQL</td></tr>
         <tr class="ln"><td class="key">SAST</td><td class="val"><code>semgrep</code> gate — build fails on new findings</td></tr>
         <tr class="ln"><td class="key">secrets</td><td class="val"><code>gitleaks</code> gate — no key reaches a commit</td></tr>
         <tr class="ln"><td class="key">images</td><td class="val"><code>trivy</code> scan — deploy blocked on known CVEs</td></tr>
-        <tr class="ln"><td class="key">transport</td><td class="val">deploys over Tailscale SSH; public traffic via Cloudflare Tunnel — zero open inbound ports</td></tr>
+        <tr class="ln"><td class="key">transport</td><td class="val">portfolio: GitHub Pages via Actions; home projects: Tailscale SSH deploys and Cloudflare Tunnel — zero open inbound ports</td></tr>
         <tr class="ln"><td class="key">requests</td><td class="val">CSRF tokens + per-route rate limiting on every mutating path</td></tr>
       </table>
     </div>
@@ -904,8 +908,8 @@ Placed for a confirmed <b>6-month internship</b> as a <b>DevOps intern</b>,
       </div>
 
       <div class="foot ln">
-        <span>syamxm@homeserver — built by hand, deployed over tailscale</span>
-        <span id="footstat">6/6 gates · fail-closed</span>
+        <span>syamxm.com — built by hand, deployed to github pages after CI</span>
+        <span id="footstat">checking homeserver…</span>
       </div>
     </div>
   </section>
@@ -921,13 +925,14 @@ Placed for a confirmed <b>6-month internship</b> as a <b>DevOps intern</b>,
 </div>
 
 <script src="js/perf.js?v=12"></script>
-<script src="js/boot.js?v=12"></script>
-<script src="js/main.js?v=16"></script>
-<script src="js/metrics.js?v=13"></script>
-<script src="js/visitors.js?v=12"></script>
+<script src="js/boot.js?v=13"></script>
+<script src="js/main.js?v=17"></script>
+<script src="js/metrics.js?v=14"></script>
+<script src="js/visitors.js?v=13"></script>
+<script src="js/status.js?v=1"></script>
 <script src="js/gallery.js?v=12"></script>
 <script src="js/ascii3d.js?v=12"></script>
 <script src="js/hero-logo.js?v=12"></script>
-<script src="js/ticker.js?v=2"></script>
+<script src="js/ticker.js?v=3"></script>
 </body>
 </html>

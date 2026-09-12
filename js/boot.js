@@ -4,7 +4,7 @@
   sessionStorage.setItem("booted", "1");
 
   var LINES = [
-    ["syamxm BIOS v2.4 — POST", ""],
+    ["syamxm BIOS v2.4 — simulated boot, not server status", ""],
     ["cpu0: online  cpu1: online  cpu2: online  cpu3: online", "ok"],
     ["memtest: 32768M", "ok"],
     ["loading kernel 6.12-syamxm ...", ""],

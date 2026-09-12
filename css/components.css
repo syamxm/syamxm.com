@@ -520,7 +520,9 @@ main{transition:opacity .5s var(--ease)}
   transition:opacity .4s var(--ease),filter .4s var(--ease);
 }
 .btop[data-state="waiting"]{opacity:.5}
-.btop[data-state="offline"]{filter:grayscale(.7);opacity:.65}
+.btop[data-state="offline"]{filter:grayscale(.7)}
+.site-status{font-size:11.5px;color:var(--muted);font-weight:400;white-space:nowrap}
+.site-status[data-state="live"]{color:var(--green)}
 .bpanel{
   position:relative;grid-column:1/-1;
   border:1px solid var(--line);border-radius:8px;
@@ -614,7 +616,7 @@ main{transition:opacity .5s var(--ease)}
   background:var(--green);box-shadow:0 0 8px var(--glow-green);
 }
 .btop[data-state="waiting"] .bstatus::before{background:var(--yellow);box-shadow:0 0 8px var(--glow-yellow)}
-.btop[data-state="offline"] .bstatus::before{background:var(--red);box-shadow:0 0 8px rgba(243,139,168,.45)}
+.btop[data-state="offline"] .bstatus::before{background:var(--muted);box-shadow:none}
 @media(prefers-reduced-motion:no-preference){
   .btop[data-state="live"] .bstatus::before{animation:pulse 2.4s var(--ease) infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}

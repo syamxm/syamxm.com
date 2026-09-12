@@ -9,6 +9,7 @@
   /* latest reading from js/metrics.js — null until the homeserver answers */
   var live = null;
   document.addEventListener("metrics", function(e){ live = e.detail; });
+  document.addEventListener("metrics:offline", function(){ live = null; });
 
   var PROJECTS = {
     "beanthere": "https://beanthere.syamxm.com",
@@ -54,7 +55,7 @@
   function neofetch(){
     var d = live && live.data;
     return [
-      "   ▄▄▄▄▄▄▄     visitor@syamxm.com",
+      "   ▄▄▄▄▄▄▄     homeserver metrics · browser shell",
       "  █ ~> ▌  █    ------------------",
       "  █       █    os      debian 13 · self-hosted",
       "  █       █    kernel  " + (d ? d.host.kernel : "—"),
@@ -64,13 +65,14 @@
       "               docker  " + (d ? d.containers_running + " containers running" : "—"),
       "               shell   fish",
       "               net     tailscale + cloudflare tunnel",
-      "               ci      6/6 gates · fail-closed",
+      "               site    github pages · ci-gated deploy",
       "               theme   cachyos violet"
     ].join("\n");
   }
 
   var USES = [
-    "host       debian 13 · docker · 8+ services, none with a published port",
+    "site       github pages · independent of the homeserver",
+    "host       configured: debian 13 · docker · 8+ services, none with a published port",
     "edge       cloudflare tunnel → nginx (hsts · csp · real-ip)",
     "host edge  ufw · fail2ban · crowdsec",
     "private    tailscale — ssh and ci deploys",
@@ -129,7 +131,7 @@
 
   function fakePing(host){
     var n = 0;
-    tprint("PING " + host + " via tailscale0", "out");
+    tprint("DEMO PING " + host + " — simulated, not a health check", "out");
     var iv = setInterval(function(){
       n++;
       var ms = (1.2 + Math.random() * 2.3).toFixed(1);
@@ -195,7 +197,7 @@
     if(c === "help"){
       tprint("help  whoami  ls  tree  open <project>  cat contact.txt  neofetch\nskills ps [--group]  uses  btop  git log  avail  uptime  fortune  ping\ndate  echo  history  qr  clear  sudo hire syamxm", "out");
     } else if(c === "whoami"){
-      tprint("visitor — guest session on syamxm@homeserver", "out");
+      tprint("visitor — browser shell on syamxm.com", "out");
     } else if(c === "ls" || c === "ls ~/projects" || c === "ls projects"){
       tprint(Object.keys(PROJECTS).map(function(k){ return k + "/"; }).join("  "), "out");
     } else if(parts[0] === "open"){
@@ -252,8 +254,8 @@
         tprint(shown + " unit" + (shown === 1 ? "" : "s") + " matched --" + cat + " — rendered above ↑", "out");
       }
     } else if(c === "uptime"){
-      if(!live) tprint("uptime: no reading yet — the homeserver has not answered", "err");
-      else tprint("up " + live.uptime + " · cpu " + live.temp + " · all systems green", "out");
+      if(!live) tprint("uptime: no current reading — homeserver unavailable or still connecting", "out");
+      else tprint("up " + live.uptime + " · cpu " + live.temp + " · homeserver reachable", "out");
     } else if(c === "btop" || c === "htop" || c === "top"){
       document.getElementById("btop").scrollIntoView({behavior: reduce ? "auto" : "smooth"});
       if(!live) tprint("btop: waiting for the homeserver to answer ↑", "out");

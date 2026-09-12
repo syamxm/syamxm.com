@@ -21,6 +21,9 @@ jobs:
       - name: Check JS syntax
         run: find js -name '*.js' -print0 | xargs -0 -n1 node --check
 
+      - name: Check offline status behavior
+        run: node --test tests/*.cjs
+
       - name: Check local asset references resolve
         run: |
           grep -oE '(href|src)="[^"]+"' index.html \
