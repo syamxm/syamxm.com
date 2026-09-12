@@ -35,7 +35,7 @@ jobs:
       - name: Package static files
         run: |
           mkdir _site
-          cp *.html *.png *.svg ascii-art.txt CNAME _site/
+          cp index.html 404.html ascii-art.txt CNAME _site/
           cp -r css js assets _site/
       - uses: actions/upload-pages-artifact@v3
         with:
