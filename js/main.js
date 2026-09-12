@@ -653,7 +653,7 @@
         reveal(sec, sec.id === "projects" ? runGates : null);
       });
     });
-  },{threshold:.12, rootMargin:"0px 0px -8% 0px"});
+  },{threshold:0, rootMargin:"0px 0px -75% 0px"});
   secs.forEach(function(s){ io.observe(s); });
 
   /* ---- hero: type "whoami", then stream the answer ---- */
