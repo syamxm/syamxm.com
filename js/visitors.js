@@ -21,4 +21,8 @@
     clearTimeout(hideTimer);
     hideTimer = setTimeout(function () { render(null); }, HIDE_AFTER_MS);
   });
+  document.addEventListener("metrics:offline", function () {
+    clearTimeout(hideTimer);
+    render(null);
+  });
 })();

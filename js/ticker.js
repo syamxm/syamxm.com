@@ -2,7 +2,7 @@
 (function () {
   var UPDATES = [
     "live btop panel now reads the home server directly",
-    "deploy pipeline runs over tailscale, no public ssh",
+    "this site stays online on github pages when the home server is off",
     "internship placed — 7 sep 2026 to 5 mar 2027",
     "open to freelance work"
   ];

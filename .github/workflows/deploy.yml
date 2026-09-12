@@ -6,28 +6,39 @@ on:
     types: [completed]
     branches: [main]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v3
+      - uses: actions/checkout@v4
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
-
-      - name: Deploy to server
-        uses: appleboy/ssh-action@v1
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - uses: actions/configure-pages@v5
+      - name: Package static files
+        run: |
+          mkdir _site
+          cp *.html *.png *.svg ascii-art.txt CNAME _site/
+          cp -r css js assets _site/
+      - uses: actions/upload-pages-artifact@v3
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          port: ${{ secrets.DEPLOY_PORT }}
-          script: |
-            cd ~/syamxm.com
-            git fetch origin main
-            git checkout main
-            git reset --hard origin/main
-            echo "Deploy complete at $(date)"
+          path: _site
+      - uses: actions/deploy-pages@v4
+        id: deployment

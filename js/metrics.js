@@ -1,5 +1,5 @@
 (function(){
-  var ENDPOINT = "/api/metrics";
+  var ENDPOINT = "https://metrics.syamxm.com/api/metrics";
   var ACTIVE_MS = 3000;
   var IDLE_MS = 15000;
   var MAX_BACKOFF_MS = 60000;
@@ -200,7 +200,8 @@
     upEls.forEach(function(node){ node.textContent = up; });
     var upShort = "up " + uptimeShortText(data.uptime_s);
     upShortEls.forEach(function(node){ node.textContent = upShort; });
-    if(footstat) footstat.textContent = up + " · 6/6 gates · fail-closed";
+    if(footstat) footstat.textContent = "homeserver " + up;
+    setText(el("server-status"), "homeserver reachable");
 
     win.dataset.state = "live";
     setText(status, "live · " + data.containers_running + " containers · refreshed every 3s");
@@ -213,6 +214,23 @@
     failures++;
     win.dataset.state = "offline";
     setText(status, "homeserver unreachable — retrying");
+    setText(el("server-status"), "homeserver unreachable");
+    setText(footstat, "homeserver offline · site hosted on github pages");
+    tempEls.forEach(function(node){ node.textContent = "— °C"; });
+    upEls.forEach(function(node){ node.textContent = "offline"; });
+    upShortEls.forEach(function(node){ node.textContent = "offline"; });
+    ["cpu-pct", "load", "procs", "uptime-long", "mem", "swap", "disk", "home",
+      "net-rx", "net-tx", "disk-read", "disk-write", "run-count"].forEach(function(name){
+      setText(el(name), "—");
+    });
+    ["cpu-temp", "nvme-temp", "gpu-temp"].forEach(function(name){ paintTemp(el(name), null); });
+    ["mem-bar", "swap-bar", "disk-bar", "home-bar"].forEach(function(name){ setBar(el(name), null); });
+    history = [];
+    setText(el("cpu-graph"), "");
+    buildCores(0);
+    rowsBox.textContent = "";
+    moreLine.hidden = true;
+    document.dispatchEvent(new Event("metrics:offline"));
   }
 
   function delay(){
@@ -229,9 +247,9 @@
     if(inflight) return;
     if(document.hidden){ schedule(); return; }
     inflight = true;
-    fetch(ENDPOINT, {headers: {accept: "application/json"}})
+    fetch(ENDPOINT, {headers: {accept: "application/json"}, cache: "no-store", signal: AbortSignal.timeout(8000)})
       .then(function(response){
-        if(!response.ok) throw new Error(response.status);
+        if(response.status !== 200) throw new Error(response.status);
         return response.json();
       })
       .then(function(data){ failures = 0; paint(data); })
